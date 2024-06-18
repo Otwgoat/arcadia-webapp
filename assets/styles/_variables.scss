@@ -1,0 +1,38 @@
+@font-face {
+  font-family: "Bellefair regular";
+  src: url("../fonts/Bellefair-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Merriweather light";
+  src: url("../fonts/Merriweather-Light.ttf");
+}
+
+@font-face {
+  font-family: "Merriweather regular";
+  src: url("../fonts/Merriweather-Regular.ttf");
+}
+
+$bellefair-font: "Bellefair regular";
+$merriweather-light-font: "Merriweather light";
+$merriweather-regular-font: "Merriweather regular";
+
+$color-title-sandcolor: #d8c4b3;
+$color-text-white: #fdf5e9;
+$color-text-white-blur: #fdf5e9a7;
+$color-button-white: #eae3d2;
+$color-background-green: #42605b;
+$color-background-light-green: #567859;
+$color-button-red: #955855;
+$color-light-red: #cf322a;
+
+$mobile-button-largeWidth: 340px;
+$mobile-button-mediumWidth: 250px;
+$mobile-button-smallWidth: 190px;
+
+$mobile-extralarge-gap: 40px;
+$mobile-large-gap: 30px;
+$mobile-medium-gap: 20px;
+$mobile-small-gap: 10px;
+
+$defaultShadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

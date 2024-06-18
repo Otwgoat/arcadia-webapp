@@ -18,7 +18,7 @@ class CreateAdminCommand extends Command
         parent::__construct();
         $this->databaseService = $databaseService;
     }
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:create-admin')

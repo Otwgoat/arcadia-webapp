@@ -1,0 +1,184 @@
+@import "../variables";
+@import "../mixin";
+
+.pageContainer {
+  width: 100%;
+  #homeSlider {
+    width: 100%;
+    background-image: url("../../../public/images/otwgoat_an_ultra_realistic_photo_of_a_lion_in_a_zoo__portrait_3d4a4584-cfb8-419c-b876-bbac7a659df4_3.png");
+    background-position: center;
+    background-size: cover;
+    min-height: 492px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    button {
+      margin-bottom: 30px;
+      margin-right: 20px;
+    }
+    #buttonBar {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      height: 4px;
+      button {
+        border: none;
+        box-shadow: none;
+        margin: 0;
+        background-color: #fdf5e91a;
+        width: 32%;
+        &:is(.active) {
+          background-color: $color-text-white;
+        }
+      }
+    }
+  }
+  #introText {
+    width: 350px;
+    text-align: center;
+    margin-bottom: $mobile-medium-gap;
+  }
+  #convictionSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: $mobile-extralarge-gap;
+    .subh1 {
+      width: 350px;
+      margin-top: $mobile-large-gap;
+    }
+    #iconsBar {
+      width: 200px;
+      height: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: $mobile-medium-gap;
+
+      span {
+        height: 100%;
+        border-bottom: 2px solid #fdf5e966;
+        &:is(.active) {
+          border-bottom: 2px solid $color-text-white;
+        }
+      }
+    }
+    .convictionContent {
+      margin-top: $mobile-medium-gap;
+      padding: 20px 0px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 350px;
+      border-radius: 5px;
+      background: linear-gradient(180deg, #42605b 10.08%, #567859 100%);
+      box-shadow: $defaultShadow;
+      p {
+        width: 300px;
+        text-align: center;
+        margin-top: $mobile-medium-gap;
+        line-height: normal;
+      }
+    }
+  }
+  #parkIntroduction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: $mobile-extralarge-gap;
+    .subh1 {
+      margin-top: $mobile-large-gap;
+    }
+    .parkIntroductionCard {
+      margin-top: $mobile-large-gap;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .cardImg {
+        width: 100%;
+        height: 350px;
+        background-position: center;
+        background-size: cover;
+      }
+      .cardBody {
+        margin-top: $mobile-small-gap;
+        p {
+          width: 345px;
+          text-align: center;
+          margin-top: $mobile-small-gap;
+        }
+      }
+      button {
+        margin-top: $mobile-small-gap;
+      }
+    }
+    #restaurantCard {
+      .cardImg {
+        background-image: url("../../../public/images/kayleigh-harrington-yhn4okt6ci0-unsplash.jpg");
+      }
+    }
+    #habitatCard {
+      .cardImg {
+        background-image: url("../../../public/images/rivage-nOo6WHb0BUk-unsplash.jpg");
+      }
+    }
+  }
+  #reviewsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: $mobile-extralarge-gap;
+    .subh1 {
+      margin-top: $mobile-large-gap;
+    }
+    #reviewCardsContainer {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: $mobile-medium-gap;
+
+      .reviewCard {
+        width: 300px;
+        background-color: rgba(217, 217, 217, 0.1);
+        border: solid 1px $color-text-white;
+        border-radius: 5px;
+        margin-bottom: $mobile-medium-gap;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: $defaultShadow;
+        &:last-child {
+          margin-bottom: 0;
+        }
+        .reviewCardHeader {
+          width: 90%;
+          display: flex;
+          border-bottom: solid 1px $color-text-white;
+          justify-content: flex-start;
+          align-items: center;
+          .subh1 {
+            padding: $mobile-small-gap 0;
+            width: 90%;
+            text-align: left;
+            margin-top: 0;
+          }
+        }
+        .reviewBody {
+          margin-top: $mobile-small-gap;
+          padding-bottom: $mobile-small-gap;
+          width: 90%;
+          p {
+            width: 100%;
+          }
+        }
+      }
+    }
+    #writeReviewButton {
+      margin-top: $mobile-small-gap;
+    }
+  }
+}

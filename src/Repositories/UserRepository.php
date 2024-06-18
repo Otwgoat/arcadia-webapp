@@ -31,6 +31,7 @@ class UserRepository
         return $stmt->fetch($this->databaseService->getPdo()::FETCH_ASSOC);
     }
 
+
     public function getUserById($id)
     {
         $this->databaseService->connect('dbarcadia');
@@ -59,5 +60,14 @@ class UserRepository
         $stmt->execute();
         $lastInsertId = $this->databaseService->getPdo()->lastInsertId();
         return $lastInsertId;
+    }
+
+    public function deleteUser($id)
+    {
+        $this->databaseService->connect('dbarcadia');
+        $sql = 'DELETE FROM user WHERE id = :id';
+        $stmt = $this->databaseService->getPdo()->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
     }
 }

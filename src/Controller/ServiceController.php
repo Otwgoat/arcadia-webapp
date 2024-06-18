@@ -25,24 +25,36 @@ class ServiceController extends AbstractController
         return new JsonResponse($jsonServices, Response::HTTP_OK, [], true);
     }
 
-    #[Route('api/admin/create-service', name: 'service', methods: ['POST'])]
+    #[Route('api/admin/creation-service', name: 'create-service', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
-    public function createService(LoggerInterface $logger, Request $request, ServiceRepository $serviceRepository): JsonResponse
+    public function createService(SerializerInterface $serializer, LoggerInterface $logger, Request $request, ServiceRepository $serviceRepository)
     {
         $data = json_decode($request->getContent(), true);
-        try {
-            $serviceRepository->addService($data['title'], $data['description']);
-            $logger->info('Service created');
-        } catch (\Exception $e) {
-            $logger->error('Error creating service: ' . $e->getMessage());
-            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
+        $errors = [];
+        if (!isset($data['title']) || trim($data['title']) === "") {
+            $errors[] = ['propertyPath' => 'title', 'title' => 'Le champ titre doit être renseigné.'];
         }
+        if (!isset($data['description']) || trim($data['description']) === "") {
+            $errors[] = ['propertyPath' => 'description', 'title' => 'Le champ description doit être renseigné.'];
+        }
+        if (empty($errors)) {
+            try {
+                $serviceRepository->addService($data['title'], $data['description']);
+                $logger->info('Service created');
+            } catch (\Exception $e) {
+                $logger->error('Error creating service: ' . $e->getMessage());
+                return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
+            }
+        } else {
+            return new JsonResponse($serializer->serialize($errors, 'json'), Response::HTTP_BAD_REQUEST, [], true);
+        }
+
         return new Response('Service créé', Response::HTTP_OK);
     }
 
-    #[Route('api/service/{id}/update', name: 'update-service', methods: ['PUT'])]
+    #[Route('api/service/{id}/modification', name: 'update-service', methods: ['PUT'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
-    public function updateService(Security $security, LoggerInterface $logger, Request $request, ServiceRepository $serviceRepository, $id): JsonResponse
+    public function updateService(Security $security, LoggerInterface $logger, Request $request, ServiceRepository $serviceRepository, $id)
     {
         $data = json_decode($request->getContent(), true);
         $user = $security->getUser();
@@ -60,7 +72,7 @@ class ServiceController extends AbstractController
         return new Response('Service modifié', Response::HTTP_OK);
     }
 
-    #[Route('api/admin/service/{id}/delete', name: 'delete-service', methods: ['DELETE'])]
+    #[Route('api/admin/service/{id}/suppression', name: 'delete-service', methods: ['DELETE'])]
     #[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
     public function deleteService(LoggerInterface $logger, ServiceRepository $serviceRepository, $id): JsonResponse
     {

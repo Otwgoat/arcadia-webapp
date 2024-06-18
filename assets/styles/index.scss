@@ -1,0 +1,318 @@
+@import "_variables.scss";
+@import "_mixin.scss";
+
+/* CSS RESET */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+hgroup,
+menu,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+html {
+  background-color: $color-background-green;
+  width: 100svw;
+
+  body {
+    width: 100%;
+    margin: 0;
+    min-height: 100svh;
+    @media screen and (max-width: 600px) {
+      .container {
+        width: 100%;
+        min-height: 100vh;
+        .pageContainer {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        background-image: url("../../public/images/Background-arcadia-mobile.png");
+        h1 {
+          @include mobile-h1;
+        }
+        h2 {
+          @include mobile-h2;
+        }
+        h3 {
+          @include mobile-h3;
+        }
+
+        p {
+          @include mobile-bodyText;
+        }
+        .navLink {
+          @include mobile-navLink($color-text-white-blur);
+        }
+        .navLinkActive {
+          @include mobile-navLink($color-text-white);
+        }
+        .subh1 {
+          @include mobile-subh1;
+        }
+        .largeMobileButton {
+          @include mobile-button(
+            $mobile-button-largeWidth,
+            $color-button-white
+          );
+        }
+        .mediumMobileButton {
+          @include mobile-button(
+            $mobile-button-mediumWidth,
+            $color-button-white
+          );
+        }
+        .smallMobileButton {
+          @include mobile-button(
+            $mobile-button-smallWidth,
+            $color-button-white
+          );
+        }
+
+        .imgDiv {
+          box-shadow: $defaultShadow;
+        }
+        .mediumLogoutButton {
+          @include mobile-button($mobile-button-mediumWidth, $color-button-red);
+          a {
+            color: $color-text-white;
+          }
+        }
+        .largeLogoutButton {
+          @include mobile-button($mobile-button-largeWidth, $color-button-red);
+          a {
+            color: $color-text-white;
+          }
+        }
+        .prevLink {
+          margin-top: calc(100px + $mobile-small-gap);
+          font-family: $merriweather-light-font;
+          font-size: 14px;
+          text-decoration: none;
+          color: $color-text-white;
+          width: 80%;
+          .prevIcon {
+            margin-right: 5px;
+          }
+        }
+        form {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: $mobile-medium-gap;
+          label {
+            color: $color-text-white;
+            font-family: $bellefair-font;
+            font-size: 18px;
+            width: 300px;
+            text-align: left;
+            margin-top: $mobile-medium-gap;
+          }
+          input,
+          .input {
+            width: 290px;
+            padding: 0px 5px;
+            margin-top: $mobile-small-gap;
+            border-radius: 5px;
+            border: none;
+            background-color: rgba(217, 217, 217, 0.44);
+          }
+
+          input {
+            height: 25px;
+            @include mobile-bodyText;
+          }
+
+          .formInputError {
+            width: 290px;
+            border-radius: 5px;
+            margin-top: $mobile-small-gap;
+            background-color: rgba(217, 217, 217, 0.44);
+            border: solid 1px $color-light-red;
+            padding: 0px 5px;
+          }
+          textarea {
+            min-height: 50px;
+            @include mobile-bodyText;
+          }
+          select {
+            margin-top: $mobile-small-gap;
+            padding: 0px 5px;
+            width: 290px;
+            height: 25px;
+            text-align: left;
+            border-radius: 5px;
+            border: none;
+            background-color: rgba(217, 217, 217, 0.44);
+            color: $color-text-white;
+            font-family: $merriweather-regular-font;
+          }
+          .passwordContainer {
+            position: relative;
+            width: 300px;
+            margin-top: $mobile-medium-gap;
+            z-index: -1;
+            input {
+              width: 290px;
+              padding: 0 5px;
+            }
+            .iconPlaceholder {
+              position: absolute;
+              right: 10px;
+              top: 60%;
+            }
+          }
+          .planningFormGroup {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+          button {
+            margin-top: $mobile-medium-gap;
+          }
+          .errorMessage,
+          .successMessage {
+            margin-top: $mobile-small-gap;
+            width: 290px;
+            text-align: center;
+          }
+          .errorMessage {
+            color: $color-light-red;
+          }
+          .infoMessage {
+            color: $color-text-white;
+            width: 290px;
+            margin-bottom: $mobile-medium-gap;
+          }
+          .successMessage {
+            color: $color-background-light-green;
+            width: 100%;
+            margin-top: 0;
+          }
+        }
+      }
+    }
+  }
+}
+@import "../styles/pages/home.scss";
+@import "../styles/components/header.scss";
+@import "../styles/components/footer.scss";
+@import "../styles/components/searchContainer.scss";
+@import "../styles/pages/loginPage.scss";
+@import "../styles/pages/dashboard.scss";

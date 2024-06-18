@@ -66,17 +66,19 @@ class AnimalRepository
 
 
 
-    public function addAnimal($firstName, $race, $birthDate, $description, $habitatId)
+    public function addAnimal($firstName, $race, $birthDate, $description, $habitatId, $gender)
     {
         $this->databaseService->connect('dbarcadia');
-        $sql = 'INSERT INTO animal (firstName, race, birthDate, description, habitatId) VALUES (:firstName, :race, :birthDate, :description, :habitatId)';
+        $sql = 'INSERT INTO animal (firstName, race, birthDate, description, habitatId, gender) VALUES (:firstName, :race, :birthDate, :description, :habitatId, :gender)';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':firstName', $firstName);
         $stmt->bindValue(':race', $race);
         $stmt->bindValue(':birthDate', $birthDate);
         $stmt->bindValue(':description', $description);
         $stmt->bindValue(':habitatId', $habitatId);
+        $stmt->bindValue(':gender', $gender);
         $stmt->execute();
+
         return $this->databaseService->getPdo()->lastInsertId();
     }
 
@@ -124,15 +126,16 @@ class AnimalRepository
         return $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
     }
 
-    public function addAnimalImage($name, $description, $url, $animalId)
+    public function addAnimalImage($name, $description, $url, $animalId, $principal)
     {
         $this->databaseService->connect('dbarcadia');
-        $sql = 'INSERT INTO animalImage (name, description, url, animalId) VALUES (:name, :description, :url, :animalId)';
+        $sql = 'INSERT INTO animalImage (name, description, url, animalId, principal) VALUES (:name, :description, :url, :animalId, :principal)';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':name', $name);
         $stmt->bindValue(':description', $description);
         $stmt->bindValue(':url', $url);
         $stmt->bindValue(':animalId', $animalId);
+        $stmt->bindValue(':principal', $principal);
         $stmt->execute();
         return $this->databaseService->getPdo()->lastInsertId();
     }

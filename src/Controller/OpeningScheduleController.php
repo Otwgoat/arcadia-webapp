@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OpeningScheduleController extends AbstractController
 {
-    #[Route('api/opening-schedule', name: 'opening-schedule', methods: ['GET'])]
+    #[Route('api/horaires', name: 'opening-schedule', methods: ['GET'])]
     public function getOpeningSchedule(SerializerInterface $serializer)
     {
         $openingSchedule = $this->getParameter('kernel.project_dir') . '/src/data/openingSchedule.json';
@@ -23,7 +23,7 @@ class OpeningScheduleController extends AbstractController
         return new JsonResponse($serializedData, 200, [], true);
     }
 
-    #[Route('api/admin/opening-schedule/update', name: 'update-opening-schedule', methods: ['PUT'])]
+    #[Route('api/admin/horaires/modification', name: 'update-opening-schedule', methods: ['PUT'])]
     #[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
     public function updateOpeningSchedule(LoggerInterface $logger, Request $request, SerializerInterface $serializer)
     {

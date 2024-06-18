@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS habitat (
 );
 
 CREATE TABLE IF NOT EXISTS animal (
-    id INT AUTO_INCREMENT PRIMARY KEY, firstName VARCHAR(255) NOT NULL, race VARCHAR(255) NOT NULL, birthDate DATE NULL, description TEXT NULL, habitatId INT, FOREIGN KEY (habitatId) REFERENCES habitat (id) ON DELETE SET NULL
+    id INT AUTO_INCREMENT PRIMARY KEY, firstName VARCHAR(255) NOT NULL, race VARCHAR(255) NOT NULL, birthDate DATE NULL, description TEXT NULL, gender ENUM("male", "female"), habitatId INT, FOREIGN KEY (habitatId) REFERENCES habitat (id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS habitatImage (

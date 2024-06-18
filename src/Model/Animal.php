@@ -12,7 +12,7 @@ class Animal
     private $id;
 
     #[Groups(['getAnimal', 'getAnimals', 'getHabitat'])]
-    #[Assert\NotBlank(message: 'Le prénom est obligatoire.')]
+    #[Assert\NotBlank(message: 'Le nom de l\'animal est obligatoire.')]
     private $firstName;
 
     #[Groups(['getAnimal', 'getAnimals', 'getHabitat'])]
@@ -20,14 +20,19 @@ class Animal
     private $race;
 
     #[Groups(['getAnimal', 'getAnimals'])]
+    #[Assert\NotBlank(message: 'La date de naissance de l\'animal est obligatoire.')]
+    #[Assert\LessThanOrEqual('today', message: 'La date de naissance ne peut pas être supérieure à la date actuelle.')]
     private $birthDate;
 
-    #[Groups(['getAnimal'])]
+    #[Groups(['getAnimal', 'getAnimals'])]
     #[Assert\NotBlank(message: 'La description de l\'animal est obligatoire.')]
     private $description;
 
-
+    #[Groups(['getAnimal', 'getAnimals'])]
     private $habitatId;
+
+    #[Groups(['getAnimal', 'getAnimals'])]
+    private $gender;
 
     #[Groups(['getAnimal', 'getAnimals'])]
     private $images;
@@ -38,17 +43,24 @@ class Animal
     #[Groups(['getAnimal'])]
     private $lastFeedingReport;
 
-    public function __construct($id, $firstName, $race, $birthDate, $description)
+    public function __construct($id, $firstName, $race, $birthDate, $description, $gender)
     {
         $this->id = $id;
         $this->firstName = $firstName;
         $this->race = $race;
         $this->birthDate = $birthDate;
         $this->description = $description;
+        $this->gender = $gender;
     }
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
     }
     public function getFirstName()
     {
@@ -75,6 +87,18 @@ class Animal
         $this->habitatId = $habitatId;
         return $this;
     }
+
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+        return $this;
+    }
+
     public function getImages()
     {
         return $this->images;

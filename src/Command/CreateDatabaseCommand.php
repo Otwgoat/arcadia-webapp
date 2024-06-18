@@ -20,7 +20,7 @@ class CreateDatabaseCommand extends Command
         $this->databaseService = $databaseService;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:create-database')

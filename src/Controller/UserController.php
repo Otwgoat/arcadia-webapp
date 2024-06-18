@@ -55,4 +55,18 @@ class UserController extends AbstractController
         $location = $urlGenerator->generate('user', ['id' => $id], UrlGeneratorInterface::ABSOLUTE_URL);
         return new JsonResponse($jsonUser, Response::HTTP_CREATED, ['Location' => $location], true);
     }
+
+    #[Route('api/admin/utilisateur/{id}/suppression', name: 'delete_user', methods: ['DELETE'])]
+    #[IsGranted("ROLE_ADMIN", message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
+    public function deleteUser(UserRepository $userRepository, $id, LoggerInterface $logger): JsonResponse
+    {
+        try {
+            $userRepository->deleteUser($id);
+            $logger->info('Utilisateur supprimé', ['id' => $id]);
+        } catch (\Exception $e) {
+            $logger->error('Erreur lors de la suppression de l\'utilisateur', ['message' => $e->getMessage()]);
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
+        }
+        return new JsonResponse(['message' => 'Utilisateur supprimé'], Response::HTTP_OK);
+    }
 }

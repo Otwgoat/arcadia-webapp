@@ -1,0 +1,21 @@
+@media screen and (max-width: 600px) {
+  footer {
+    margin-top: calc($mobile-large-gap * 2);
+    border-top: solid 1px $color-text-white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .subh1 {
+      margin-top: $mobile-medium-gap;
+    }
+    #socialIcons {
+      margin-top: $mobile-small-gap;
+      display: flex;
+      width: 40%;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: $mobile-medium-gap;
+    }
+  }
+}

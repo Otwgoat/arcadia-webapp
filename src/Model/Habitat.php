@@ -6,7 +6,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 class Habitat
 {
-
+    #[Groups(['getHabitat', 'getHabitats'])]
     private $id;
 
     #[Groups(['getHabitat', 'getHabitats'])]

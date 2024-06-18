@@ -44,17 +44,27 @@ class ReviewController extends AbstractController
     }
 
     #[Route('api/add-review', name: 'add-review', methods: ['POST'])]
-    public function addReview(ReviewRepository $reviewRepository, LoggerInterface $logger, Request $request)
+    public function addReview(ReviewRepository $reviewRepository, LoggerInterface $logger, Request $request, SerializerInterface $serializer)
     {
         $data = json_decode($request->getContent(), true);
-        try {
-            $reviewRepository->addReview($data['username'], $data['review']);
-            $logger->info('Review added');
-        } catch (\Exception $e) {
-            $logger->error('Error adding review: ' . $e->getMessage());
-            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
+        $errors = [];
+        if (!isset($data['username']) || trim($data['username']) === '') {
+            $errors[] = ['propertyPath' => 'username', 'title' => 'Le champ pseudonyme doit être renseigné.'];
         }
-
+        if (!isset($data['review']) || trim($data['review']) === '') {
+            $errors[] = ['propertyPath' => 'review', 'title' => 'Le champ avis doit être renseigné.'];
+        }
+        if (empty($errors)) {
+            try {
+                $reviewRepository->addReview($data['username'], $data['review']);
+                $logger->info('Review added');
+            } catch (\Exception $e) {
+                $logger->error('Error adding review: ' . $e->getMessage());
+                return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
+            }
+        } else {
+            return new JsonResponse($serializer->serialize($errors, 'json'), Response::HTTP_BAD_REQUEST, [], true);
+        }
         return new Response('Avis soumis', Response::HTTP_OK);
     }
 

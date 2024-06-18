@@ -17,7 +17,7 @@ class CreateTablesCommand extends Command
         parent::__construct();
         $this->tablesService = $tablesService;
     }
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:create-tables')

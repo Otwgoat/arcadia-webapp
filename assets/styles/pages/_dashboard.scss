@@ -1,0 +1,120 @@
+.dashboardContainer {
+  .heroTitle {
+    margin-top: $mobile-small-gap;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    h1 {
+      padding: $mobile-small-gap 0;
+    }
+  }
+  .dashboardHeroTitle {
+    margin-top: calc(100px + $mobile-small-gap);
+  }
+  .dashboardNavItem {
+    width: 340px;
+    height: 70px;
+    margin-top: $mobile-medium-gap;
+    border-radius: 5px;
+    border: 1px solid #fdf5e9;
+    background: linear-gradient(
+      90deg,
+      rgba(66, 96, 91, 0.6) 0%,
+      rgba(86, 120, 89, 0.6) 100%
+    );
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    &:first-child {
+      margin-top: calc($mobile-medium-gap * 2);
+    }
+    &:is(.active) {
+      background: none;
+      background-color: $color-button-red;
+    }
+    .subh1 {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+  }
+  button {
+    margin-top: $mobile-large-gap;
+  }
+  form {
+    margin-bottom: calc($mobile-large-gap + $mobile-medium-gap);
+    .planningFormGroup {
+      margin-top: $mobile-medium-gap;
+      .formLabel {
+        margin-top: $mobile-small-gap;
+      }
+    }
+    #animalImages {
+      display: none;
+    }
+    #selectImagesButton {
+      width: 300px;
+      margin-top: $mobile-small-gap;
+    }
+    #createAnimalButton {
+      margin-top: calc($mobile-medium-gap * 2);
+    }
+    .filesSelectedList {
+      margin-top: $mobile-small-gap;
+      text-align: center;
+
+      p {
+        margin-top: calc($mobile-small-gap / 2);
+        color: $color-text-white-blur;
+      }
+      .principaleFileSelected {
+        color: $color-text-white;
+        text-decoration: underline;
+      }
+      .loading {
+        color: $color-text-white-blur;
+      }
+    }
+  }
+  .listContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: $mobile-medium-gap;
+    .listItem {
+      width: 310px;
+      border-bottom: 1px solid $color-text-white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: $mobile-medium-gap;
+      padding-bottom: 10px;
+      .listItemContent {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h3 {
+          text-align: left;
+        }
+        .listItemActions {
+          width: 50px;
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+
+      &:last-child {
+        margin-bottom: $mobile-medium-gap;
+      }
+      form {
+        margin-top: $mobile-small-gap;
+        margin-bottom: $mobile-small-gap;
+      }
+    }
+  }
+}

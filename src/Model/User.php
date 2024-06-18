@@ -25,6 +25,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: 'L\'adresse e-mail est obligatoire.')]
     private $email;
 
+    #[Assert\Length(min: 8, minMessage: 'Le mot de passe doit contenir au moins 8 caractères.')]
+    #[Assert\NotBlank(message: 'Le mot de passe est obligatoire.')]
     private $password;
 
     #[Groups(['getUsers', 'userCreation'])]
