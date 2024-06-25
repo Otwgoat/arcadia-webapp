@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import CustomButton from "./CustomButton";
-import { XCircle } from "@phosphor-icons/react";
 
 const SearchContainer = (props) => {
   const [inputValue, setInputValue] = useState("");
@@ -19,16 +17,14 @@ const SearchContainer = (props) => {
     setFilteredData(filterData);
   };
 
-  const handleDeleteClick = async (id) => {
-    if (props.deleteOnClick) {
-      await props.deleteOnClick(id);
-      setFilteredData((prevData) => prevData.filter((item) => item.id !== id));
-    }
-  };
   useEffect(() => {
     searchItem();
   }, [inputValue]);
-
+  useEffect(() => {
+    if (props.rerender) {
+      searchItem();
+    }
+  }, [props.rerender]);
   return (
     <div id={props.searchContainerId} className="searchContainer">
       <form>
@@ -50,12 +46,6 @@ const SearchContainer = (props) => {
               className={`searchResultItem ${index % 2 === 0 ? "even" : "odd"}`}
             >
               {props.resultTemplate(item)}
-              <XCircle
-                size={20}
-                weight="light"
-                color="#cf322a"
-                onClick={() => handleDeleteClick(item.id)}
-              />
             </div>
           ))}
       </div>

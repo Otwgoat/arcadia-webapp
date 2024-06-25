@@ -34,8 +34,7 @@ class Animal
     #[Groups(['getAnimal', 'getAnimals'])]
     private $gender;
 
-    #[Groups(['getAnimal', 'getAnimals'])]
-    private $images;
+
 
     #[Groups(['getAnimal'])]
     private $lastVeterinaryReport;
@@ -43,13 +42,14 @@ class Animal
     #[Groups(['getAnimal'])]
     private $lastFeedingReport;
 
-    public function __construct($id, $firstName, $race, $birthDate, $description, $gender)
+    public function __construct($id, $firstName, $race, $birthDate, $description, $gender, $habitatId)
     {
         $this->id = $id;
         $this->firstName = $firstName;
         $this->race = $race;
         $this->birthDate = $birthDate;
         $this->description = $description;
+        $this->habitatId = $habitatId;
         $this->gender = $gender;
     }
     public function getId()
@@ -91,22 +91,6 @@ class Animal
     public function getGender()
     {
         return $this->gender;
-    }
-
-    public function setGender($gender)
-    {
-        $this->gender = $gender;
-        return $this;
-    }
-
-    public function getImages()
-    {
-        return $this->images;
-    }
-    public function setImages(array $images)
-    {
-        $this->images = $images;
-        return $this;
     }
 
     public function getLastVeterinaryReport()

@@ -13,6 +13,8 @@ import ServicesDashboardPage from './pages/adminDashboard/ServicesDashboardPage'
 import UsersDashboardPage from './pages/adminDashboard/UsersDashboardPage';
 import AnimalsDashboardPage from './pages/adminDashboard/AnimalsDashboardPage';
 import AnimalDashboardPage from './pages/adminDashboard/AnimalDashboardPage';
+import HabitatsDashboardPage from './pages/adminDashboard/HabitatsDashboardPage';
+import HabitatDashboardPage from './pages/adminDashboard/HabitatDashboardPage';
 
 
 authApi.setup();
@@ -43,7 +45,12 @@ const App = () => {
                         <Route path='/dashboard/admin/animal/:id' element={<PrivateRoute />} >
                             <Route path='/dashboard/admin/animal/:id' element={<AnimalDashboardPage />} />
                         </Route> 
-                      
+                        <Route path='/dashboard/admin/habitats' element={<PrivateRoute />} >
+                           <Route path='/dashboard/admin/habitats' element={<HabitatsDashboardPage/>} /> 
+                        </Route>   
+                        <Route path='/dashboard/admin/habitat/:id' element={<PrivateRoute />} >
+                            <Route path='/dashboard/admin/habitat/:id' element={<HabitatDashboardPage/>} />
+                        </Route>
 
                         <Route path="/" element={<Home />} />
                         <Route path="/connexion" element={<LoginPage />} />

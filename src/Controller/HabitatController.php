@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class HabitatController extends AbstractController
 {
@@ -28,8 +28,6 @@ class HabitatController extends AbstractController
         $serializedHabitats = [];
         foreach ($habitats  as $habitat) {
             $habitatModel = new Habitat($habitat['id'], $habitat['name'], $habitat['description']);
-            $images = $habitatRepository->getHabitatImages($habitat['id']);
-            $habitatModel->setImages($images);
             $serializedHabitats[] = $habitatModel;
         }
         $jsonHabitats = $serializer->serialize($serializedHabitats, 'json', ['groups' => 'getHabitats']);
@@ -43,30 +41,41 @@ class HabitatController extends AbstractController
         $habitatModel = new Habitat($habitat['id'], $habitat['name'], $habitat['description']);
         $animals = $habitatRepository->getAnimalsByHabitatId($id);
         $habitatModel->setAnimals($animals);
-        $images = $habitatRepository->getHabitatImages($id);
-        $habitatModel->setImages($images);
         $jsonHabitat = $serializer->serialize($habitatModel, 'json', ['groups' => 'getHabitat']);
         return new JsonResponse($jsonHabitat, Response::HTTP_OK, [], true);
     }
 
+    #[Route('api/habitat/{id}/animaux', name: 'habitat-animaux', methods: ['GET'])]
+    public function getAnimalsByHabitatId(SerializerInterface $serializer, HabitatRepository $habitatRepository, $id): JsonResponse
+    {
+        $animals = $habitatRepository->getAnimalsByHabitatId($id);
+        $serializedAnimals = [];
+        foreach ($animals as $animal) {
+            $animalModel = new Animal($animal['id'], $animal['firstName'], $animal['race'], $animal['birthDate'], $animal['description'], $animal['habitatId'], $animal['gender']);
+            $serializedAnimals[] = $animalModel;
+        }
+        $jsonAnimals = $serializer->serialize($serializedAnimals, 'json', ['groups' => 'getAnimals']);
+        return new JsonResponse($jsonAnimals, Response::HTTP_OK, [], true);
+    }
+
     #[Route('api/admin/habitat-creation', name: 'creation-habitat', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
-    public function createHabitat(SerializerInterface $serializer, LoggerInterface $logger, HabitatRepository $habitatRepository, Request $request, UrlGeneratorInterface $urlGenerator): JsonResponse
+    public function createHabitat(ValidatorInterface $validator, SerializerInterface $serializer, LoggerInterface $logger, HabitatRepository $habitatRepository, Request $request, UrlGeneratorInterface $urlGenerator): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         $habitat = new Habitat(null, $data['name'], $data['description'], null);
-        $images = $data['images'];
+        $errors = $validator->validate($habitat);
+        if (count($errors) > 0) {
+            return new JsonResponse($serializer->serialize($errors, 'json'), Response::HTTP_BAD_REQUEST, [], true);
+        }
         try {
             $id = $habitatRepository->addHabitat($data['name'], $data['description']);
-            foreach ($images as $image) {
-                $habitatRepository->addHabitatImage($image['name'], $image['description'], $image['url'], $id);
-            }
             $logger->info('Habitat créé', ['id' => $id, "name" => $data['name']]);
         } catch (\Exception $e) {
             $logger->error('Erreur lors de la création de l\'habitat', ['message' => $e->getMessage()]);
             return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
-
+        $habitat->setId($id);
         $jsonHabitat = $serializer->serialize($habitat, 'json', ['groups' => 'getHabitat']);
         $location = $urlGenerator->generate('habitat', ['id' => $id], UrlGeneratorInterface::ABSOLUTE_URL);
         return new JsonResponse($jsonHabitat, Response::HTTP_CREATED, ['Location' => $location], true);
@@ -106,11 +115,16 @@ class HabitatController extends AbstractController
         return new JsonResponse(['message' => 'Rapport créé'], Response::HTTP_CREATED);
     }
 
-    #[Route('api/admin/habitat/{id}/update', name: 'update-habitat', methods: ['PUT'])]
+    #[Route('api/admin/habitat/{id}/modification', name: 'modification-habitat', methods: ['PUT'])]
     #[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
-    public function updateHabitat(LoggerInterface $logger, HabitatRepository $habitatRepository, Request $request, $id): JsonResponse
+    public function updateHabitat(UrlGeneratorInterface $urlGenerator, SerializerInterface $serializer, ValidatorInterface $validator, LoggerInterface $logger, HabitatRepository $habitatRepository, Request $request, $id): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
+        $habitat = new Habitat($id, $data['name'], $data['description'], null);
+        $errors = $validator->validate($habitat);
+        if (count($errors) > 0) {
+            return new JsonResponse($serializer->serialize($errors, 'json'), Response::HTTP_BAD_REQUEST, [], true);
+        }
         try {
             $habitatRepository->updateHabitat($id, $data['name'], $data['description']);
             $logger->info('Habitat mis à jour', ['id' => $id, 'name' => $data['name']]);
@@ -118,13 +132,19 @@ class HabitatController extends AbstractController
             $logger->error('Erreur lors de la mise à jour de l\'habitat', ['message' => $e->getMessage()]);
             return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
-        return new JsonResponse(['message' => 'Habitat mis à jour'], Response::HTTP_OK);
+        $jsonHabitat = $serializer->serialize($habitat, 'json', ['groups' => 'getHabitat']);
+        $location = $urlGenerator->generate('habitat', ['id' => $id], UrlGeneratorInterface::ABSOLUTE_URL);
+        return new JsonResponse($jsonHabitat, Response::HTTP_CREATED, ['Location' => $location], true);
     }
 
-    #[Route('api/admin/habitat/{id}/delete', name: 'delete-habitat', methods: ['DELETE'])]
+    #[Route('api/admin/habitat/{id}/suppression', name: 'suppression-habitat', methods: ['DELETE'])]
     #[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
     public function deleteHabitat(LoggerInterface $logger, HabitatRepository $habitatRepository, $id): JsonResponse
     {
+        $animalsInHabitat = $habitatRepository->getAnimalsByHabitatId($id);
+        if (count($animalsInHabitat) > 0) {
+            return new JsonResponse(['error' => 'Vous ne pouvez pas supprimer cet habitat car il abrite encore des animaux.'], Response::HTTP_CONFLICT);
+        }
         try {
             $habitatRepository->deleteHabitat($id);
             $logger->info('Habitat supprimé', ['id' => $id]);

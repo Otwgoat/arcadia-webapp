@@ -32,15 +32,6 @@ class HabitatRepository
         return $stmt->fetch($this->databaseService->getPdo()::FETCH_ASSOC);
     }
 
-    public function getHabitatImages($habitatId)
-    {
-        $this->databaseService->connect('dbarcadia');
-        $sql = 'SELECT * FROM habitatImage WHERE habitatId = :habitatId';
-        $stmt = $this->databaseService->getPdo()->prepare($sql);
-        $stmt->bindValue(':habitatId', $habitatId);
-        $stmt->execute();
-        return $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
-    }
 
     public function getAnimalsByHabitatId($habitatId)
     {

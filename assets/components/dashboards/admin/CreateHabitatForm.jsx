@@ -1,72 +1,66 @@
 import React, { useEffect, useRef, useState } from "react";
 import CustomButton from "../../CustomButton";
-import animalsApi from "../../../services/animalsApi";
-import { uploadFile } from "../../../services/firebase";
 
-const CreateAnimalForm = (props) => {
+import { uploadFile } from "../../../services/firebase";
+import habitatsApi from "../../../services/habitatsApi";
+
+const CreateHabitatForm = () => {
   const formRef = useRef(formRef);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({
-    firstName: "",
-    race: "",
-    birthDate: "",
-    habitatId: "",
+    name: "",
     description: "",
-    gender: "",
-    images: "",
   });
   const [selectImagesError, setSelectImagesError] = useState();
   const [files, setFiles] = useState();
   const [principalSelectedFile, setPrincipalSelectedFile] = useState();
-  const [imagesData, setImagesData] = useState([]);
   const [imagesLoading, setImagesLoading] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
-  const [animalName, setAnimalName] = useState("");
-  const [animalRace, setAnimalRace] = useState("");
-  const [animalBirthDate, setAnimalBirthDate] = useState("");
-  const [animalHabitat, setAnimalHabitat] = useState(1);
-  const [animalDescription, setAnimalDescription] = useState("");
-  const [animalGender, setAnimalGender] = useState("male");
-  const [newAnimalId, setNewAnimalId] = useState();
+  const [habitatName, setHabitatName] = useState("");
+  const [habitatDescription, setHabitatDescription] = useState("");
+  const [newHabitatId, setNewHabitatId] = useState();
 
   async function postFormData() {
-    const animalData = {
-      firstName: animalName,
-      race: animalRace,
-      birthDate: animalBirthDate,
-      habitatId: animalHabitat,
-      description: animalDescription,
-      gender: animalGender,
+    const habitatData = {
+      name: habitatName,
+      description: habitatDescription,
     };
     try {
-      const response = await animalsApi.createAnimal(animalData);
-      setNewAnimalId(response.id);
+      const response = await habitatsApi.createHabitat(habitatData);
+      setNewHabitatId(response.id);
       return response.id;
     } catch (error) {
       throw error;
     }
   }
-
   const handleSubmit = async (e) => {
     setErrors({});
     e.preventDefault();
     try {
-      const animalId = await postFormData();
+      const habitatId = await postFormData();
+      if (!files) {
+        setSelectImagesError(
+          "Habitat créé sans images, il sera possible d'en ajouter ultérieurement."
+        );
+        formRef.current.reset();
+        setSuccessMessage("Habitat créé avec succès");
+        setSubmitSuccess(true);
+      }
       const uploadPromises = files.map((file) =>
         uploadFile(
           file,
-          animalId,
+          habitatId,
           setImagesLoading,
           setFiles,
-          "animals",
+          "habitats",
           principalSelectedFile
         )
       );
-      const uploadedFiles = await Promise.all(uploadPromises).then(() => {
+      await Promise.all(uploadPromises).then(() => {
         setImagesLoaded(true);
       });
-      setSuccessMessage("Animal créé avec succès");
+      setSuccessMessage("Habitat créé avec succès");
       setSubmitSuccess(true);
       formRef.current.reset();
       setFiles();
@@ -83,22 +77,20 @@ const CreateAnimalForm = (props) => {
       }
     }
   };
-
   const handleButtonClick = () => {
     setSelectImagesError();
-    const realFileInput = document.getElementById("animalImages");
+    const realFileInput = document.getElementById("habitatImages");
     if (realFileInput) {
       realFileInput.click();
     } else {
       console.error("No file input found");
     }
   };
-
   const fileSelectedPlaceholder = (file, index) => {
     if (imagesLoading) {
       return (
         <>
-          <p className={file.progress < 100 ? "loading" : ""}>
+          <p className={file.progress < 100 ? "loading" : "fileSelectedName"}>
             {file.name} : {file.progress}%
           </p>
         </>
@@ -130,86 +122,36 @@ const CreateAnimalForm = (props) => {
   }, [selectImagesError]);
   return (
     <form ref={formRef} onSubmit={handleSubmit} method="POST">
-      <label htmlFor="animalName" className="formLabel">
-        Nom de l'animal
+      <label htmlFor="habitatName" className="formLabel">
+        Nom de l'habitat
       </label>
       <input
         type="text"
-        id="animalName"
-        name="animalName"
-        className={errors.firstName ? "formInputError" : "formInput"}
-        onChange={(e) => setAnimalName(e.target.value)}
+        id="habitatName"
+        name="habitatName"
+        className={errors.name ? "formInputError" : "formInput"}
+        onChange={(e) => setHabitatName(e.target.value)}
       />
-      {errors.firstName && <p className="errorMessage">{errors.firstName}</p>}
-      <label htmlFor="animalSpecies" className="formLabel">
-        Espèce de l'animal
-      </label>
-      <input
-        type="text"
-        id="animalSpecies"
-        name="animalSpecies"
-        className={errors.race ? "formInputError" : "formInput"}
-        onChange={(e) => setAnimalRace(e.target.value)}
-      />
-      {errors.race && <p className="errorMessage">{errors.race}</p>}
-      <label className="formLabel" htmlFor="animalBirthDate">
-        Jour de naissance
-      </label>
-      <input
-        type="date"
-        id="animalBirthDate"
-        name="animalBirthDate"
-        className={errors.birthDate ? "formInputError" : "formInput"}
-        onChange={(e) => setAnimalBirthDate(e.target.value)}
-      />
-      {errors.birthDate && <p className="errorMessage">{errors.birthDate}</p>}
-      <label htmlFor="animalHabitat" className="formLabel">
-        Habitat de l'animal
-      </label>
-      <select
-        name="animalHabitat"
-        id="animalHabitat"
-        className="formInput"
-        onChange={(e) => setAnimalHabitat(e.target.value)}
-      >
-        {props.habitatsData &&
-          props.habitatsData.map((habitat) => (
-            <option key={habitat.id} value={habitat.id}>
-              {habitat.name}
-            </option>
-          ))}
-      </select>
-      <label htmlFor="animalDescription" className="formLabel">
-        Description de l'animal
+      {errors.name && <p className="errorMessage">{errors.name}</p>}
+      <label htmlFor="habitatDescription" className="formLabel">
+        Description de l'habitat
       </label>
       <textarea
-        name="animalDescription"
-        id="animalDescription"
+        name="habitatDescription"
+        id="habitatDescription"
         className={errors.description ? "formInputError" : "input"}
-        onChange={(e) => setAnimalDescription(e.target.value)}
+        onChange={(e) => setHabitatDescription(e.target.value)}
       />
       {errors.description && (
         <p className="errorMessage">{errors.description}</p>
       )}
-      <label htmlFor="animalGender" className="formLabel">
-        Sexe de l'animal
-      </label>
-      <select
-        name="animalGender"
-        id="animalGender"
-        className="formInput"
-        onChange={(e) => setAnimalGender(e.target.value)}
-      >
-        <option value="male">Mâle</option>
-        <option value="female">Femelle</option>
-      </select>
-      <label htmlFor="animalImages" className="formLabel">
-        Images de l'animal
+      <label htmlFor="habitatImages" className="formLabel">
+        Images de l'habitat
       </label>
       <input
         type="file"
-        name="animalImages"
-        id="animalImages"
+        name="habitatImages"
+        id="habitatImages"
         multiple
         onChange={(e) => setFiles(Array.from(e.target.files))}
       />
@@ -234,11 +176,10 @@ const CreateAnimalForm = (props) => {
         </div>
       )}
       {errors.images && <p className="errorMessage">{errors.images}</p>}
-
       <CustomButton
-        id="createAnimalButton"
+        id="createHabitatButton"
         buttonClassName="mediumMobileButton"
-        title="Créer l'animal"
+        title="Créer l'habitat"
         successMessage={successMessage}
         submitSuccess={submitSuccess}
         type="submit"
@@ -248,4 +189,4 @@ const CreateAnimalForm = (props) => {
   );
 };
 
-export default CreateAnimalForm;
+export default CreateHabitatForm;

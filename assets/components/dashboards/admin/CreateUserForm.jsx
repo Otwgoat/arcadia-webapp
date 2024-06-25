@@ -39,8 +39,6 @@ const CreateUserForm = () => {
       setSuccessMessage("Utilisateur créé avec succès.");
       setSubmitSuccess(true);
     } catch (error) {
-      const violations = error.response.data.violations;
-
       if (violations) {
         const apiErrors = {};
         violations.forEach(({ propertyPath, title }) => {

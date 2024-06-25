@@ -209,102 +209,103 @@ html {
             margin-right: 5px;
           }
         }
-        form {
+        .infoMessage {
+          color: $color-text-white;
+          width: 290px;
+          margin-bottom: $mobile-medium-gap;
+          text-align: center;
+        }
+        .errorMessage,
+        .successMessage {
+          margin-top: $mobile-small-gap;
+          width: 290px;
+          text-align: center;
+        }
+        .errorMessage {
+          color: $color-light-red;
+        }
+        .successMessage {
+          color: $color-background-light-green;
+          width: 100%;
+          margin-top: 0;
+        }
+      }
+      form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: $mobile-medium-gap;
+        label {
+          color: $color-text-white;
+          font-family: $bellefair-font;
+          font-size: 18px;
+          width: 300px;
+          text-align: left;
+          margin-top: $mobile-medium-gap;
+        }
+        input,
+        .input {
+          width: 290px;
+          padding: 0px 5px;
+          margin-top: $mobile-small-gap;
+          border-radius: 5px;
+          border: none;
+          background-color: rgba(217, 217, 217, 0.44);
+        }
+
+        input {
+          height: 25px;
+          @include mobile-bodyText;
+        }
+
+        .formInputError {
+          width: 290px;
+          border-radius: 5px;
+          margin-top: $mobile-small-gap;
+          background-color: rgba(217, 217, 217, 0.44);
+          border: solid 1px $color-light-red;
+          padding: 0px 5px;
+        }
+        textarea {
+          min-height: 50px;
+          @include mobile-bodyText;
+        }
+        select {
+          margin-top: $mobile-small-gap;
+          padding: 0px 5px;
+          width: 290px;
+          height: 25px;
+          text-align: left;
+          border-radius: 5px;
+          border: none;
+          background-color: rgba(217, 217, 217, 0.44);
+          color: $color-text-white;
+          font-family: $merriweather-regular-font;
+        }
+        .passwordContainer {
+          position: relative;
+          width: 300px;
+          margin-top: $mobile-medium-gap;
+          z-index: -1;
+          input {
+            width: 290px;
+            padding: 0 5px;
+          }
+          .iconPlaceholder {
+            position: absolute;
+            right: 10px;
+            top: 60%;
+          }
+        }
+        .planningFormGroup {
           width: 100%;
           display: flex;
           flex-direction: column;
           align-items: center;
+        }
+        button {
           margin-top: $mobile-medium-gap;
-          label {
-            color: $color-text-white;
-            font-family: $bellefair-font;
-            font-size: 18px;
-            width: 300px;
-            text-align: left;
-            margin-top: $mobile-medium-gap;
-          }
-          input,
-          .input {
-            width: 290px;
-            padding: 0px 5px;
-            margin-top: $mobile-small-gap;
-            border-radius: 5px;
-            border: none;
-            background-color: rgba(217, 217, 217, 0.44);
-          }
-
-          input {
-            height: 25px;
-            @include mobile-bodyText;
-          }
-
-          .formInputError {
-            width: 290px;
-            border-radius: 5px;
-            margin-top: $mobile-small-gap;
-            background-color: rgba(217, 217, 217, 0.44);
-            border: solid 1px $color-light-red;
-            padding: 0px 5px;
-          }
-          textarea {
-            min-height: 50px;
-            @include mobile-bodyText;
-          }
-          select {
-            margin-top: $mobile-small-gap;
-            padding: 0px 5px;
-            width: 290px;
-            height: 25px;
-            text-align: left;
-            border-radius: 5px;
-            border: none;
-            background-color: rgba(217, 217, 217, 0.44);
-            color: $color-text-white;
-            font-family: $merriweather-regular-font;
-          }
-          .passwordContainer {
-            position: relative;
-            width: 300px;
-            margin-top: $mobile-medium-gap;
-            z-index: -1;
-            input {
-              width: 290px;
-              padding: 0 5px;
-            }
-            .iconPlaceholder {
-              position: absolute;
-              right: 10px;
-              top: 60%;
-            }
-          }
-          .planningFormGroup {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          }
-          button {
-            margin-top: $mobile-medium-gap;
-          }
-          .errorMessage,
-          .successMessage {
-            margin-top: $mobile-small-gap;
-            width: 290px;
-            text-align: center;
-          }
-          .errorMessage {
-            color: $color-light-red;
-          }
-          .infoMessage {
-            color: $color-text-white;
-            width: 290px;
-            margin-bottom: $mobile-medium-gap;
-          }
-          .successMessage {
-            color: $color-background-light-green;
-            width: 100%;
-            margin-top: 0;
-          }
         }
       }
     }

@@ -53,17 +53,6 @@ class AnimalRepository
         return $stmt->fetch($this->databaseService->getPdo()::FETCH_ASSOC);
     }
 
-    // Fetch all images of an animal by his ID
-    public function getAnimalImages($animalId)
-    {
-        $this->databaseService->connect('dbarcadia');
-        $sql = 'SELECT * FROM animalImage WHERE animalId = :animalId';
-        $stmt = $this->databaseService->getPdo()->prepare($sql);
-        $stmt->bindValue(':animalId', $animalId);
-        $stmt->execute();
-        return $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
-    }
-
 
 
     public function addAnimal($firstName, $race, $birthDate, $description, $habitatId, $gender)
@@ -126,19 +115,6 @@ class AnimalRepository
         return $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
     }
 
-    public function addAnimalImage($name, $description, $url, $animalId, $principal)
-    {
-        $this->databaseService->connect('dbarcadia');
-        $sql = 'INSERT INTO animalImage (name, description, url, animalId, principal) VALUES (:name, :description, :url, :animalId, :principal)';
-        $stmt = $this->databaseService->getPdo()->prepare($sql);
-        $stmt->bindValue(':name', $name);
-        $stmt->bindValue(':description', $description);
-        $stmt->bindValue(':url', $url);
-        $stmt->bindValue(':animalId', $animalId);
-        $stmt->bindValue(':principal', $principal);
-        $stmt->execute();
-        return $this->databaseService->getPdo()->lastInsertId();
-    }
 
     public function addAnimalVeterinaryReport($date, $animalState, $foodProvided, $foodAmountGrams, $animalStateDetails, $animalId, $veterinaryId)
     {

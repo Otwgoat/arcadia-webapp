@@ -32,14 +32,16 @@ const ServicesList = () => {
   return (
     <div className="listContainer">
       {services &&
-        services.map((service) => (
+        services.map((service, index) => (
           <div key={service.id} className="listItem">
-            <div className="listItemContent">
+            <div
+              className={`listItemContent ${index % 2 === 0 ? "even" : "odd"}`}
+            >
               <h3>{service.title}</h3>
               <div className="listItemActions">
                 <ArrowClockwise
                   size={20}
-                  weight="regular"
+                  weight="light"
                   color="#fdf5e9"
                   onClick={() =>
                     updateServiceFormOpen === service.id
@@ -48,8 +50,9 @@ const ServicesList = () => {
                   }
                 />
                 <XCircle
+                  style={{ marginLeft: "10px" }}
                   size={20}
-                  weight="regular"
+                  weight="light"
                   color="#cf322a"
                   onClick={() => handleDelete(service.id)}
                 />

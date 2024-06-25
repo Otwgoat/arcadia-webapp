@@ -1,5 +1,7 @@
 import axios from "axios";
 import apiPath from "./apiPath";
+import { update } from "firebase/database";
+
 
 const animalsApi = {
     createAnimal: async (animalData) => {
@@ -23,6 +25,25 @@ const animalsApi = {
             throw error;
         }
     },
+    deleteAnimalImage: async (imageId) => {
+        try {
+            const response = await axios.delete(apiPath(`admin/animal/suppression-image/${imageId}`));
+            return response.data;
+        } catch (error) {
+            console.error("Error in deleteAnimalImage API call:", error);
+            throw error;
+        }
+    },
+    updateAnimal: async (animalData) => {
+        try {
+            const response = await axios.put(apiPath(`admin/animal/${animalData.id}/modification`), animalData);
+            return response.data;
+        }
+        catch (error) {
+            console.error("Error in updateAnimal API call:", error);
+            throw error;
+        }
+    },
     deleteAnimal: async (animalId) => {
         try {
             const response = await axios.delete(apiPath(`admin/animal/${animalId}/suppression`));
@@ -38,6 +59,15 @@ const animalsApi = {
             return response.data;
         } catch (error) {
             console.error("Error in getAnimals API call:", error);
+            throw error;
+        }
+    },
+    getAnimal: async (animalId) => {
+        try {
+            const response = await axios.get(apiPath(`animal/${animalId}`));
+            return response.data;
+        } catch (error) {
+            console.error("Error in getAnimal API call:", error);
             throw error;
         }
     }

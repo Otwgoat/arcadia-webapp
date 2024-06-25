@@ -8,6 +8,7 @@ use App\Model\Animal;
 use App\Model\User;
 use Psr\Log\LoggerInterface;
 use App\Repositories\AnimalRepository;
+use App\Repositories\HabitatRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,21 +28,18 @@ class AnimalController extends AbstractController
         $animals = $animalRepository->getAnimals();
         $serializedAnimals = [];
         foreach ($animals as $animal) {
-            $animalModel = new Animal($animal['id'], $animal['firstName'], $animal['race'], $animal['birthDate'], $animal['description'], $animal['gender']);
-            $images = $animalRepository->getAnimalImages($animal['id']);
-            $animalModel->setImages($images);
+            $animalModel = new Animal($animal['id'], $animal['firstName'], $animal['race'], $animal['birthDate'], $animal['description'], $animal['gender'], $animal['habitatId']);
             $serializedAnimals[] = $animalModel;
         }
         $jsonAnimals = $serializer->serialize($serializedAnimals, 'json', ['groups' => 'getAnimals']);
         return new JsonResponse($jsonAnimals, Response::HTTP_OK, [], true);
     }
     #[Route('api/animal/{id}', name: 'animal', methods: ['GET'])]
-    public function getAnimalById(SerializerInterface $serializer, AnimalRepository $animalRepository, $id): JsonResponse
+    public function getAnimalById(SerializerInterface $serializer, AnimalRepository $animalRepository, HabitatRepository $habitatRepository, $id): JsonResponse
     {
         $animal = $animalRepository->getAnimalById($id);
-        $animalModel = new Animal($animal['id'], $animal['firstName'], $animal['race'], $animal['birthDate'], $animal['description'], $animal['gender']);
-        $images = $animalRepository->getAnimalImages($id);
-        $animalModel->setImages($images);
+        $habitatId = $habitatRepository->getHabitatById($animal['habitatId']);
+        $animalModel = new Animal($animal['id'], $animal['firstName'], $animal['race'], $animal['birthDate'], $animal['description'], $animal['gender'], $habitatId);
         $lastVeterinaryReport = $animalRepository->getLastVeterinaryReport($id);
         if ($lastVeterinaryReport) {
             $animalModel->setLastVeterinaryReport($lastVeterinaryReport);
@@ -116,26 +114,6 @@ class AnimalController extends AbstractController
         return new JsonResponse($jsonAnimal, Response::HTTP_CREATED, ['Location' => $location], true);
     }
 
-    #[Route('api/admin/animal/creation-images', name: 'creation-images', methods: ['POST'])]
-    #[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
-    public function createAnimalImages(Request $request, LoggerInterface $logger, AnimalRepository $animalRepository): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-        $images = $data['imagesData'];
-        $animalId = $data['animalId'];
-        foreach ($images as $image) {
-            try {
-                $animalRepository->addAnimalImage($image['name'], $image['description'], $image['url'], $animalId, $image['principal']);
-                $logger->info('Image ajoutée', ['animalId' => $animalId, "name" => $image['name']]);
-            } catch (\Exception $e) {
-                $logger->error('Erreur lors de l\'ajout de l\'image', ['message' => $e->getMessage()]);
-                return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
-            }
-        }
-        return new JsonResponse(['message' => 'Images ajoutées'], Response::HTTP_CREATED);
-    }
-
-
     #[Route('api/animal/create-veterinary-report', name: 'creation-rapport-vétérinaire', methods: ['POST'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function createVeterinaryReport(Security $security, Request $request, AnimalRepository $animalRepository, LoggerInterface $logger): JsonResponse
@@ -185,16 +163,21 @@ class AnimalController extends AbstractController
     }
 
 
-    #[Route('api/admin/animal/{id}/update', name: 'update-animal', methods: ['PUT'])]
+    #[Route('api/admin/animal/{id}/modification', name: 'modification-animal', methods: ['PUT'])]
     #[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
-    public function updateAnimal($id, Request $request, LoggerInterface $logger, AnimalRepository $animalRepository): JsonResponse
+    public function updateAnimal(SerializerInterface $serializer, ValidatorInterface $validator, $id, Request $request, LoggerInterface $logger, AnimalRepository $animalRepository): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $dateInput = $data['birthDate']; // Get the input date
-        $date = DateTime::createFromFormat('d/m/Y', $dateInput);
-        $formattedDate = $date->format('Y-m-d'); //  format to YYYY-MM-DD
+        $animal = new Animal($id, $data['firstName'], $data['race'], $data['birthDate'], $data['description'], $data['habitatId'], $data['gender']);
+        $errors = $validator->validate($animal);
+        if (count($errors) > 0) {
+            return new JsonResponse($serializer->serialize($errors, 'json'), Response::HTTP_BAD_REQUEST, [], true);
+        }
+        if ($animalRepository->getAnimalByNameAndHabitat($data['firstName'], $data['habitatId'])) {
+            return new JsonResponse(['error' => 'Un animal avec ce nom existe déjà dans cet habitat'], Response::HTTP_CONFLICT);
+        }
         try {
-            $animalRepository->updateAnimal($id, $data['firstName'], $data['race'], $formattedDate, $data['description'], $data['habitatId']);
+            $animalRepository->updateAnimal($id, $data['firstName'], $data['race'], $data['birthDate'], $data['description'], $data['habitatId'], $data['gender']);
             $logger->info('Animal mis à jour', ['id' => $data['id'], "firstName" => $data['firstName']]);
         } catch (\Exception $e) {
             $logger->error('Erreur lors de la mise à jour de l\'animal', ['message' => $e->getMessage()]);

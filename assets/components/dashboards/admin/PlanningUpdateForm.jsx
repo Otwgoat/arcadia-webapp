@@ -54,7 +54,6 @@ const PlanningUpdateForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (updated) {
-      console.log(planningFormState);
       try {
         servicesApi.updatePlanning(planningFormState);
         setSuccessMessage("Horaires mis à jour avec succès");

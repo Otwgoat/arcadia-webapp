@@ -18,7 +18,7 @@ const UsersDashboardPage = () => {
     <div className="container">
       <DashboardHeader />
       <div className="pageContainer dashboardContainer">
-        <PrevLink link="/dashboard/admin" title="Revenir au dashboard" />
+        <PrevLink link="/dashboard" title="Revenir au dashboard" />
         <div className="heroTitle">
           <h1>Utilisateurs</h1>
           <h3>Gestion des utilisateurs</h3>

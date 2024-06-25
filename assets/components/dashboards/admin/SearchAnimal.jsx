@@ -3,6 +3,7 @@ import SearchContainer from "../../SearchContainer";
 import animalsApi from "../../../services/animalsApi";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { ArrowSquareIn } from "@phosphor-icons/react";
 
 const SearchAnimal = (props) => {
   const navigate = useNavigate();
@@ -18,24 +19,17 @@ const SearchAnimal = (props) => {
     console.log("An error occured:" + error.message);
   }
 
-  const handleDeleteAnimal = async (animalId) => {
-    try {
-      await animalsApi.deleteAnimal(animalId);
-    } catch (error) {
-      console.error("Error in deleteAnimal API call:", error);
-      throw error;
-    }
-  };
-
   const resultTemplate = (item) => {
     return (
-      <h3 onClick={() => navigateOnClick(item)}>
-        {item.id} {item.firstName}
-      </h3>
+      <>
+        <h3 onClick={() => navigateOnClick(item)}>
+          {item.id} {item.firstName}
+        </h3>
+        <ArrowSquareIn size={20} weight="light" color="#fdf5e9" />
+      </>
     );
   };
   const navigateOnClick = (item) => {
-    console.log(item);
     navigate(`/dashboard/admin/animal/:${item.id}`, {
       state: { animal: item, habitats: props.habitatsData },
     });
@@ -50,7 +44,6 @@ const SearchAnimal = (props) => {
         iterableTerm="firstName"
         resultTemplate={resultTemplate}
         data={animals}
-        deleteOnClick={handleDeleteAnimal}
       />
     </>
   );

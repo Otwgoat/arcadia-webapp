@@ -3,23 +3,24 @@
 namespace App\Model;
 
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class Habitat
 {
     #[Groups(['getHabitat', 'getHabitats'])]
     private $id;
 
+    #[Assert\NotBlank(message: 'Le nom de l\'habitat est obligatoire.')]
     #[Groups(['getHabitat', 'getHabitats'])]
     private $name;
 
+    #[Assert\NotBlank(message: 'La description de l\'habitat est obligatoire.')]
     #[Groups(['getHabitat', 'getHabitats'])]
     private $description;
 
     #[Groups(['getHabitat'])]
     private $animals;
 
-    #[Groups(['getHabitat', 'getHabitats'])]
-    private $images;
 
     public function __construct($id, $name, $description)
     {
@@ -32,7 +33,11 @@ class Habitat
     {
         return $this->id;
     }
-
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
     public function getName()
     {
         return $this->name;
@@ -51,17 +56,6 @@ class Habitat
     public function setAnimals(array $animals)
     {
         $this->animals = $animals;
-        return $this;
-    }
-
-    public function getImages()
-    {
-        return $this->images;
-    }
-
-    public function setImages(array $images)
-    {
-        $this->images = $images;
         return $this;
     }
 }
