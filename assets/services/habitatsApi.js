@@ -56,6 +56,15 @@ const habitatsApi = {
             throw error;
         }
     },
+    createReport: async (reportData) => {
+        try {
+            const response = await axios.post(apiPath('habitat/creation-rapport'), reportData);
+            return response.data;
+        } catch (error) {
+            console.error("Error in createReport API call:", error);
+            throw error;
+        }
+    }
 
 }
 export default habitatsApi;

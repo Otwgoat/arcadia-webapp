@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {createRoot} from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './styles/index.scss';
 import Home from './pages/Home';
-import AuthContext from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 import authApi from './services/authApi';
 import PrivateRoute from './routing/PrivateRoute';
@@ -15,41 +15,52 @@ import AnimalsDashboardPage from './pages/adminDashboard/AnimalsDashboardPage';
 import AnimalDashboardPage from './pages/adminDashboard/AnimalDashboardPage';
 import HabitatsDashboardPage from './pages/adminDashboard/HabitatsDashboardPage';
 import HabitatDashboardPage from './pages/adminDashboard/HabitatDashboardPage';
+import ConsultationsDashboardPage from './pages/veterinaryDashboard/ConsultationsDashboardPage';
+import AnimalFilesDashboardPage from './pages/veterinaryDashboard/AnimalFilesDashboardPage';
+import HabitatCommentsDashboardPage from './pages/veterinaryDashboard/HabitatCommentsDashboardPage';
+
 
 
 authApi.setup();
 const queryClient = new QueryClient();
 const App = () => {
-    const [isAuthenticated , setIsAuthenticated] = useState(authApi.isAuthenticated());
+
+    
     return (
         <QueryClientProvider client={queryClient}>
-            <AuthContext.Provider value={{
-                isAuthenticated,
-                setIsAuthenticated
-            }}>
+            <AuthProvider>
            
                 <BrowserRouter>
                     <Routes>
                         <Route path='/dashboard' element={<PrivateRoute />}>
                             <Route path='/dashboard' element={<Dashboard />} />
                         </Route>
-                        <Route path="/dashboard/admin/utilisateurs" element={<PrivateRoute />}>
+                        <Route path="/dashboard/admin/utilisateurs"  element={<PrivateRoute role="admin" />}>
                             <Route path="/dashboard/admin/utilisateurs" element={<UsersDashboardPage />} />
                         </Route>
-                        <Route path='/dashboard/admin/services' element={<PrivateRoute />} >
+                        <Route path='/dashboard/admin/services' element={<PrivateRoute role="admin" />} >
                             <Route path='/dashboard/admin/services' element={<ServicesDashboardPage />} />
                         </Route>
-                        <Route path='/dashboard/admin/animaux' element={<PrivateRoute />} >
+                        <Route path='/dashboard/admin/animaux' element={<PrivateRoute role="admin"/>} >
                             <Route path='/dashboard/admin/animaux' element={<AnimalsDashboardPage />} />
                         </Route>
-                        <Route path='/dashboard/admin/animal/:id' element={<PrivateRoute />} >
+                        <Route path='/dashboard/admin/animal/:id' element={<PrivateRoute role="admin"/>} >
                             <Route path='/dashboard/admin/animal/:id' element={<AnimalDashboardPage />} />
                         </Route> 
-                        <Route path='/dashboard/admin/habitats' element={<PrivateRoute />} >
+                        <Route path='/dashboard/admin/habitats' element={<PrivateRoute role="admin"/>} >
                            <Route path='/dashboard/admin/habitats' element={<HabitatsDashboardPage/>} /> 
                         </Route>   
-                        <Route path='/dashboard/admin/habitat/:id' element={<PrivateRoute />} >
+                        <Route path='/dashboard/admin/habitat/:id' element={<PrivateRoute role="admin" />} >
                             <Route path='/dashboard/admin/habitat/:id' element={<HabitatDashboardPage/>} />
+                        </Route>
+                        <Route path='/dashboard/veterinaire/consultations' element={<PrivateRoute role="veterinary" />} >
+                            <Route path='/dashboard/veterinaire/consultations' element={<ConsultationsDashboardPage />} />
+                        </Route>
+                        <Route path="/dashboard/veterinaire/dossier-animal" element={<PrivateRoute role="veterinary" />} >
+                            <Route path="/dashboard/veterinaire/dossier-animal" element={<AnimalFilesDashboardPage />} />
+                        </Route>
+                        <Route path='/dashboard/veterinaire/habitats' element={<PrivateRoute role="veterinary" />} >
+                            <Route path='/dashboard/veterinaire/habitats' element={<HabitatCommentsDashboardPage />} />
                         </Route>
 
                         <Route path="/" element={<Home />} />
@@ -58,7 +69,7 @@ const App = () => {
                     </Routes>
                 </BrowserRouter>
             
-            </AuthContext.Provider>
+            </AuthProvider>
         </QueryClientProvider>
     );
 

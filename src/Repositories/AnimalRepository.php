@@ -81,16 +81,27 @@ class AnimalRepository
         return $stmt->fetch($this->databaseService->getPdo()::FETCH_ASSOC);
     }
 
-    public function getVeterinaryReports($animalId, $page)
+    public function getVeterinaryReports($animalId, $limit)
     {
         $this->databaseService->connect('dbarcadia');
-        $offset = ($page - 1) * 10;
-        $sql = 'SELECT * FROM veterinaryReport WHERE animalId = :animalId LIMIT 10 OFFSET :offset';
+        $sql = 'SELECT * FROM veterinaryReport WHERE animalId = :animalId ORDER BY date DESC LIMIT :limit';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
-        $stmt->bindValue(':offset', $offset, \PDO::PARAM_INT);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
         $stmt->bindValue(':animalId', $animalId);
         $stmt->execute();
-        return $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
+        $reports = $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
+
+        $sqlCount = 'SELECT COUNT(*) as totalCount FROM veterinaryReport WHERE animalId = :animalId';
+        $stmtCount = $this->databaseService->getPdo()->prepare($sqlCount);
+        $stmtCount->bindValue(':animalId', $animalId);
+        $stmtCount->execute();
+
+        $totalCount = $stmtCount->fetch($this->databaseService->getPdo()::FETCH_ASSOC)['totalCount'];
+
+        return [
+            'reports' => $reports,
+            'totalCount' => $totalCount
+        ];
     }
 
     public function getLastFeedingReport($animalId)
@@ -103,17 +114,30 @@ class AnimalRepository
         return $stmt->fetch($this->databaseService->getPdo()::FETCH_ASSOC);
     }
 
-    public function getFeedingReports($animalId, $page)
+
+    public function getFeedingReports($animalId, $limit)
     {
         $this->databaseService->connect('dbarcadia');
-        $offset = ($page - 1) * 10;
-        $sql = 'SELECT * FROM feedingReport WHERE animalId = :animalId ORDER BY date DESC LIMIT 10 OFFSET :offset ';
+
+        $sql = 'SELECT * FROM feedingReport WHERE animalId = :animalId ORDER BY date DESC LIMIT :limit';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
-        $stmt->bindValue(':offset', $offset, \PDO::PARAM_INT);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
         $stmt->bindValue(':animalId', $animalId);
         $stmt->execute();
-        return $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
+        $reports = $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
+        $sqlCount = 'SELECT COUNT(*) as totalCount FROM feedingReport WHERE animalId = :animalId';
+        $stmtCount = $this->databaseService->getPdo()->prepare($sqlCount);
+        $stmtCount->bindValue(':animalId', $animalId);
+        $stmtCount->execute();
+
+        $totalCount = $stmtCount->fetch($this->databaseService->getPdo()::FETCH_ASSOC)['totalCount'];
+
+        return [
+            'reports' => $reports,
+            'totalCount' => $totalCount
+        ];
     }
+
 
 
     public function addAnimalVeterinaryReport($date, $animalState, $foodProvided, $foodAmountGrams, $animalStateDetails, $animalId, $veterinaryId)

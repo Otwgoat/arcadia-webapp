@@ -169,7 +169,7 @@ const CreateAnimalForm = (props) => {
       <select
         name="animalHabitat"
         id="animalHabitat"
-        className="formInput"
+        className="formInput selectInput"
         onChange={(e) => setAnimalHabitat(e.target.value)}
       >
         {props.habitatsData &&
@@ -197,7 +197,7 @@ const CreateAnimalForm = (props) => {
       <select
         name="animalGender"
         id="animalGender"
-        className="formInput"
+        className="formInput selectInput"
         onChange={(e) => setAnimalGender(e.target.value)}
       >
         <option value="male">Mâle</option>

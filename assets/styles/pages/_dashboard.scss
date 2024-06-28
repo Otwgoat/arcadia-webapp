@@ -1,4 +1,7 @@
 .dashboardContainer {
+  .infoMessage {
+    color: $color-text-white-blur;
+  }
   .heroTitle {
     margin-top: $mobile-small-gap;
     width: 80%;
@@ -96,9 +99,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: $mobile-medium-gap;
-    .infoMessage {
-      color: $color-text-white-blur;
-    }
+
     .listItem {
       width: 290px;
       display: flex;

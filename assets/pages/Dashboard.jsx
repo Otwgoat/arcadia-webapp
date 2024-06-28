@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import authApi from "../services/authApi";
 import AdminDashboard from "../components/dashboards/admin/AdminDashboard";
 import DashboardHeader from "../components/dashboards/DashboardHeader";
 import CustomButton from "../components/CustomButton";
+import VeterinaryDashboard from "../components/dashboards/veterinary/VeterinaryDashboard";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
-  const userRole = authApi.getUserType();
+  const { isAuthenticated, currentUser, setIsAuthenticated } = useAuth();
   const [startRedirect, setStartRedirect] = useState(false);
 
   const handleLogout = () => {
@@ -32,7 +32,12 @@ const Dashboard = () => {
     <div className="container">
       <DashboardHeader />
       <main className="pageContainer dashboardContainer">
-        {userRole === "admin" ? <AdminDashboard /> : ""}
+        {currentUser.type === "Admin" ? <AdminDashboard /> : ""}
+        {currentUser.type === "Vétérinaire" ? (
+          <VeterinaryDashboard currentUser={currentUser} />
+        ) : (
+          ""
+        )}
         <CustomButton
           buttonClassName="largeLogoutButton"
           title="Déconnexion"

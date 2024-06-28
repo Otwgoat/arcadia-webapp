@@ -58,14 +58,14 @@ class AnimalController extends AbstractController
         return new JsonResponse($jsonAnimal, Response::HTTP_OK, [], true);
     }
 
-    #[Route('api/animal/{id}/veterinary-reports', name: 'veterinary-reports', methods: ['GET'])]
+    #[Route('api/animal/{id}/rapports-veterinaires', name: 'rapports-veterinaires', methods: ['GET'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function getVeterinaryReports(SerializerInterface $serializer, AnimalRepository $animalRepository, Request $request, $id, Security $security): JsonResponse
     {
         $user = $security->getUser();
         if ($user instanceof User && $user->getType() === 'Vétérinaire') {
-            $page = $request->query->get('page', 1);
-            $veterinaryReports = $animalRepository->getVeterinaryReports($id, $page);
+            $limit = $request->query->get('limit');
+            $veterinaryReports = $animalRepository->getVeterinaryReports($id, $limit);
             $jsonVeterinaryReports = $serializer->serialize($veterinaryReports, 'json', ['groups' => 'getVeterinaryReports']);
             return new JsonResponse($jsonVeterinaryReports, Response::HTTP_OK, [], true);
         } else {
@@ -73,14 +73,14 @@ class AnimalController extends AbstractController
         }
     }
 
-    #[Route('api/animal/{id}/feeding-reports', name: 'feeding-reports', methods: ['GET'])]
+    #[Route('api/animal/{id}/rapports-alimentation', name: 'rapports-alimentation', methods: ['GET'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function getFeedingReports(SerializerInterface $serializer, AnimalRepository $animalRepository, Request $request, $id, Security $security): JsonResponse
     {
         $user = $security->getUser();
         if ($user instanceof User && $user->getType() === 'Vétérinaire') {
-            $page = $request->query->get('page', 1);
-            $feedingReports = $animalRepository->getFeedingReports($id, $page);
+            $limit = $request->query->get('limit');
+            $feedingReports = $animalRepository->getFeedingReports($id, $limit);
             $jsonFeedingReports = $serializer->serialize($feedingReports, 'json', ['groups' => 'getFeedingReports']);
             return new JsonResponse($jsonFeedingReports, Response::HTTP_OK, [], true);
         } else {
@@ -114,7 +114,7 @@ class AnimalController extends AbstractController
         return new JsonResponse($jsonAnimal, Response::HTTP_CREATED, ['Location' => $location], true);
     }
 
-    #[Route('api/animal/create-veterinary-report', name: 'creation-rapport-vétérinaire', methods: ['POST'])]
+    #[Route('api/animal/creation-rapport-veterinaire', name: 'creation-rapport-vétérinaire', methods: ['POST'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function createVeterinaryReport(Security $security, Request $request, AnimalRepository $animalRepository, LoggerInterface $logger): JsonResponse
     {
@@ -125,11 +125,9 @@ class AnimalController extends AbstractController
         } else {
             return new JsonResponse(['error' => 'Vous n\'avez pas les droits pour accéder à cette ressource'], Response::HTTP_FORBIDDEN);
         }
-        $dateInput = $data['date']; // Get the input date
-        $date = DateTime::createFromFormat('d/m/Y', $dateInput);
-        $formattedDate = $date->format('Y-m-d'); //  format to YYYY-MM-DD
+
         try {
-            $animalRepository->addAnimalVeterinaryReport($formattedDate, $data['animalState'], $data['foodProvided'], $data['foodAmountGrams'], $data['animalStateDetails'], $data['animalId'], $veterinaryId);
+            $animalRepository->addAnimalVeterinaryReport($data['date'], $data['animalState'], $data['foodProvided'], $data['foodAmountGrams'], $data['animalStateDetails'], $data['animalId'], $veterinaryId);
             $logger->info('Rapport vétérinaire créé', ['animalId' => $data['animalId'], 'veterinaryId' => $veterinaryId]);
         } catch (\Exception $e) {
             $logger->error('Erreur lors de la création du rapport vétérinaire', ['message' => $e->getMessage()]);

@@ -6,6 +6,7 @@ function authenticate(credentials) {
     return axios
         .post(apiPath("login_check"), credentials)
         .then((response) => {
+           
             return response.data.token;
         })
         .then(token => {

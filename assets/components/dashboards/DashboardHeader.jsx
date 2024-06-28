@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { List, XCircle } from "@phosphor-icons/react";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../CustomButton";
-import AuthContext from "../../context/AuthContext";
+import AuthContext, { useAuth } from "../../context/AuthContext";
 import authApi from "../../services/authApi";
 import HeaderLinkContainer from "../HeaderLinkContainer";
 const DashboardHeader = () => {
@@ -10,7 +10,7 @@ const DashboardHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isActive, setIsActive] = useState("dashboard");
   const [startRedirect, setStartRedirect] = useState(false);
-  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
   const handleLogout = () => {
     authApi.logout();
     setIsAuthenticated(false);

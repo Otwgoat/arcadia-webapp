@@ -1,6 +1,7 @@
 import axios from "axios";
 import apiPath from "./apiPath";
-import { update } from "firebase/database";
+
+
 
 
 const animalsApi = {
@@ -70,6 +71,24 @@ const animalsApi = {
             console.error("Error in getAnimal API call:", error);
             throw error;
         }
-    }
+    },
+    getVeterinaryReports: async (animalId, limit) => {
+        try {
+            const response = await axios.get(apiPath(`animal/${animalId}/rapports-veterinaires?limit=${limit}`));
+            return response.data;
+        } catch (error) {
+            console.error("Error in getVeterinaryReports API call:", error);
+            throw error;
+        }
+    },
+    getFeedingReports: async (animalId, limit) => {
+        try {
+            const response = await axios.get(apiPath(`animal/${animalId}/rapports-alimentation?limit=${limit}`));
+            return response.data;
+        } catch (error) {
+            console.error("Error in getFeedingReports API call:", error);
+            throw error;
+        }
+    },
 };
 export default animalsApi;

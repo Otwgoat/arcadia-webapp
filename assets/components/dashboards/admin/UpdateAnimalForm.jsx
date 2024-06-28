@@ -97,7 +97,7 @@ const UpdateAnimalForm = ({ animal, habitats }) => {
       <select
         name="animalHabitat"
         id="animalHabitat"
-        className="formInput"
+        className="formInput selectInput"
         value={newHabitat}
         onChange={(e) => setNewHabitat(e.target.value)}
       >
@@ -127,7 +127,7 @@ const UpdateAnimalForm = ({ animal, habitats }) => {
       <select
         name="animalGender"
         id="animalGender"
-        className="formInput"
+        className="formInput selectInput"
         onChange={(e) => setNewGender(e.target.value)}
       >
         <option value="male">Mâle</option>

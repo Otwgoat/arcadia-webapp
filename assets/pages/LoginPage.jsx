@@ -2,13 +2,13 @@ import React, { useContext, useState } from "react";
 import Header from "../components/Header";
 import CustomButton from "../components/CustomButton";
 import Footer from "../components/Footer";
-import AuthContext from "../context/AuthContext";
+import AuthContext, { useAuth } from "../context/AuthContext";
 import authApi from "../services/authApi";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [errors, setErrors] = useState();

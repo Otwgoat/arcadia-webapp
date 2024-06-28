@@ -29,6 +29,15 @@ const userApi = {
             throw error;
         }
     },
+    getCurrentUser: async () => {
+        try {
+            const response = await axios.get(apiPath('utilisateur-connecte'));
+            return response.data;
+        } catch (error) {
+            console.error("Error in getCurrentUser API call:", error);
+            throw error;
+        }
+    }
 
 };
 

@@ -91,7 +91,7 @@ class HabitatController extends AbstractController
         return new JsonResponse($jsonHabitatReports, Response::HTTP_OK, [], true);
     }
 
-    #[Route('api/habitat/create-report', name: 'habitat-create-report', methods: ['POST'])]
+    #[Route('api/habitat/creation-rapport', name: 'habitat-creation-rapport', methods: ['POST'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul l'utilisateur peut accéder à cette ressource.")]
     public function createHabitatReport(Security $security, LoggerInterface $logger, HabitatRepository $habitatRepository, Request $request): JsonResponse
     {
@@ -102,11 +102,9 @@ class HabitatController extends AbstractController
         } else {
             return new JsonResponse(['error' => 'Vous n\'avez pas les droits, seul le vétérinaire peut accéder à cette ressource.'], Response::HTTP_FORBIDDEN);
         }
-        $dateInput = $data['date']; // Get the input date
-        $date = DateTime::createFromFormat('d/m/Y', $dateInput);
-        $formattedDate = $date->format('Y-m-d'); //  format to YYYY-MM-DD
+
         try {
-            $habitatRepository->addHabitatReport($formattedDate, $data['report'], $data['habitatId'], $veterinaryId);
+            $habitatRepository->addHabitatReport($data['date'], $data['report'], $data['habitatId'], $veterinaryId);
             $logger->info('Rapport créé', ['habitatId' => $data['habitatId'], 'veterinaryId' => $veterinaryId]);
         } catch (\Exception $e) {
             $logger->error('Erreur lors de la création du rapport', ['message' => $e->getMessage()]);

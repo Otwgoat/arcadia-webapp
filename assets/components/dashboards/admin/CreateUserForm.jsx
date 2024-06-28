@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CustomButton from "../../CustomButton";
 import { Eye, EyeClosed } from "@phosphor-icons/react";
 import userApi from "../../../services/userApi";
@@ -11,7 +11,7 @@ const CreateUserForm = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState();
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});
   function capitalizeFirstLetter(string) {
@@ -38,14 +38,21 @@ const CreateUserForm = () => {
       setErrors({});
       setSuccessMessage("Utilisateur créé avec succès.");
       setSubmitSuccess(true);
+      setUserType("Employé");
+      setEmail("");
+      setFirstname("");
+      setLastname("");
+      setPassword("");
     } catch (error) {
-      if (violations) {
-        const apiErrors = {};
-        violations.forEach(({ propertyPath, title }) => {
-          apiErrors[propertyPath] = title;
-          console.log(propertyPath + ": " + title);
-        });
-        setErrors(apiErrors);
+      if (error.response && error.response.data) {
+        const violations = error.response.data.violations;
+        if (violations) {
+          const apiErrors = {};
+          violations.forEach(({ propertyPath, title }) => {
+            apiErrors[propertyPath] = title;
+          });
+          setErrors(apiErrors);
+        }
       }
       if (
         error.response.data.error ===
@@ -57,7 +64,9 @@ const CreateUserForm = () => {
       }
     }
   };
-
+  useEffect(() => {
+    console.log(passwordShown);
+  }, [passwordShown]);
   return (
     <form method="POST" ref={formRef}>
       <label className="formLabel" htmlFor="userType">
@@ -66,6 +75,7 @@ const CreateUserForm = () => {
       <select
         name="userType"
         id="userType"
+        className="formInput selectInput"
         onChange={(e) => setUserType(e.target.value)}
       >
         <option value="Employé">Employé</option>

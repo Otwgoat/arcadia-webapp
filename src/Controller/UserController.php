@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -68,5 +69,12 @@ class UserController extends AbstractController
             return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
         return new JsonResponse(['message' => 'Utilisateur supprimé'], Response::HTTP_OK);
+    }
+    #[Route("api/utilisateur-connecte", name: "utilisateur-actuel", methods: ["GET"])]
+    public function getConnectedUser(SerializerInterface $serializer, Security $security): JsonResponse
+    {
+        $user = $security->getUser();
+        $jsonUser = $serializer->serialize($user, 'json', ['groups' => 'getUsers']);
+        return new JsonResponse($jsonUser, Response::HTTP_OK, [], true);
     }
 }
