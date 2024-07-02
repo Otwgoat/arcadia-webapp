@@ -72,9 +72,9 @@ class ServiceController extends AbstractController
         return new Response('Service modifié', Response::HTTP_OK);
     }
 
-    #[Route('api/admin/service/{id}/suppression', name: 'delete-service', methods: ['DELETE'])]
-    #[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
-    public function deleteService(LoggerInterface $logger, ServiceRepository $serviceRepository, $id): JsonResponse
+    #[Route('api/service/{id}/suppression', name: 'delete-service', methods: ['DELETE'])]
+    #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un membre des équipes du parc peut accéder à cette ressource.")]
+    public function deleteService(LoggerInterface $logger, ServiceRepository $serviceRepository, $id)
     {
         try {
             $serviceRepository->deleteService($id);
@@ -83,6 +83,6 @@ class ServiceController extends AbstractController
             $logger->error('Error deleting service: ' . $e->getMessage());
             return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
-        return new JsonResponse(['message:' => 'Service supprimé'], Response::HTTP_OK, [], true);
+        return new Response('Service supprimé', Response::HTTP_OK);
     }
 }

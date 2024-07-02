@@ -10,10 +10,9 @@ const DashboardHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isActive, setIsActive] = useState("dashboard");
   const [startRedirect, setStartRedirect] = useState(false);
-  const { isAuthenticated, setIsAuthenticated } = useAuth();
+  const { isAuthenticated, setIsAuthenticated, logout } = useAuth();
   const handleLogout = () => {
-    authApi.logout();
-    setIsAuthenticated(false);
+    logout();
     setStartRedirect(true);
   };
   useEffect(() => {

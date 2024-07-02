@@ -4,13 +4,14 @@ import CustomButton from "../CustomButton";
 import { useQuery } from "@tanstack/react-query";
 
 const Reviews = () => {
+  const [itemCount, setItemCount] = useState(3);
   const {
     data: reviews,
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["reviews"],
-    queryFn: reviewsApi.getReviews,
+    queryKey: ["reviews", itemCount],
+    queryFn: () => reviewsApi.getReviews(itemCount),
   });
   if (isLoading) {
     return console.log("chargement des avis...");
@@ -21,17 +22,29 @@ const Reviews = () => {
 
   return (
     <div id="reviewCardsContainer">
-      {reviews.map((review) => (
-        <div key={review.id} className="reviewCard">
-          <div className="reviewCardHeader">
-            <p className="subh1">{review.username}</p>
+      {reviews &&
+        reviews.reviews &&
+        reviews.reviews.map((review) => (
+          <div key={review.id} className="reviewCard">
+            <div className="reviewCardHeader">
+              <p className="subh1">{review.username}</p>
+            </div>
+            <div className="reviewBody">
+              <p>{review.review}</p>
+            </div>
           </div>
-          <div className="reviewBody">
-            <p>{review.review}</p>
-          </div>
-        </div>
-      ))}
-      <CustomButton title="En voir plus" buttonClassName="mediumMobileButton" />
+        ))}
+      {reviews && reviews.reviews.length !== reviews.totalCount ? (
+        <CustomButton
+          title="En voir plus"
+          buttonClassName="mediumMobileButton"
+          onClick={() => {
+            reviews && reviews.reviews.length !== reviews.totalCount
+              ? setItemCount(itemCount + 3)
+              : null;
+          }}
+        />
+      ) : null}
     </div>
   );
 };

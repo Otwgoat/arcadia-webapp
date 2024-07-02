@@ -131,6 +131,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: $mobile-extralarge-gap;
+
     .subh1 {
       margin-top: $mobile-large-gap;
     }
@@ -151,9 +152,7 @@
         flex-direction: column;
         align-items: center;
         box-shadow: $defaultShadow;
-        &:last-child {
-          margin-bottom: 0;
-        }
+
         .reviewCardHeader {
           width: 90%;
           display: flex;

@@ -63,8 +63,9 @@ class AnimalController extends AbstractController
     public function getVeterinaryReports(SerializerInterface $serializer, AnimalRepository $animalRepository, Request $request, $id, Security $security): JsonResponse
     {
         $user = $security->getUser();
-        if ($user instanceof User && $user->getType() === 'Vétérinaire') {
+        if ($user instanceof User && ($user->getType() === 'Vétérinaire' || $user->getType() === 'Admin')) {
             $limit = $request->query->get('limit');
+
             $veterinaryReports = $animalRepository->getVeterinaryReports($id, $limit);
             $jsonVeterinaryReports = $serializer->serialize($veterinaryReports, 'json', ['groups' => 'getVeterinaryReports']);
             return new JsonResponse($jsonVeterinaryReports, Response::HTTP_OK, [], true);
@@ -72,6 +73,24 @@ class AnimalController extends AbstractController
             return new JsonResponse(['error' => 'Vous n\'avez pas les droits pour accéder à cette ressource'], Response::HTTP_FORBIDDEN);
         }
     }
+
+    #[Route('api/animal/rapports-veterinaires/{date}', name: 'rapports-veterinaires-par-date', methods: ['GET'])]
+    #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
+    public function getVeterinaryReportsByDate(SerializerInterface $serializer, AnimalRepository $animalRepository, Request $request, $date, Security $security): JsonResponse
+    {
+        $user = $security->getUser();
+        if ($user instanceof User && ($user->getType() === 'Vétérinaire' || $user->getType() === 'Admin')) {
+            $limit = $request->query->get('limit');
+
+            $veterinaryReports = $animalRepository->getVeterinaryReportsByDate($date, $limit);
+            $jsonVeterinaryReports = $serializer->serialize($veterinaryReports, 'json', ['groups' => 'getVeterinaryReports']);
+            return new JsonResponse($jsonVeterinaryReports, Response::HTTP_OK, [], true);
+        } else {
+            return new JsonResponse(['error' => 'Vous n\'avez pas les droits pour accéder à cette ressource'], Response::HTTP_FORBIDDEN);
+        }
+    }
+
+
 
     #[Route('api/animal/{id}/rapports-alimentation', name: 'rapports-alimentation', methods: ['GET'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
@@ -136,7 +155,7 @@ class AnimalController extends AbstractController
         return new JsonResponse(['message' => 'Rapport vétérinaire créé'], Response::HTTP_CREATED);
     }
 
-    #[Route('api/animal/create-feeding-report', name: 'creation-feeding-report', methods: ['POST'])]
+    #[Route('api/animal/creation-rapport-alimentation', name: 'creation-rapport-alimentation', methods: ['POST'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function createFeedingReport(Security $security, Request $request, AnimalRepository $animalRepository, LoggerInterface $logger): JsonResponse
     {
@@ -147,11 +166,9 @@ class AnimalController extends AbstractController
         } else {
             return new JsonResponse(['error' => 'Vous n\'avez pas les droits pour accéder à cette ressource'], Response::HTTP_FORBIDDEN);
         }
-        $dateInput = $data['date']; // 
-        $date = DateTime::createFromFormat('d/m/Y H:i', $dateInput);
-        $formattedDate = $date->format('Y-m-d H:i'); // formatte à YYYY-MM-DD HH:MM
+
         try {
-            $animalRepository->addAnimalFeedingReport($formattedDate, $data['foodType'], $data['foodAmountGrams'], $data['animalId'], $employeeId);
+            $animalRepository->addAnimalFeedingReport($data['date'], $data['foodType'], $data['foodAmount'], $data['animalId'], $employeeId);
             $logger->info('Rapport d\'alimentation créé', ['animalId' => $data['animalId'], 'soigneurId' => $employeeId]);
         } catch (\Exception $e) {
             $logger->error('Erreur lors de la création du rapport d\'alimentation', ['message' => $e->getMessage()]);

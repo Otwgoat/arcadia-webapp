@@ -1,5 +1,6 @@
 import axios from "axios";
 import apiPath from "./apiPath";
+import { getAll } from "firebase/remote-config";
 
 
 
@@ -81,6 +82,16 @@ const animalsApi = {
             throw error;
         }
     },
+    getVeterinaryReportsByDate: async (date, limit) => {
+        try {
+            const response = await axios.get(apiPath(`animal/rapports-veterinaires/${date}?limit=${limit}`));
+            return response.data;
+        } catch (error) {
+            console.error("Error in getVeterinaryReportsByDate API call:", error);
+            throw error;
+        }
+    },
+  
     getFeedingReports: async (animalId, limit) => {
         try {
             const response = await axios.get(apiPath(`animal/${animalId}/rapports-alimentation?limit=${limit}`));
@@ -90,5 +101,14 @@ const animalsApi = {
             throw error;
         }
     },
+    createFeedingReport: async (feedingReportData) => {
+        try {
+            const response = await axios.post(apiPath('animal/creation-rapport-alimentation'), feedingReportData);
+            return response.data;
+        } catch (error) {
+            console.error("Error in createFeedingReport API call:", error);
+            throw error;
+        }
+    }
 };
 export default animalsApi;

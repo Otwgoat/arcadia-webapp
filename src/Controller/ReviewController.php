@@ -17,15 +17,15 @@ use Symfony\Component\HttpFoundation\Request;
 class ReviewController extends AbstractController
 {
     #[Route('api/reviews', name: 'get-reviews', methods: ['GET'])]
-    public function getReviews(SerializerInterface $serializer, ReviewRepository $reviewRepository)
+    public function getReviews(Request $request, SerializerInterface $serializer, ReviewRepository $reviewRepository)
     {
-
-        $reviews = $reviewRepository->getApprovedReviews();
+        $limit = $request->query->get('limit');
+        $reviews = $reviewRepository->getApprovedReviews($limit);
         $jsonReviews = $serializer->serialize($reviews, 'json');
         return new JsonResponse($jsonReviews, Response::HTTP_OK, [], true);
     }
 
-    #[Route('api/unapproved-reviews', name: 'get-unapproved-reviews', methods: ['GET'])]
+    #[Route('api/avis-non-approuves', name: 'avis non approuvés', methods: ['GET'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function getUnapprovedReviews(Security $security, SerializerInterface $serializer, ReviewRepository $reviewRepository)
     {
@@ -68,7 +68,7 @@ class ReviewController extends AbstractController
         return new Response('Avis soumis', Response::HTTP_OK);
     }
 
-    #[Route('api/review/{id}/approve', name: 'approve-review', methods: ['PUT'])]
+    #[Route('api/review/{id}/approbation', name: 'approbation-avis', methods: ['PUT'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function approveReview(Security $security, LoggerInterface $logger, ReviewRepository $reviewRepository, $id)
     {
@@ -87,7 +87,7 @@ class ReviewController extends AbstractController
         return new Response('Avis approuvé', Response::HTTP_OK);
     }
 
-    #[Route('api/review/{id}/delete', name: 'delete-review', methods: ['DELETE'])]
+    #[Route('api/review/{id}/suppression', name: 'suppression-avis', methods: ['DELETE'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function deleteReview(Security $security, LoggerInterface $logger, ReviewRepository $reviewRepository, $id)
     {
@@ -103,6 +103,6 @@ class ReviewController extends AbstractController
         } else {
             return new JsonResponse(['error' => 'Vous n\'avez pas les droits pour accéder à cette ressource'], Response::HTTP_FORBIDDEN);
         }
-        return new JsonResponse(['message:' => 'Avis supprimé'], Response::HTTP_OK, [], true);
+        return new Response('Avis supprimé', Response::HTTP_OK);
     }
 }

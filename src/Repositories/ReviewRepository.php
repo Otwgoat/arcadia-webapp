@@ -14,12 +14,22 @@ class ReviewRepository
     }
 
     // Fetch all the reviews from the database
-    public function getApprovedReviews()
+    public function getApprovedReviews($limit)
     {
         $this->databaseService->connect('dbarcadia');
-        $sql = 'SELECT * FROM review WHERE isApproved = 1';
-        $stmt = $this->databaseService->getPdo()->query($sql);
-        return $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
+        $sql = 'SELECT * FROM review WHERE isApproved = 1 LIMIT :limit';
+        $stmt = $this->databaseService->getPdo()->prepare($sql);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+        $reviews = $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
+        $sqlCount = 'SELECT COUNT(*) as totalCount FROM review WHERE isApproved = 1';
+        $stmtCount = $this->databaseService->getPdo()->prepare($sqlCount);
+        $stmtCount->execute();
+        $totalCount = $stmtCount->fetch($this->databaseService->getPdo()::FETCH_ASSOC)['totalCount'];
+        return [
+            'reviews' => $reviews,
+            'totalCount' => $totalCount
+        ];
     }
 
     // Fetch all the unapproved reviews from the database

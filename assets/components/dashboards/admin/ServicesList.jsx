@@ -2,11 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import servicesApi from "../../../services/servicesApi";
 import { ArrowClockwise, XCircle } from "@phosphor-icons/react";
-import { useNavigate } from "react-router-dom";
 import CreateServiceForm from "./CreateServiceForm";
 
 const ServicesList = () => {
   const [updateServiceFormOpen, setUpdateServiceFormOpen] = useState(null);
+  const [servicesList, setServicesList] = useState();
   const {
     data: services,
     error,
@@ -24,15 +24,21 @@ const ServicesList = () => {
   const handleDelete = async (serviceId) => {
     try {
       await servicesApi.deleteService(serviceId);
+      setServicesList(
+        servicesList.filter((service) => service.id !== serviceId)
+      );
     } catch (error) {
       console.error("Error in deleteService API call:", error);
       throw error;
     }
   };
+  useEffect(() => {
+    setServicesList(services);
+  }, [services]);
   return (
     <div className="listContainer">
-      {services &&
-        services.map((service, index) => (
+      {servicesList &&
+        servicesList.map((service, index) => (
           <div key={service.id} className="listItem">
             <div
               className={`listItemContent ${index % 2 === 0 ? "even" : "odd"}`}

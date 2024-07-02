@@ -6,7 +6,13 @@ import CustomButton from "../../CustomButton";
 
 const AnimalFiles = ({ animalId }) => {
   const formatDate = (dateString) => {
-    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+    const options = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
     return new Date(dateString).toLocaleDateString("fr-FR", options);
   };
   const [displayedImage, setDisplayedImage] = useState();
@@ -180,8 +186,21 @@ const AnimalFiles = ({ animalId }) => {
                     >
                       <p>
                         Rapport d'alimentation du{" "}
-                        <span>{formatDate(report.date)}</span>
+                        <span>{formatDate(report.date)}</span>{" "}
                       </p>
+                      {selectedFeedingReport &&
+                        selectedFeedingReport.id === report.id && (
+                          <div className="reportDetails">
+                            <p>
+                              <span>Aliment: </span>
+                              {report.foodType}
+                            </p>
+                            <p>
+                              <span>Quantité: </span>
+                              {report.foodAmountGrams}g
+                            </p>
+                          </div>
+                        )}
                     </div>
                   </div>
                 ))

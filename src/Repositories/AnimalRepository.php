@@ -84,10 +84,12 @@ class AnimalRepository
     public function getVeterinaryReports($animalId, $limit)
     {
         $this->databaseService->connect('dbarcadia');
+
         $sql = 'SELECT * FROM veterinaryReport WHERE animalId = :animalId ORDER BY date DESC LIMIT :limit';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
         $stmt->bindValue(':animalId', $animalId);
+
         $stmt->execute();
         $reports = $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
 
@@ -98,6 +100,28 @@ class AnimalRepository
 
         $totalCount = $stmtCount->fetch($this->databaseService->getPdo()::FETCH_ASSOC)['totalCount'];
 
+        return [
+            'reports' => $reports,
+            'totalCount' => $totalCount
+        ];
+    }
+
+    public function getVeterinaryReportsByDate($date, $limit)
+    {
+        $this->databaseService->connect('dbarcadia');
+        $sql = 'SELECT * FROM veterinaryReport WHERE date = :date ORDER BY date DESC LIMIT :limit';
+        $stmt = $this->databaseService->getPdo()->prepare($sql);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->bindValue(':date', $date);
+
+        $stmt->execute();
+        $reports = $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
+
+        $sqlCount = 'SELECT COUNT(*) as totalCount FROM veterinaryReport WHERE date = :date';
+        $stmtCount = $this->databaseService->getPdo()->prepare($sqlCount);
+        $stmtCount->bindValue(':date', $date);
+        $stmtCount->execute();
+        $totalCount = $stmtCount->fetch($this->databaseService->getPdo()::FETCH_ASSOC)['totalCount'];
         return [
             'reports' => $reports,
             'totalCount' => $totalCount

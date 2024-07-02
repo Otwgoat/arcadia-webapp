@@ -169,4 +169,110 @@
       border: none;
     }
   }
+  #reviewsList {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: $mobile-medium-gap;
+    margin-bottom: calc($mobile-large-gap * 2);
+    .reviewCard {
+      border: 1px solid #fdf5e9;
+      border-radius: 5px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-top: calc($mobile-medium-gap * 2);
+      padding: $mobile-medium-gap $mobile-small-gap;
+
+      &:first-child {
+        margin-top: $mobile-medium-gap;
+      }
+      .subh1 {
+        text-align: left;
+        margin-bottom: calc($mobile-small-gap / 2);
+      }
+      .actionButtons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        button {
+          margin-top: $mobile-medium-gap;
+          &:last-child {
+            margin-top: $mobile-small-gap;
+          }
+        }
+      }
+    }
+  }
+  .reportsContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: $mobile-large-gap;
+    .reportPlaceholder {
+      margin-top: $mobile-medium-gap;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      p {
+        font-weight: 300;
+      }
+      .reportDate {
+        font-weight: 400;
+      }
+    }
+    .reportNavLink {
+      width: 340px;
+      min-height: 50px;
+      border-radius: 5px;
+      border: 1px solid #fdf5e9;
+      background: linear-gradient(
+        180deg,
+        rgba(66, 96, 91, 0.6) 0%,
+        rgba(86, 120, 89, 0.6) 100%
+      );
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .reportNavLinkActive {
+      width: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      border: 1px solid #fdf5e9;
+      background: linear-gradient(
+        180deg,
+        rgba(66, 96, 91, 0.6) 0%,
+        rgba(86, 120, 89, 0.6) 100%
+      );
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      padding-top: $mobile-medium-gap;
+    }
+  }
+  .reportDetails {
+    margin-top: $mobile-small-gap;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: $mobile-medium-gap;
+    p {
+      text-align: left;
+      margin-bottom: calc($mobile-small-gap / 2);
+      span {
+        color: $color-text-white-blur;
+      }
+    }
+  }
 }

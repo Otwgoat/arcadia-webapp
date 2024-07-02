@@ -140,6 +140,17 @@ html {
           display: flex;
           flex-direction: column;
           align-items: center;
+          .heroContainer {
+            margin-top: 90px;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            h1 {
+              padding: $mobile-small-gap 0;
+            }
+          }
         }
         background-image: url("../../public/images/Background-arcadia-mobile.png");
         h1 {
@@ -191,6 +202,12 @@ html {
 
         .imgDiv {
           box-shadow: $defaultShadow;
+        }
+        .smallLogoutButton {
+          @include mobile-button($mobile-button-smallWidth, $color-button-red);
+          a {
+            color: $color-text-white;
+          }
         }
         .mediumLogoutButton {
           @include mobile-button($mobile-button-mediumWidth, $color-button-red);

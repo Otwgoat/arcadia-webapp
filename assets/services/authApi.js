@@ -6,8 +6,7 @@ function authenticate(credentials) {
     return axios
         .post(apiPath("login_check"), credentials)
         .then((response) => {
-           
-            return response.data.token;
+           return response.data.token;
         })
         .then(token => {
             // stockage du token généré par l'API dans le localStorage.

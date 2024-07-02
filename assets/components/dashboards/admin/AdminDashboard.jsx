@@ -26,7 +26,7 @@ const AdminDashboard = () => {
           title="Gérer les habitats"
         />
         <DashboardNavItem
-          path="/"
+          path="/dashboard/admin/rapports-veterinaires"
           title="Consulter les rapports vétérinaires"
         />
       </div>

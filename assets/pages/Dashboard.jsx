@@ -6,15 +6,16 @@ import AdminDashboard from "../components/dashboards/admin/AdminDashboard";
 import DashboardHeader from "../components/dashboards/DashboardHeader";
 import CustomButton from "../components/CustomButton";
 import VeterinaryDashboard from "../components/dashboards/veterinary/VeterinaryDashboard";
+import EmployeeDashboard from "../components/dashboards/employee/EmployeeDashboard";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, currentUser, setIsAuthenticated } = useAuth();
+  const { isAuthenticated, currentUser, setIsAuthenticated, logout } =
+    useAuth();
   const [startRedirect, setStartRedirect] = useState(false);
 
   const handleLogout = () => {
-    authApi.logout();
-    setIsAuthenticated(false);
+    logout();
     setStartRedirect(true);
   };
   useEffect(() => {
@@ -35,6 +36,11 @@ const Dashboard = () => {
         {currentUser.type === "Admin" ? <AdminDashboard /> : ""}
         {currentUser.type === "Vétérinaire" ? (
           <VeterinaryDashboard currentUser={currentUser} />
+        ) : (
+          ""
+        )}
+        {currentUser.type === "Employé" ? (
+          <EmployeeDashboard currentUser={currentUser} />
         ) : (
           ""
         )}

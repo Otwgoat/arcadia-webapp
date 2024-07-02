@@ -22,7 +22,7 @@ const servicesApi = {
     },
     deleteService: async (serviceId) => {
         try {
-            const response = await axios.delete(apiPath(`admin/service/${serviceId}/suppression`));
+            const response = await axios.delete(apiPath(`service/${serviceId}/suppression`));
             return response.data;
         } catch (error) {
             console.error("Error in deleteService API call:", error);

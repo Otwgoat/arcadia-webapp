@@ -18,6 +18,12 @@ import HabitatDashboardPage from './pages/adminDashboard/HabitatDashboardPage';
 import ConsultationsDashboardPage from './pages/veterinaryDashboard/ConsultationsDashboardPage';
 import AnimalFilesDashboardPage from './pages/veterinaryDashboard/AnimalFilesDashboardPage';
 import HabitatCommentsDashboardPage from './pages/veterinaryDashboard/HabitatCommentsDashboardPage';
+import FeedingReportDashboardPage from './pages/employeeDashboard/FeedingReportDashboardPage';
+import ReviewsDashboardPage from './pages/employeeDashboard/ReviewsDashboardPage';
+import UpdateServicesDashboardPage from './pages/employeeDashboard/UpdateServicesDashboardPage';
+import VeterinaryDashboard from './components/dashboards/veterinary/VeterinaryDashboard';
+import VeterinaryReportsDashboardPage from './pages/adminDashboard/VeterinaryReportsDashboardPage';
+import Services from './pages/Services';
 
 
 
@@ -53,6 +59,9 @@ const App = () => {
                         <Route path='/dashboard/admin/habitat/:id' element={<PrivateRoute role="admin" />} >
                             <Route path='/dashboard/admin/habitat/:id' element={<HabitatDashboardPage/>} />
                         </Route>
+                        <Route path="/dashboard/admin/rapports-veterinaires" element={<PrivateRoute role="admin" />} >
+                            <Route path="/dashboard/admin/rapports-veterinaires" element={<VeterinaryReportsDashboardPage />} />
+                        </Route>
                         <Route path='/dashboard/veterinaire/consultations' element={<PrivateRoute role="veterinary" />} >
                             <Route path='/dashboard/veterinaire/consultations' element={<ConsultationsDashboardPage />} />
                         </Route>
@@ -62,9 +71,18 @@ const App = () => {
                         <Route path='/dashboard/veterinaire/habitats' element={<PrivateRoute role="veterinary" />} >
                             <Route path='/dashboard/veterinaire/habitats' element={<HabitatCommentsDashboardPage />} />
                         </Route>
-
+                        <Route path='/dashboard/employe/rapport-alimentation' element={<PrivateRoute role="employee" />} >
+                            <Route path='/dashboard/employe/rapport-alimentation' element={<FeedingReportDashboardPage />} />
+                        </Route>
+                        <Route path='/dashboard/employe/validation-avis' element={<PrivateRoute role="employee" />} >
+                            <Route path='/dashboard/employe/validation-avis' element={<ReviewsDashboardPage />} />
+                        </Route>
+                        <Route path='/dashboard/employe/modification-services' element={<PrivateRoute role="employee" />} >
+                            <Route path='/dashboard/employe/modification-services' element={<UpdateServicesDashboardPage />} />
+                        </Route>
                         <Route path="/" element={<Home />} />
                         <Route path="/connexion" element={<LoginPage />} />
+                        <Route path="/services" element={<Services />} />
 
                     </Routes>
                 </BrowserRouter>
