@@ -24,6 +24,9 @@ import UpdateServicesDashboardPage from './pages/employeeDashboard/UpdateService
 import VeterinaryDashboard from './components/dashboards/veterinary/VeterinaryDashboard';
 import VeterinaryReportsDashboardPage from './pages/adminDashboard/VeterinaryReportsDashboardPage';
 import Services from './pages/Services';
+import Habitats from './pages/Habitats';
+import HabitatPage from './pages/HabitatPage';
+import AnimalPage from './pages/AnimalPage';
 
 
 
@@ -83,6 +86,9 @@ const App = () => {
                         <Route path="/" element={<Home />} />
                         <Route path="/connexion" element={<LoginPage />} />
                         <Route path="/services" element={<Services />} />
+                        <Route path="/habitats" element={<Habitats />} />
+                        <Route path="/habitats/:id" element={<HabitatPage />} />
+                        <Route path='/habitats/:habitatName/animal/:animalId' element={<AnimalPage />} />
 
                     </Routes>
                 </BrowserRouter>

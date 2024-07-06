@@ -27,15 +27,7 @@ const animalsApi = {
             throw error;
         }
     },
-    deleteAnimalImage: async (imageId) => {
-        try {
-            const response = await axios.delete(apiPath(`admin/animal/suppression-image/${imageId}`));
-            return response.data;
-        } catch (error) {
-            console.error("Error in deleteAnimalImage API call:", error);
-            throw error;
-        }
-    },
+ 
     updateAnimal: async (animalData) => {
         try {
             const response = await axios.put(apiPath(`admin/animal/${animalData.id}/modification`), animalData);

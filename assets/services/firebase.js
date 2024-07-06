@@ -23,7 +23,6 @@ var firebaseConfig = {
   const uploadFile = (file, itemId, loadingSetter, filesSetter, folder ,principalSelectedFile) => {
     loadingSetter(true);
     let imagePath;
-    console.log("Lancement de uploadFile");
     return new Promise((resolve, reject) => {
    
       imagePath = `${folder}/${itemId}/${file.name}`;
@@ -34,6 +33,7 @@ var firebaseConfig = {
           isPrincipal: (principalSelectedFile && file.name) && (file.name === principalSelectedFile.name) ? 'true' : 'false'
         }
       };
+      
       const uploadTask = uploadBytesResumable(storageRef, file , metadata);
       uploadTask.on(
         "state_changed",
@@ -63,6 +63,8 @@ var firebaseConfig = {
           resolve(downloadURL);
         }
       );
+     
+    
     });
   };
 

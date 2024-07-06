@@ -53,7 +53,7 @@ const UpdateHabitatImages = ({ habitat }) => {
       );
     }
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     try {
       const uploadPromises = files.map((file) => {
         uploadFile(file, habitat.id, setImagesLoading, setFiles, "habitats");
@@ -144,8 +144,10 @@ const UpdateHabitatImages = ({ habitat }) => {
             type="submit"
             title="Valider les images"
             buttonClassName="mediumMobileButton"
-            successMessage={successMessage}
             submitSuccess={submitSuccess}
+            successMessage={
+              !imagesLoading && submitSuccess ? successMessage : null
+            }
             onClick={handleSubmit}
           />
         )}

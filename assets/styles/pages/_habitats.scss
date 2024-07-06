@@ -1,0 +1,38 @@
+.habitatsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: $mobile-large-gap;
+  width: 100%;
+  .habitatCard {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: calc($mobile-large-gap + $mobile-small-gap);
+    img {
+      height: 400px;
+      width: 100%;
+      object-fit: cover;
+      box-shadow: $defaultShadow;
+      border-top: solid 1px $color-text-white;
+    }
+    .habitatCardHeader {
+      margin-top: $mobile-medium-gap;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      h3 {
+        color: $color-title-sandcolor;
+      }
+      p {
+        margin-top: $mobile-small-gap;
+        width: 290px;
+        text-align: center;
+      }
+    }
+    button {
+      margin-top: $mobile-medium-gap;
+    }
+  }
+}

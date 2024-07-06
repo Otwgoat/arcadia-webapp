@@ -43,6 +43,28 @@ class HabitatRepository
         return $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
     }
 
+    public function getAnimalsByRaceAndHabitat($race, $habitatId, $limit)
+    {
+        $this->databaseService->connect('dbarcadia');
+        $sql = 'SELECT * FROM animal WHERE race = :race AND habitatId = :habitatId LIMIT :limit';
+        $stmt = $this->databaseService->getPdo()->prepare($sql);
+        $stmt->bindValue(':habitatId', $habitatId);
+        $stmt->bindValue(':race', $race);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+        $animals = $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
+
+        $sqlCount = 'SELECT COUNT(*) as totalCount FROM animal WHERE race = :race AND habitatId = :habitatId';
+        $stmtCount = $this->databaseService->getPdo()->prepare($sqlCount);
+        $stmtCount->bindValue(':habitatId', $habitatId);
+        $stmt->bindValue(':race', $race);
+        $stmtCount->execute();
+        $totalCount = $stmtCount->fetch($this->databaseService->getPdo()::FETCH_ASSOC)['totalCount'];
+        return [
+            'animals' => $animals,
+            'totalCount' => $totalCount
+        ];
+    }
     public function addHabitat($name, $description)
     {
         $this->databaseService->connect('dbarcadia');

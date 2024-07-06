@@ -1,0 +1,26 @@
+.servicesContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: $mobile-large-gap 0;
+  align-items: center;
+  .serviceCard {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    background: linear-gradient(180deg, #42605b 0%, #567859 100%);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: $mobile-medium-gap;
+
+    margin-top: $mobile-medium-gap;
+    h3 {
+      color: $color-title-sandcolor;
+    }
+    p {
+      margin-top: $mobile-small-gap;
+      text-align: center;
+    }
+  }
+}

@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import animalsApi from "../../../services/animalsApi";
 import CustomButton from "../../CustomButton";
-import { da } from "@faker-js/faker";
 
 const ReportsByDate = () => {
   const getTodayDate = () => {

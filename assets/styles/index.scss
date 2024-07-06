@@ -140,8 +140,8 @@ html {
           display: flex;
           flex-direction: column;
           align-items: center;
-          .heroContainer {
-            margin-top: 90px;
+          .heroTitle {
+            margin-top: $mobile-small-gap;
             width: 80%;
             display: flex;
             flex-direction: column;
@@ -150,198 +150,196 @@ html {
             h1 {
               padding: $mobile-small-gap 0;
             }
+            h3 {
+              text-align: left;
+            }
           }
-        }
-        background-image: url("../../public/images/Background-arcadia-mobile.png");
-        h1 {
-          @include mobile-h1;
-        }
-        h2 {
-          @include mobile-h2;
-        }
-        h3 {
-          @include mobile-h3;
-        }
-
-        p {
-          @include mobile-bodyText;
-        }
-        .navLink {
-          @include mobile-navLink($color-text-white-blur);
-        }
-        .navLinkActive {
-          @include mobile-navLink($color-text-white);
-        }
-        .subh1 {
-          @include mobile-subh1;
-        }
-        .largeMobileButton {
-          @include mobile-button(
-            $mobile-button-largeWidth,
-            $color-button-white
-          );
-        }
-        .mediumMobileButton {
-          @include mobile-button(
-            $mobile-button-mediumWidth,
-            $color-button-white
-          );
-        }
-        .mediumMobiledisabledButton {
-          @include mobile-button(
-            $mobile-button-mediumWidth,
-            $color-text-white-blur
-          );
-        }
-        .smallMobileButton {
-          @include mobile-button(
-            $mobile-button-smallWidth,
-            $color-button-white
-          );
-        }
-
-        .imgDiv {
-          box-shadow: $defaultShadow;
-        }
-        .smallLogoutButton {
-          @include mobile-button($mobile-button-smallWidth, $color-button-red);
-          a {
-            color: $color-text-white;
+          .dashboardHeroTitle {
+            margin-top: calc(100px + $mobile-small-gap);
           }
-        }
-        .mediumLogoutButton {
-          @include mobile-button($mobile-button-mediumWidth, $color-button-red);
-          a {
-            color: $color-text-white;
-          }
-        }
-        .largeLogoutButton {
-          @include mobile-button($mobile-button-largeWidth, $color-button-red);
-          a {
-            color: $color-text-white;
-          }
-        }
-        .prevLink {
-          margin-top: calc(100px + $mobile-small-gap);
-          font-family: $merriweather-light-font;
-          font-size: 14px;
-          text-decoration: none;
-          color: $color-text-white;
-          width: 80%;
-          .prevIcon {
-            margin-right: 5px;
-          }
-        }
-        .infoMessage {
-          color: $color-text-white;
-          width: 290px;
-          margin-bottom: $mobile-medium-gap;
-          text-align: center;
-        }
-        .errorMessage,
-        .successMessage {
-          margin-top: $mobile-small-gap;
-          width: 290px;
-          text-align: center;
-        }
-        .errorMessage {
-          color: $color-light-red;
-        }
-        .successMessage {
-          color: $color-background-light-green;
-          width: 100%;
-          margin-top: 0;
         }
       }
-      form {
+      background-image: url("../../public/images/Background-arcadia-mobile.png");
+      h1 {
+        @include mobile-h1;
+      }
+      h2 {
+        @include mobile-h2;
+      }
+      h3 {
+        @include mobile-h3;
+      }
+
+      p {
+        @include mobile-bodyText;
+      }
+      .navLink {
+        @include mobile-navLink($color-text-white-blur);
+      }
+      .navLinkActive {
+        @include mobile-navLink($color-text-white);
+      }
+      .subh1 {
+        @include mobile-subh1;
+      }
+      .largeMobileButton {
+        @include mobile-button($mobile-button-largeWidth, $color-button-white);
+      }
+      .mediumMobileButton {
+        @include mobile-button($mobile-button-mediumWidth, $color-button-white);
+      }
+      .mediumMobiledisabledButton {
+        @include mobile-button(
+          $mobile-button-mediumWidth,
+          $color-text-white-blur
+        );
+      }
+      .smallMobileButton {
+        @include mobile-button($mobile-button-smallWidth, $color-button-white);
+      }
+
+      .imgDiv {
+        box-shadow: $defaultShadow;
+      }
+      .smallLogoutButton {
+        @include mobile-button($mobile-button-smallWidth, $color-button-red);
+        a {
+          color: $color-text-white;
+        }
+      }
+      .mediumLogoutButton {
+        @include mobile-button($mobile-button-mediumWidth, $color-button-red);
+        a {
+          color: $color-text-white;
+        }
+      }
+      .largeLogoutButton {
+        @include mobile-button($mobile-button-largeWidth, $color-button-red);
+        a {
+          color: $color-text-white;
+        }
+      }
+      .prevLink {
+        margin-top: calc(100px + $mobile-small-gap);
+        font-family: $merriweather-light-font;
+        font-size: 14px;
+        text-decoration: none;
+        color: $color-text-white;
+        width: 80%;
+        .prevIcon {
+          margin-right: 5px;
+        }
+      }
+      .infoMessage {
+        color: $color-text-white;
+        width: 290px;
+        margin-bottom: $mobile-medium-gap;
+        text-align: center;
+      }
+      .errorMessage,
+      .successMessage {
+        margin-top: $mobile-small-gap;
+        width: 290px;
+        text-align: center;
+      }
+      .errorMessage {
+        color: $color-light-red;
+      }
+      .successMessage {
+        color: $color-background-light-green;
+        width: 100%;
+        margin-top: 0;
+      }
+    }
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: $mobile-medium-gap;
+      label {
+        color: $color-text-white;
+        font-family: $bellefair-font;
+        font-size: 18px;
+        width: 300px;
+        text-align: left;
+        margin-top: $mobile-medium-gap;
+      }
+      input,
+      .input {
+        width: 290px;
+        padding: 0px 5px;
+        margin-top: $mobile-small-gap;
+        border-radius: 5px;
+        border: none;
+        background-color: rgba(217, 217, 217, 0.44);
+      }
+
+      input {
+        height: 25px;
+        @include mobile-bodyText;
+      }
+
+      .formInputError {
+        width: 290px;
+        border-radius: 5px;
+        margin-top: $mobile-small-gap;
+        background-color: rgba(217, 217, 217, 0.44);
+        border: solid 1px $color-light-red;
+        padding: 0px 5px;
+      }
+      textarea {
+        min-height: 50px;
+        @include mobile-bodyText;
+      }
+      select {
+        margin-top: $mobile-small-gap;
+        padding: 0px 5px;
+        width: 290px;
+        height: 25px;
+        text-align: left;
+        border-radius: 5px;
+        border: none;
+        background-color: rgba(217, 217, 217, 0.44);
+        color: $color-text-white;
+        font-family: $merriweather-regular-font;
+      }
+      .selectInput {
+        border-radius: 5px;
+        border: 2px solid #fdf5e9;
+        background: #fdf5e9;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        color: $color-background-green;
+        font-family: $bellefair-font;
+      }
+      .passwordContainer {
+        position: relative;
+        width: 300px;
+        margin-top: $mobile-medium-gap;
+
+        input {
+          width: 290px;
+          padding: 0 5px;
+        }
+        .iconPlaceholder {
+          position: absolute;
+          right: 10px;
+          top: 60%;
+        }
+      }
+      .planningFormGroup {
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
+      }
+      button {
         margin-top: $mobile-medium-gap;
-        label {
-          color: $color-text-white;
-          font-family: $bellefair-font;
-          font-size: 18px;
-          width: 300px;
-          text-align: left;
-          margin-top: $mobile-medium-gap;
-        }
-        input,
-        .input {
-          width: 290px;
-          padding: 0px 5px;
-          margin-top: $mobile-small-gap;
-          border-radius: 5px;
-          border: none;
-          background-color: rgba(217, 217, 217, 0.44);
-        }
-
-        input {
-          height: 25px;
-          @include mobile-bodyText;
-        }
-
-        .formInputError {
-          width: 290px;
-          border-radius: 5px;
-          margin-top: $mobile-small-gap;
-          background-color: rgba(217, 217, 217, 0.44);
-          border: solid 1px $color-light-red;
-          padding: 0px 5px;
-        }
-        textarea {
-          min-height: 50px;
-          @include mobile-bodyText;
-        }
-        select {
-          margin-top: $mobile-small-gap;
-          padding: 0px 5px;
-          width: 290px;
-          height: 25px;
-          text-align: left;
-          border-radius: 5px;
-          border: none;
-          background-color: rgba(217, 217, 217, 0.44);
-          color: $color-text-white;
-          font-family: $merriweather-regular-font;
-        }
-        .selectInput {
-          border-radius: 5px;
-          border: 2px solid #fdf5e9;
-          background: #fdf5e9;
-          box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-          color: $color-background-green;
-          font-family: $bellefair-font;
-        }
-        .passwordContainer {
-          position: relative;
-          width: 300px;
-          margin-top: $mobile-medium-gap;
-
-          input {
-            width: 290px;
-            padding: 0 5px;
-          }
-          .iconPlaceholder {
-            position: absolute;
-            right: 10px;
-            top: 60%;
-          }
-        }
-        .planningFormGroup {
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-        button {
-          margin-top: $mobile-medium-gap;
-        }
       }
     }
   }
 }
+
 @import "../styles/pages/home.scss";
 @import "../styles/components/header.scss";
 @import "../styles/components/footer.scss";
@@ -349,3 +347,7 @@ html {
 @import "../styles/components/dashboardAnimalCard.scss";
 @import "../styles/pages/loginPage.scss";
 @import "../styles/pages/dashboard.scss";
+@import "../styles/components/servicesContainer";
+@import "../styles/pages/habitats.scss";
+@import "../styles/pages/habitat.scss";
+@import "../styles/pages/animal.scss";
