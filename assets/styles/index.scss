@@ -136,6 +136,10 @@ html {
       .container {
         width: 100%;
         min-height: 100vh;
+        #serviceContainer,
+        #contactFormContainer {
+          min-height: 85vh;
+        }
         .pageContainer {
           display: flex;
           flex-direction: column;
@@ -351,3 +355,4 @@ html {
 @import "../styles/pages/habitats.scss";
 @import "../styles/pages/habitat.scss";
 @import "../styles/pages/animal.scss";
+@import "../styles/components/slider.scss";

@@ -10,6 +10,7 @@ import ParkIntroductionCard from "../components/content/ParkIntroductionCard";
 import Reviews from "../components/content/Reviews";
 import PostReviewForm from "../components/forms/PostReviewForm";
 import Footer from "../components/Footer";
+import HomeSlider from "../components/content/HomeSlider";
 
 export const Home = () => {
   const [activeContent, setActiveContent] = useState("happiness");
@@ -22,17 +23,8 @@ export const Home = () => {
     <div className="container">
       <Header />
       <main className="pageContainer">
-        <div id="homeSlider" className="imgDiv">
-          <CustomButton
-            buttonClassName="smallMobileButton"
-            title="En savoir plus"
-          />
-          <div id="buttonBar">
-            <button className="active"></button>
-            <button></button>
-            <button></button>
-          </div>
-        </div>
+        <HomeSlider />
+
         <h1>Arcadia</h1>
         <p id="introText" className="subh1">
           Bienvenue sur le site du parc zoologique Arcadia. Situé à quelques

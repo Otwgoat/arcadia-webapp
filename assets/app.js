@@ -27,6 +27,9 @@ import Services from './pages/Services';
 import Habitats from './pages/Habitats';
 import HabitatPage from './pages/HabitatPage';
 import AnimalPage from './pages/AnimalPage';
+import AnimalsViewsCountPage from './pages/adminDashboard/AnimalsViewsCountDashboardPage';
+import AnimalsViewsCountDashboardPage from './pages/adminDashboard/AnimalsViewsCountDashboardPage';
+import Contact from './pages/Contact';
 
 
 
@@ -65,6 +68,9 @@ const App = () => {
                         <Route path="/dashboard/admin/rapports-veterinaires" element={<PrivateRoute role="admin" />} >
                             <Route path="/dashboard/admin/rapports-veterinaires" element={<VeterinaryReportsDashboardPage />} />
                         </Route>
+                        <Route path='/dashboard/admin/animaux-nb-vues' element={<PrivateRoute role="admin" />} >
+                            <Route path='/dashboard/admin/animaux-nb-vues' element={< AnimalsViewsCountDashboardPage />} />
+                        </Route>
                         <Route path='/dashboard/veterinaire/consultations' element={<PrivateRoute role="veterinary" />} >
                             <Route path='/dashboard/veterinaire/consultations' element={<ConsultationsDashboardPage />} />
                         </Route>
@@ -88,8 +94,8 @@ const App = () => {
                         <Route path="/services" element={<Services />} />
                         <Route path="/habitats" element={<Habitats />} />
                         <Route path="/habitats/:id" element={<HabitatPage />} />
-                        <Route path='/habitats/:habitatName/animal/:animalId' element={<AnimalPage />} />
-
+                        <Route path='/habitats/animal/:animalId' element={<AnimalPage />} />
+                        <Route path='/contact' element={<Contact />} />
                     </Routes>
                 </BrowserRouter>
             

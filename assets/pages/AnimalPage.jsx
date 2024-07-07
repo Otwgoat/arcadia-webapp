@@ -22,11 +22,7 @@ const AnimalPage = () => {
   const [animalId, setAnimalId] = useState(
     paramAnimalId.includes(":") ? paramAnimalId.split(":")[1] : paramAnimalId
   );
-  const [habitatName, setHabitatName] = useState(
-    paramHabitatName.includes(":")
-      ? paramHabitatName.split(":")[1]
-      : paramHabitatName
-  );
+
   const { data: animal } = useQuery({
     queryKey: ["animal", animalId],
     queryFn: () => animalsApi.getAnimal(animalId),
@@ -73,39 +69,44 @@ const AnimalPage = () => {
           <div className="animalInfoItem">
             <p className="animalInfotitle">Habitat</p>
             <span className="line"></span>
-            <p>{habitatName}</p>
+            <p>{animal?.habitatId.name}</p>
           </div>
         </div>
         <div className="animalContentCard" id="animalDescriptionCard">
           <h2>Description</h2>
           <p>{animal?.description}</p>
         </div>
-        <div className="animalContentCard" id="animalVeterinaryReportCard">
-          <h2>Rapport vétérinaire</h2>
-          <p className="veterinaryReportItem">
-            <span className="reportItemTitle">État de santé: </span>{" "}
-            {animal?.lastVeterinaryReport?.animalState}
-          </p>
-          {animal?.lastVeterinaryReport?.animalStateDetails !== "" && (
+        {animal?.lastVeterinaryReport &&
+        animal.lastVeterinaryReport[0] !==
+          "Aucun rapport vétérinaire disponible" ? (
+          <div className="animalContentCard" id="animalVeterinaryReportCard">
+            <h2>Rapport vétérinaire</h2>
             <p className="veterinaryReportItem">
-              <span className="reportItemTitle">Détails: </span>
-              {animal?.lastVeterinaryReport?.animalStateDetails}
+              <span className="reportItemTitle">État de santé: </span>{" "}
+              {animal?.lastVeterinaryReport?.animalState}
             </p>
-          )}
+            {animal?.lastVeterinaryReport?.animalStateDetails !== "" && (
+              <p className="veterinaryReportItem">
+                <span className="reportItemTitle">Détails: </span>
+                {animal?.lastVeterinaryReport?.animalStateDetails}
+              </p>
+            )}
 
-          <p className="veterinaryReportItem">
-            <span className="reportItemTitle">Date du rapport: </span>
-            {formatDate(animal?.lastVeterinaryReport?.date)}
-          </p>
-          <p className="veterinaryReportItem">
-            <span className="reportItemTitle">Nourriture proposée: </span>
-            {animal?.lastVeterinaryReport?.foodProvided}
-          </p>
-          <p className="veterinaryReportItem">
-            <span className="reportItemTitle">Quantité proposée: </span>
-            {animal?.lastVeterinaryReport?.foodAmountGrams}g / jour
-          </p>
-        </div>
+            <p className="veterinaryReportItem">
+              <span className="reportItemTitle">Date du rapport: </span>
+              {formatDate(animal?.lastVeterinaryReport?.date)}
+            </p>
+            <p className="veterinaryReportItem">
+              <span className="reportItemTitle">Nourriture proposée: </span>
+              {animal?.lastVeterinaryReport?.foodProvided}
+            </p>
+            <p className="veterinaryReportItem">
+              <span className="reportItemTitle">Quantité proposée: </span>
+              {animal?.lastVeterinaryReport?.foodAmountGrams}g / jour
+            </p>
+          </div>
+        ) : null}
+
         <CustomButton
           title="Retour à l'habitat"
           buttonClassName="mediumMobileButton"

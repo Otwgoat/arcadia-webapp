@@ -1,5 +1,6 @@
 
 import { initializeApp } from "firebase/app";
+import { doc, getFirestore, increment, setDoc,collection, getDocs, query  } from "firebase/firestore";
 
 import {
   getStorage, ref, uploadBytesResumable, getDownloadURL,
@@ -16,10 +17,11 @@ var firebaseConfig = {
     messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
   };
-
+  
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
-  
+  const db = getFirestore(app);
+
   const uploadFile = (file, itemId, loadingSetter, filesSetter, folder ,principalSelectedFile) => {
     loadingSetter(true);
     let imagePath;
@@ -94,9 +96,37 @@ var firebaseConfig = {
       throw error;
     }
   };
+  
+  const incrementAnimalViews = async (animalId) => {
+    const animalRef = doc(db, "animals", animalId.toString());
+    try {
+    await setDoc(animalRef, {
+      views: increment(1)
+    }, { merge: true }); 
+  } catch (error) {
+    console.error("Error incrementing animal views: ", error);
+  }
+  };
 
+  const getViewsData = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "animals"));
+      const animalList = [];
+      querySnapshot.forEach((doc) => {
+        
+        animalList.push({ animalId: doc.id, ...doc.data() });
+      });
+      return animalList; 
+    } catch (error) {
+      console.error("Error fetching animal data: ", error);
+      return []; 
+    }
+  }
+  
   export {
         uploadFile,
         deleteFile,
-        getFiles
+        getFiles,
+        incrementAnimalViews,
+        getViewsData
   };

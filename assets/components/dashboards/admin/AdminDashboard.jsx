@@ -29,6 +29,10 @@ const AdminDashboard = () => {
           path="/dashboard/admin/rapports-veterinaires"
           title="Consulter les rapports vétérinaires"
         />
+        <DashboardNavItem
+          path="/dashboard/admin/animaux-nb-vues"
+          title="Consulter le nombre de vue des animaux"
+        />
       </div>
     </>
   );

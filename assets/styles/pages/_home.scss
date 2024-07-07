@@ -3,37 +3,7 @@
 
 .pageContainer {
   width: 100%;
-  #homeSlider {
-    width: 100%;
-    background-image: url("../../../public/images/otwgoat_an_ultra_realistic_photo_of_a_lion_in_a_zoo__portrait_3d4a4584-cfb8-419c-b876-bbac7a659df4_3.png");
-    background-position: center;
-    background-size: cover;
-    min-height: 492px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-    button {
-      margin-bottom: 30px;
-      margin-right: 20px;
-    }
-    #buttonBar {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      height: 4px;
-      button {
-        border: none;
-        box-shadow: none;
-        margin: 0;
-        background-color: #fdf5e91a;
-        width: 32%;
-        &:is(.active) {
-          background-color: $color-text-white;
-        }
-      }
-    }
-  }
+
   #introText {
     width: 350px;
     text-align: center;

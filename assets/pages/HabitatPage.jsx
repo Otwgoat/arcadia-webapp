@@ -4,13 +4,14 @@ import PrevLink from "../components/dashboards/admin/PrevLink";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import habitatsApi from "../services/habitatsApi";
 import { useQuery } from "@tanstack/react-query";
-import { getFiles } from "../services/firebase";
+import { getFiles, incrementAnimalViews } from "../services/firebase";
 import { ArrowSquareIn } from "@phosphor-icons/react";
 import CustomButton from "../components/CustomButton";
 import Footer from "../components/Footer";
 import ImageSliderMobile from "../components/ImageSliderMobile";
 
 const HabitatPage = () => {
+  const navigate = useNavigate();
   const [displayHabitatImage, setDisplayHabitatImage] = useState(0);
   const [filteredAnimalsTotalCount, setFilteredAnimalsTotalCount] = useState(0);
   const getPrincipalImage = async (folder, itemId) => {
@@ -93,6 +94,16 @@ const HabitatPage = () => {
     loadDisplayedAnimals();
   }, [animals, specyDisplayed, itemCount]);
 
+  const handleAnimalClick = (animalId) => {
+    try {
+      incrementAnimalViews(animalId).then(() => {
+        navigate(`/habitats/animal/${animalId}`);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getUniqueSpecies(animals);
   }, [animals]);
@@ -136,7 +147,7 @@ const HabitatPage = () => {
               <Link
                 key={animal.id}
                 className="animalCard"
-                to={`/habitats/${habitat.name}/animal/${animal.id}`}
+                onClick={() => handleAnimalClick(animal.id)}
               >
                 <img
                   src={animal.imageUrl}

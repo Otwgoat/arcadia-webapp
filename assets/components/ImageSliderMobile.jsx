@@ -6,7 +6,7 @@ const ImageSliderMobile = ({ images }) => {
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   return (
-    <div className="imgsContainer">
+    <div className="imgsContainer slider">
       <Swiper
         ref={swiperRef}
         spaceBetween={50}

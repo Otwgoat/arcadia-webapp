@@ -273,4 +273,27 @@
       }
     }
   }
+  #animalsLeaderBoardContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: $mobile-large-gap;
+    gap: $mobile-small-gap;
+    .leaderBoardItem {
+      width: 290px;
+      display: flex;
+      min-height: 40px;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5px;
+      border-radius: 5px;
+    }
+    .odd {
+      background-color: rgba(217, 217, 217, 0.44);
+    }
+    .even {
+      background-color: rgba(42, 41, 41, 0.4);
+    }
+  }
 }

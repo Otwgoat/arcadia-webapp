@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import { useQuery } from "@tanstack/react-query";
 import servicesApi from "../services/servicesApi";
 import PrevLink from "../components/dashboards/admin/PrevLink";
+import Footer from "../components/Footer";
 
 const Services = () => {
   const [loadingError, setLoadingError] = useState();
@@ -19,7 +20,7 @@ const Services = () => {
   return (
     <div className="container">
       <Header />
-      <div className="pageContainer">
+      <div className="pageContainer" id="serviceContainer">
         <PrevLink link="/" title="Revenir à l'accueil" />
         <div className="heroTitle">
           <h1>Nos services</h1>
@@ -36,6 +37,7 @@ const Services = () => {
             ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

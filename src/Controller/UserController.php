@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -36,7 +38,7 @@ class UserController extends AbstractController
 
     #[Route('api/admin/creation-utilisateur', name: 'creation_utilisateur', methods: ['POST'])]
     #[IsGranted("ROLE_ADMIN", message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
-    public function createUser(UserRepository $userRepository, Request $request, UserPasswordHasherInterface $passHasher, UrlGeneratorInterface $urlGenerator, SerializerInterface $serializer, LoggerInterface $logger, ValidatorInterface $validator): JsonResponse
+    public function createUser(MailerInterface $mailer, UserRepository $userRepository, Request $request, UserPasswordHasherInterface $passHasher, UrlGeneratorInterface $urlGenerator, SerializerInterface $serializer, LoggerInterface $logger, ValidatorInterface $validator): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         $user = new User(null, $data['firstName'], $data['lastName'], $data['email'], $data['password'], json_encode(['ROLE_USER']), $data['type']);
@@ -48,6 +50,12 @@ class UserController extends AbstractController
         try {
             $id = $userRepository->addUser($data['email'], $hashedPassword, $data['firstName'], $data['lastName'], $data['type']);
             $logger->info('Utilisateur créé', ['id' => $id]);
+            $email = (new Email())
+                ->from('arcadia@gmail.com')
+                ->to($user->getEmail())
+                ->subject('Bienvenue chez Arcadia')
+                ->text('Bienvenue chez Arcadia, votre compte a bien été créé. Veuillez-vous rapprocher de l\'administrateur afin qu\'il vous communique votre mot de passe. Voici l\'identifiant qui vous a été attribué: ' . $user->getEmail() . '. Nous vous souhaitons une trés bonne intégration.');
+            $mailer->send($email);
         } catch (\Exception $e) {
             $logger->error('Erreur lors de la création de l\'utilisateur', ['message' => $e->getMessage()]);
             return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
