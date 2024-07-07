@@ -30,7 +30,9 @@ class CreateDatabaseCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->databaseService->createDatabase('dbarcadia');
+        $databaseName = getenv('DATABASE_NAME');
+
+        $this->databaseService->createDatabase($databaseName);
         $output->writeln('Database created successfully!');
 
         return Command::SUCCESS;

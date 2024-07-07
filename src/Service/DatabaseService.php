@@ -47,7 +47,8 @@ class DatabaseService
     public function createAdmin($firstName, $lastName, $email, $password)
     {
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        $this->connect('dbarcadia');
+        $databaseName = getenv('DATABASE_NAME');
+        $this->connect($databaseName);
         $sql = "INSERT INTO user (firstName, lastName, email, password, role, type) VALUES (:firstName, :lastName, :email, :password, :role, :type)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':firstName', $firstName);

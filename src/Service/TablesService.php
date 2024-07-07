@@ -16,7 +16,8 @@ class TablesService
 
     public function createTableFromSqlFile($filePath)
     {
-        $this->databaseService->connect('dbarcadia');
+        $databaseName = getenv('DATABASE_NAME');
+        $this->databaseService->connect($databaseName);
         if (!file_exists($filePath)) {
             throw new \RuntimeException("SQL file does not exist: $filePath");
         }
