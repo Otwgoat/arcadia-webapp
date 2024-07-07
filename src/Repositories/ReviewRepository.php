@@ -7,16 +7,17 @@ use App\Service\DatabaseService;
 class ReviewRepository
 {
     private $databaseService;
+    private $databaseName;
 
     public function __construct(DatabaseService $databaseService)
     {
         $this->databaseService = $databaseService;
+        $this->databaseName = getenv('DATABASE_NAME');
     }
-
     // Fetch all the reviews from the database
     public function getApprovedReviews($limit)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM review WHERE isApproved = 1 LIMIT :limit';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
@@ -35,7 +36,7 @@ class ReviewRepository
     // Fetch all the unapproved reviews from the database
     public function getUnapprovedReviews()
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM review WHERE isApproved = 0';
         $stmt = $this->databaseService->getPdo()->query($sql);
         return $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
@@ -44,7 +45,7 @@ class ReviewRepository
     // Add a review to the database
     public function addReview($username, $review)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'INSERT INTO review (username, review, isApproved) VALUES (:username, :review, :isApproved)';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':username', $username);
@@ -56,7 +57,7 @@ class ReviewRepository
     // Approve a review
     public function approveReview($id)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'UPDATE review SET isApproved = 1 WHERE id = :id';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':id', $id);
@@ -66,7 +67,7 @@ class ReviewRepository
     // Delete a review
     public function deleteReview($id)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'DELETE FROM review WHERE id = :id';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':id', $id);

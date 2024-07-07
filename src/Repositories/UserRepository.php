@@ -7,15 +7,16 @@ use App\Service\DatabaseService;
 class UserRepository
 {
     private $databaseService;
+    private $databaseName;
 
     public function __construct(DatabaseService $databaseService)
     {
         $this->databaseService = $databaseService;
+        $this->databaseName = getenv('DATABASE_NAME');
     }
-
     public function getUsers()
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM user';
         $stmt = $this->databaseService->getPdo()->query($sql);
         return $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
@@ -23,7 +24,7 @@ class UserRepository
 
     public function getUserByEmail($email)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM user WHERE email = :email';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':email', $email);
@@ -34,7 +35,7 @@ class UserRepository
 
     public function getUserById($id)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM user WHERE id = :id';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':id', $id);
@@ -44,7 +45,7 @@ class UserRepository
 
     public function addUser($email, $passwordHash, $firstName, $lastName, $type)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $existingUser = $this->getUserByEmail($email);
         if ($existingUser) {
             throw new \Exception('Un utilisateur avec cet e-mail existe déjà.');
@@ -64,7 +65,7 @@ class UserRepository
 
     public function deleteUser($id)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'DELETE FROM user WHERE id = :id';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':id', $id);

@@ -8,15 +8,17 @@ use App\Service\DatabaseService;
 class ServiceRepository
 {
     private $databaseService;
+    private $databaseName;
 
     public function __construct(DatabaseService $databaseService)
     {
         $this->databaseService = $databaseService;
+        $this->databaseName = getenv('DATABASE_NAME');
     }
 
     public function getServices()
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM service';
         $stmt = $this->databaseService->getPdo()->query($sql);
         return $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
@@ -24,7 +26,7 @@ class ServiceRepository
 
     public function addService($title, $description)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'INSERT INTO service (title, description) VALUES (:title, :description)';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':title', $title);
@@ -34,7 +36,7 @@ class ServiceRepository
 
     public function updateService($id, $title, $description)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'UPDATE service SET title = :title, description = :description WHERE id = :id';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':title', $title);
@@ -45,7 +47,7 @@ class ServiceRepository
 
     public function deleteService($id)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'DELETE FROM service WHERE id = :id';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':id', $id);

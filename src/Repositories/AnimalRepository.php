@@ -7,15 +7,17 @@ use App\Service\DatabaseService;
 class AnimalRepository
 {
     private $databaseService;
+    private $databaseName;
 
     public function __construct(DatabaseService $databaseService)
     {
         $this->databaseService = $databaseService;
+        $this->databaseName = getenv('DATABASE_NAME');
     }
     // Fetch all the animals from the database
     public function getAnimals()
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM animal';
         $stmt = $this->databaseService->getPdo()->query($sql);
         return $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
@@ -24,7 +26,7 @@ class AnimalRepository
     // Fetch the animal by his ID from the database with his habitat
     public function getAnimalById($id)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT 
         a.*, 
         h.name AS habitatName, 
@@ -44,7 +46,7 @@ class AnimalRepository
     // Check if an animal exists by his name and habitat
     public function getAnimalByNameAndHabitat($firstName, $habitatId)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM animal WHERE firstName = :firstName AND habitatId = :habitatId';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':firstName', $firstName);
@@ -57,7 +59,7 @@ class AnimalRepository
 
     public function addAnimal($firstName, $race, $birthDate, $description, $habitatId, $gender)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'INSERT INTO animal (firstName, race, birthDate, description, habitatId, gender) VALUES (:firstName, :race, :birthDate, :description, :habitatId, :gender)';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':firstName', $firstName);
@@ -73,7 +75,7 @@ class AnimalRepository
 
     public function getLastVeterinaryReport($animalId)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM veterinaryReport WHERE animalId = :animalId ORDER BY id DESC LIMIT 1';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':animalId', $animalId);
@@ -83,7 +85,7 @@ class AnimalRepository
 
     public function getVeterinaryReports($animalId, $limit)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
 
         $sql = 'SELECT * FROM veterinaryReport WHERE animalId = :animalId ORDER BY date DESC LIMIT :limit';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
@@ -108,7 +110,7 @@ class AnimalRepository
 
     public function getVeterinaryReportsByDate($date, $limit)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM veterinaryReport WHERE date = :date ORDER BY date DESC LIMIT :limit';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
@@ -130,7 +132,7 @@ class AnimalRepository
 
     public function getLastFeedingReport($animalId)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM feedingReport WHERE animalId = :animalId ORDER BY id DESC LIMIT 1';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':animalId', $animalId);
@@ -141,7 +143,7 @@ class AnimalRepository
 
     public function getFeedingReports($animalId, $limit)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
 
         $sql = 'SELECT * FROM feedingReport WHERE animalId = :animalId ORDER BY date DESC LIMIT :limit';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
@@ -166,7 +168,7 @@ class AnimalRepository
 
     public function addAnimalVeterinaryReport($date, $animalState, $foodProvided, $foodAmountGrams, $animalStateDetails, $animalId, $veterinaryId)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'INSERT INTO veterinaryReport (date, animalState, foodProvided, foodAmountGrams, animalStateDetails, animalId, veterinaryId) VALUES (:date, :animalState, :foodProvided, :foodAmountGrams, :animalStateDetails, :animalId, :veterinaryId)';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':date', $date);
@@ -182,7 +184,7 @@ class AnimalRepository
 
     public function addAnimalFeedingReport($date, $foodType, $foodAmountGrams, $animalId, $employeeId)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'INSERT INTO feedingReport (date, foodType, foodAmountGrams, animalId, employeeId) VALUES (:date, :foodType, :foodAmountGrams, :animalId, :employeeId)';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':date', $date);
@@ -196,7 +198,7 @@ class AnimalRepository
 
     public function updateAnimal($id, $firstName, $race, $birthDate, $description, $habitatId)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'UPDATE animal SET firstName = :firstName, race = :race, birthDate = :birthDate, description = :description, habitatId = :habitatId WHERE id = :id';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':id', $id);
@@ -210,7 +212,7 @@ class AnimalRepository
 
     public function deleteAnimal($id)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'DELETE FROM animal WHERE id = :id';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':id', $id);

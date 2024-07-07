@@ -8,15 +8,16 @@ use App\Service\DatabaseService;
 class HabitatRepository
 {
     private $databaseService;
+    private $databaseName;
 
     public function __construct(DatabaseService $databaseService)
     {
         $this->databaseService = $databaseService;
+        $this->databaseName = getenv('DATABASE_NAME');
     }
-
     public function getHabitats()
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM habitat';
         $stmt = $this->databaseService->getPdo()->query($sql);
         return $stmt->fetchAll($this->databaseService->getPdo()::FETCH_ASSOC);
@@ -24,7 +25,7 @@ class HabitatRepository
 
     public function getHabitatById($id)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM habitat WHERE id = :id';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':id', $id);
@@ -35,7 +36,7 @@ class HabitatRepository
 
     public function getAnimalsByHabitatId($habitatId)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM animal WHERE habitatId = :habitatId';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':habitatId', $habitatId);
@@ -45,7 +46,7 @@ class HabitatRepository
 
     public function getAnimalsByRaceAndHabitat($race, $habitatId, $limit)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'SELECT * FROM animal WHERE race = :race AND habitatId = :habitatId LIMIT :limit';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':habitatId', $habitatId);
@@ -67,7 +68,7 @@ class HabitatRepository
     }
     public function addHabitat($name, $description)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'INSERT INTO habitat (name, description) VALUES (:name, :description)';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':name', $name);
@@ -78,7 +79,7 @@ class HabitatRepository
 
     public function addHabitatImage($name, $description, $url, $habitatId)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'INSERT INTO habitatImage (name, description, url, habitatId) VALUES (:name, :description, :url, :habitatId)';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':name', $name);
@@ -91,7 +92,7 @@ class HabitatRepository
 
     public function addHabitatReport($date, $report, $habitatId, $veterinaryId)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'INSERT INTO habitatReport (date,report, habitatId, veterinaryId) VALUES (:date, :report, :habitatId, :veterinaryId)';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':habitatId', $habitatId);
@@ -104,7 +105,7 @@ class HabitatRepository
 
     public function getHabitatReports($habitatId, $page)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $offset = ($page - 1) * 10;
         $sql = 'SELECT * FROM habitatReport WHERE habitatId = :habitatId ORDER BY id DESC LIMIT 10 OFFSET :offset ';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
@@ -116,7 +117,7 @@ class HabitatRepository
 
     public function updateHabitat($id, $name, $description)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'UPDATE habitat SET name = :name, description = :description WHERE id = :id';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':id', $id);
@@ -127,7 +128,7 @@ class HabitatRepository
 
     public function deleteHabitat($id)
     {
-        $this->databaseService->connect('dbarcadia');
+        $this->databaseService->connect($this->databaseName);
         $sql = 'DELETE FROM habitat WHERE id = :id';
         $stmt = $this->databaseService->getPdo()->prepare($sql);
         $stmt->bindValue(':id', $id);
