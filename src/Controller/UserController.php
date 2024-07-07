@@ -47,11 +47,12 @@ class UserController extends AbstractController
         if (count($errors) > 0) {
             return new JsonResponse($serializer->serialize($errors, 'json'), Response::HTTP_BAD_REQUEST, [], true);
         }
+
         try {
             $id = $userRepository->addUser($data['email'], $hashedPassword, $data['firstName'], $data['lastName'], $data['type']);
             $logger->info('Utilisateur créé', ['id' => $id]);
             $email = (new Email())
-                ->from('arcadia@gmail.com')
+                ->from('lucas.jouffroy@gmail.com')
                 ->to($user->getEmail())
                 ->subject('Bienvenue chez Arcadia')
                 ->text('Bienvenue chez Arcadia, votre compte a bien été créé. Veuillez-vous rapprocher de l\'administrateur afin qu\'il vous communique votre mot de passe. Voici l\'identifiant qui vous a été attribué: ' . $user->getEmail() . '. Nous vous souhaitons une trés bonne intégration.');
