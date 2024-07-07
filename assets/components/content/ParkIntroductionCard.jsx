@@ -10,7 +10,7 @@ const ParkIntroductionCard = (props) => {
         <p>{props.content}</p>
       </div>
       <CustomButton
-        to={props.buttonPath}
+        path={props.buttonPath}
         title={props.buttonTitle}
         buttonClassName="largeMobileButton"
       />

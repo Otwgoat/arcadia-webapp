@@ -37,6 +37,7 @@ export const Home = () => {
         <CustomButton
           buttonClassName="largeMobileButton"
           title="Découvrir le parc"
+          path={"/habitats"}
         />
         <div id="convictionSection">
           <h2>Nos Convictions</h2>

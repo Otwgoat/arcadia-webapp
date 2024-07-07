@@ -7,6 +7,7 @@ const PostReviewForm = () => {
   const [review, setReview] = useState();
   const [errors, setErrors] = useState({});
   const [succesMessage, setSuccesMessage] = useState();
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   let data = {};
 
   const handleSubmit = async (e) => {
@@ -20,6 +21,7 @@ const PostReviewForm = () => {
 
     try {
       await reviewsApi.postReview(data).then(() => {
+        setSubmitSuccess(true);
         setSuccesMessage("Votre avis a bien été envoyé !");
         setUsername("");
         setReview("");
@@ -66,12 +68,14 @@ const PostReviewForm = () => {
         onChange={(e) => setReview(e.target.value)}
       />
       {errors.review && <p className="errorMessage">{errors.review}</p>}
-      {succesMessage && <p className="successMessage">{succesMessage}</p>}
+
       <CustomButton
         id="postReviewSubmitButton"
         title="Envoyer"
         buttonClassName="mediumMobileButton"
         type="submit"
+        submitSuccess={submitSuccess}
+        succesMessage={succesMessage}
         onClick={handleSubmit}
       />
     </form>
