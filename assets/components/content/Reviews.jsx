@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import reviewsApi from "../../services/reviewsApi";
 import CustomButton from "../CustomButton";
 import { useQuery } from "@tanstack/react-query";
+import PostReviewForm from "../forms/PostReviewForm";
 
-const Reviews = () => {
-  const [itemCount, setItemCount] = useState(3);
+const Reviews = ({ mediaQuery }) => {
+  const [itemCount, setItemCount] = useState(mediaQuery ? 6 : 3);
+  const [postReviewFormActive, setPostReviewFormActive] = useState(false);
   const {
     data: reviews,
     error,
@@ -34,17 +36,30 @@ const Reviews = () => {
             </div>
           </div>
         ))}
-      {reviews && reviews.reviews.length !== reviews.totalCount ? (
+      <div id="reviewButtons">
+        {reviews && reviews.reviews.length !== reviews.totalCount ? (
+          <CustomButton
+            title="En voir plus"
+            buttonClassName={
+              mediaQuery ? "smallDesktopButton" : "mediumMobileButton"
+            }
+            onClick={() => {
+              reviews && reviews.reviews.length !== reviews.totalCount
+                ? setItemCount(mediaQuery ? itemCount + 6 : itemCount + 3)
+                : null;
+            }}
+          />
+        ) : null}
         <CustomButton
-          title="En voir plus"
-          buttonClassName="mediumMobileButton"
-          onClick={() => {
-            reviews && reviews.reviews.length !== reviews.totalCount
-              ? setItemCount(itemCount + 3)
-              : null;
-          }}
+          buttonClassName={
+            mediaQuery ? "smallDesktopButton" : "mediumMobileButton"
+          }
+          title={postReviewFormActive ? "Fermer" : "Écrire un avis"}
+          id="writeReviewButton"
+          onClick={() => setPostReviewFormActive(!postReviewFormActive)}
         />
-      ) : null}
+        {postReviewFormActive && <PostReviewForm />}
+      </div>
     </div>
   );
 };

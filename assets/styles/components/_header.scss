@@ -68,3 +68,29 @@ header {
     }
   }
 }
+
+@media screen and (min-width: 900px) {
+  header {
+    max-width: 100%;
+    height: 120px;
+    position: static;
+    display: flex;
+    align-items: flex-start;
+
+    nav {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      width: 80%;
+      height: 100px;
+      align-items: center;
+
+      .linkContainer {
+        display: flex;
+        height: 50px;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}

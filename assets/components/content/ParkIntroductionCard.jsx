@@ -12,7 +12,9 @@ const ParkIntroductionCard = (props) => {
       <CustomButton
         path={props.buttonPath}
         title={props.buttonTitle}
-        buttonClassName="largeMobileButton"
+        buttonClassName={
+          props.mediaQuery ? "mediumDesktopButton" : "largeMobileButton"
+        }
       />
     </div>
   );

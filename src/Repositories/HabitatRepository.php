@@ -13,7 +13,7 @@ class HabitatRepository
     public function __construct(DatabaseService $databaseService)
     {
         $this->databaseService = $databaseService;
-        $this->databaseName = getenv('DATABASE_NAME');
+        $this->databaseName = $_ENV['DATABASE_NAME'];
     }
     public function getHabitats()
     {

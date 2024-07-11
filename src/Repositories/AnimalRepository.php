@@ -12,7 +12,9 @@ class AnimalRepository
     public function __construct(DatabaseService $databaseService)
     {
         $this->databaseService = $databaseService;
-        $this->databaseName = getenv('DATABASE_NAME');
+        $this->databaseName = $_ENV['DATABASE_NAME'];
+        // Debug: Afficher la valeur de DATABASE_NAME
+        error_log('DATABASE_NAME in __construct: ' . $this->databaseName);
     }
     // Fetch all the animals from the database
     public function getAnimals()

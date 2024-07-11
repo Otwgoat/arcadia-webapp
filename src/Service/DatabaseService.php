@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use PDO;
+use PDOException;
 
 class DatabaseService
 {
@@ -27,9 +28,13 @@ class DatabaseService
         if ($databaseName !== null) {
             $dsn .= ";dbname=$databaseName";
         }
-
-        $this->pdo = new PDO($dsn, $this->username, $this->password);
-        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        try {
+            $this->pdo = new PDO($dsn, $this->username, $this->password);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            error_log('Connection failed: ' . $e->getMessage());
+            throw new \PDOException($e->getMessage(), (int)$e->getCode());
+        }
     }
 
     public function getPdo(): PDO

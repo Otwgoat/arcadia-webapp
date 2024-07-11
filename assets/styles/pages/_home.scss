@@ -1,153 +1,426 @@
 @import "../variables";
 @import "../mixin";
 
-.pageContainer {
-  width: 100%;
-
-  #introText {
-    width: 350px;
-    text-align: center;
-    margin-bottom: $mobile-medium-gap;
-  }
-  #convictionSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: $mobile-extralarge-gap;
-    .subh1 {
-      width: 350px;
-      margin-top: $mobile-large-gap;
-    }
-    #iconsBar {
-      width: 200px;
-      height: 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-top: $mobile-medium-gap;
-
-      span {
-        height: 100%;
-        border-bottom: 2px solid #fdf5e966;
-        &:is(.active) {
-          border-bottom: 2px solid $color-text-white;
-        }
-      }
-    }
-    .convictionContent {
-      margin-top: $mobile-medium-gap;
-      padding: 20px 0px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 350px;
-      border-radius: 5px;
-      background: linear-gradient(180deg, #42605b 10.08%, #567859 100%);
-      box-shadow: $defaultShadow;
-      p {
-        width: 300px;
-        text-align: center;
-        margin-top: $mobile-medium-gap;
-        line-height: normal;
-      }
-    }
-  }
-  #parkIntroduction {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+@media screen and (max-width: 600px) {
+  .pageContainer {
     width: 100%;
-    margin-top: $mobile-extralarge-gap;
-    .subh1 {
-      margin-top: $mobile-large-gap;
+
+    #introText {
+      width: 350px;
+      text-align: center;
+      margin-bottom: $mobile-medium-gap;
     }
-    .parkIntroductionCard {
-      margin-top: $mobile-large-gap;
-      width: 100%;
+    #convictionSection {
       display: flex;
       flex-direction: column;
       align-items: center;
-      .cardImg {
-        width: 100%;
-        height: 350px;
-        background-position: center;
-        background-size: cover;
+      margin-top: $mobile-extralarge-gap;
+      .subh1 {
+        width: 350px;
+        margin-top: $mobile-large-gap;
       }
-      .cardBody {
-        margin-top: $mobile-small-gap;
-        p {
-          width: 345px;
-          text-align: center;
-          margin-top: $mobile-small-gap;
+      #iconsBar {
+        width: 200px;
+        height: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-top: $mobile-medium-gap;
+
+        span {
+          height: 100%;
+          border-bottom: 2px solid #fdf5e966;
+          &:is(.active) {
+            border-bottom: 2px solid $color-text-white;
+          }
         }
       }
-      button {
-        margin-top: $mobile-small-gap;
-      }
-    }
-    #restaurantCard {
-      .cardImg {
-        background-image: url("../../../public/images/kayleigh-harrington-yhn4okt6ci0-unsplash.jpg");
-      }
-    }
-    #habitatCard {
-      .cardImg {
-        background-image: url("../../../public/images/rivage-nOo6WHb0BUk-unsplash.jpg");
-      }
-    }
-  }
-  #reviewsContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: $mobile-extralarge-gap;
-
-    .subh1 {
-      margin-top: $mobile-large-gap;
-    }
-    #reviewCardsContainer {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: $mobile-medium-gap;
-
-      .reviewCard {
-        width: 300px;
-        background-color: rgba(217, 217, 217, 0.1);
-        border: solid 1px $color-text-white;
-        border-radius: 5px;
-        margin-bottom: $mobile-medium-gap;
+      .convictionContent {
+        margin-top: $mobile-medium-gap;
+        padding: 20px 0px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 350px;
+        border-radius: 5px;
+        background: linear-gradient(180deg, #42605b 10.08%, #567859 100%);
         box-shadow: $defaultShadow;
-
-        .reviewCardHeader {
-          width: 90%;
+        p {
+          width: 300px;
+          text-align: center;
+          margin-top: $mobile-medium-gap;
+          line-height: normal;
+        }
+      }
+    }
+    #parkIntroduction {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-top: $mobile-extralarge-gap;
+      .subh1 {
+        margin-top: $mobile-large-gap;
+      }
+      .parkIntroductionCards {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $mobile-medium-gap;
+        .parkIntroductionCard {
+          margin-top: $mobile-large-gap;
+          width: 100%;
           display: flex;
-          border-bottom: solid 1px $color-text-white;
-          justify-content: flex-start;
+          flex-direction: column;
           align-items: center;
-          .subh1 {
-            padding: $mobile-small-gap 0;
-            width: 90%;
-            text-align: left;
-            margin-top: 0;
+          .cardImg {
+            width: 100%;
+            height: 350px;
+            background-position: center;
+            background-size: cover;
+          }
+          .cardBody {
+            margin-top: $mobile-small-gap;
+            p {
+              width: 345px;
+              text-align: center;
+              margin-top: $mobile-small-gap;
+            }
+          }
+          button {
+            margin-top: $mobile-small-gap;
           }
         }
-        .reviewBody {
-          margin-top: $mobile-small-gap;
-          padding-bottom: $mobile-small-gap;
-          width: 90%;
+      }
+      #restaurantCard {
+        .cardImg {
+          background-image: url("../../../public/images/kayleigh-harrington-yhn4okt6ci0-unsplash.jpg");
+        }
+      }
+      #habitatCard {
+        .cardImg {
+          background-image: url("../../../public/images/rivage-nOo6WHb0BUk-unsplash.jpg");
+        }
+      }
+    }
+    #reviewsContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: $mobile-extralarge-gap;
+
+      .subh1 {
+        margin-top: $mobile-large-gap;
+      }
+      #reviewCardsContainer {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: $mobile-medium-gap;
+
+        .reviewCard {
+          width: 300px;
+          background-color: rgba(217, 217, 217, 0.1);
+          border: solid 1px $color-text-white;
+          border-radius: 5px;
+          margin-bottom: $mobile-medium-gap;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          box-shadow: $defaultShadow;
+
+          .reviewCardHeader {
+            width: 90%;
+            display: flex;
+            border-bottom: solid 1px $color-text-white;
+            justify-content: flex-start;
+            align-items: center;
+            .subh1 {
+              padding: $mobile-small-gap 0;
+              width: 90%;
+              text-align: left;
+              margin-top: 0;
+            }
+          }
+          .reviewBody {
+            margin-top: $mobile-small-gap;
+            padding-bottom: $mobile-small-gap;
+            width: 90%;
+            p {
+              width: 100%;
+            }
+          }
+        }
+      }
+      #reviewButtons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $mobile-small-gap;
+      }
+    }
+  }
+}
+@media screen and (min-width: 1024px) {
+  .pageContainer {
+    #homeHeroBanner {
+      margin-top: $desktop-large-gap;
+      width: 80%;
+
+      #homeHeroBannerContent {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        .imgPlaceholder {
+          content: "";
+          width: 50%;
+          background-image: url("../../../public/images/toucandesign.png");
+          height: 500px;
+          background-position: center;
+          background-size: cover;
+        }
+        #heroBannerDescription {
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          height: 90%;
+          justify-content: space-between;
+
+          gap: 50px;
+
           p {
-            width: 100%;
+            width: 80%;
+            text-align: left;
           }
         }
       }
     }
-    #writeReviewButton {
-      margin-top: $mobile-small-gap;
+    #convictionsSection {
+      width: 1050px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: $desktop-large-gap;
+      gap: $desktop-medium-gap;
+      .convictionCard {
+        background-position: center;
+        background-size: cover;
+        content: "";
+        width: 500px;
+        height: 320px;
+        border-radius: 5px;
+        box-shadow: $defaultShadow;
+        position: relative;
+        &:hover {
+          cursor: pointer;
+        }
+        .convictionCardLink {
+          height: 30px;
+          border-radius: 5px;
+          background: rgba(253, 245, 233, 0.4);
+          backdrop-filter: blur(5px);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: absolute;
+          bottom: 10px;
+          left: 10px;
+          padding: 0 10px;
+          font-family: $merriweather-regular-font;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 400;
+          color: $color-text-white;
+
+          span {
+            margin-left: 10px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+          }
+        }
+        .convictionContent {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          h2 {
+            width: 80%;
+            text-align: left;
+            margin-top: $desktop-small-gap;
+          }
+          .subh1-light {
+            width: 80%;
+            text-align: left;
+            margin-top: $desktop-medium-gap;
+          }
+        }
+      }
+      #convictionSection {
+        background: rgba(217, 217, 217, 0.1);
+      }
+      #happinessCard {
+        background-image: url("../../../public/images/clement-roy-97BUcJgBpdE-unsplash.jpg");
+      }
+      #pedagogyCard {
+        background-image: url("../../../public/images/vidar-nordli-mathisen-sGwdsTwQm7U-unsplash.jpg");
+      }
+      #ecologyCard {
+        background-image: url("../../../public/images/mariana-proenca-GXiHwHkIdVs-unsplash-2.jpg");
+      }
+      .convictionCardActive {
+        width: 500px;
+        min-height: 320px;
+        border-radius: 5px;
+        box-shadow: $defaultShadow;
+        .convictionContent {
+          min-height: 100%;
+          background: linear-gradient(180deg, #42605b 10.08%, #567859 100%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          h3 {
+            width: 80%;
+            text-align: left;
+            margin-top: $desktop-small-gap;
+          }
+          p {
+            width: 80%;
+            text-align: left;
+            margin-top: $desktop-medium-gap;
+            margin-bottom: $desktop-medium-gap;
+          }
+        }
+      }
+    }
+
+    #parkIntroduction {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 70%;
+      margin-top: calc($desktop-large-gap + $desktop-medium-gap);
+      .subh1 {
+        margin-top: $desktop-small-gap;
+        text-align: center;
+        width: 70%;
+      }
+      .parkIntroductionCards {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: $desktop-medium-gap;
+        margin-top: $desktop-large-gap;
+        .parkIntroductionCard {
+          width: 50%;
+
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background: linear-gradient(180deg, #42605b 69.72%, #567859 99.92%);
+          box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+          position: relative;
+          .cardImg {
+            width: 100%;
+            height: 350px;
+            background-position: center;
+            background-size: cover;
+          }
+          .cardBody {
+            margin-top: $desktop-medium-gap;
+            margin-bottom: $desktop-medium-gap;
+            h3 {
+              text-align: center;
+            }
+            p {
+              width: 345px;
+              text-align: center;
+              margin-top: $mobile-small-gap;
+            }
+          }
+          button {
+            position: absolute;
+            bottom: -70px;
+            margin-top: $desktop-small-gap;
+          }
+        }
+      }
+
+      #restaurantCard {
+        .cardImg {
+          background-image: url("../../../public/images/kayleigh-harrington-yhn4okt6ci0-unsplash.jpg");
+        }
+      }
+      #habitatCard {
+        .cardImg {
+          background-image: url("../../../public/images/rivage-nOo6WHb0BUk-unsplash.jpg");
+        }
+      }
+    }
+    #reviewsContainer {
+      display: flex;
+      flex-direction: column;
+      width: 70%;
+      align-items: center;
+      margin-top: calc($desktop-extralarge-gap + $desktop-medium-gap);
+
+      .subh1 {
+        margin-top: $desktop-small-gap;
+      }
+      #reviewCardsContainer {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: $desktop-small-gap;
+        margin-top: $desktop-large-gap;
+
+        .reviewCard {
+          width: 300px;
+          background-color: rgba(217, 217, 217, 0.1);
+          border: solid 1px $color-text-white;
+          border-radius: 5px;
+          margin-bottom: $desktop-small-gap;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          box-shadow: $defaultShadow;
+
+          .reviewCardHeader {
+            width: 90%;
+            display: flex;
+            border-bottom: solid 1px $color-text-white;
+            justify-content: flex-start;
+            align-items: center;
+            .subh1 {
+              padding: $mobile-small-gap 0;
+              width: 90%;
+              text-align: left;
+              margin-top: 0;
+            }
+          }
+          .reviewBody {
+            margin-top: $mobile-small-gap;
+            padding-bottom: $mobile-small-gap;
+            width: 90%;
+            p {
+              width: 100%;
+            }
+          }
+        }
+      }
+      #reviewButtons {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
     }
   }
 }

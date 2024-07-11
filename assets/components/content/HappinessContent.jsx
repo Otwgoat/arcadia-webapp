@@ -1,6 +1,8 @@
 import React from "react";
+import { useMediaQuery } from "react-responsive";
 
 const HappinessContent = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   return (
     <div id="hapinessContent" className="convictionContent">
       <h3>Bien-être</h3>

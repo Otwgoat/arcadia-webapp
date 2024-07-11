@@ -12,7 +12,7 @@ class ReviewRepository
     public function __construct(DatabaseService $databaseService)
     {
         $this->databaseService = $databaseService;
-        $this->databaseName = getenv('DATABASE_NAME');
+        $this->databaseName = $_ENV['DATABASE_NAME'];
     }
     // Fetch all the reviews from the database
     public function getApprovedReviews($limit)

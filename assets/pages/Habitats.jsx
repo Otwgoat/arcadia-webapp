@@ -53,7 +53,7 @@ const Habitats = () => {
   };
   return (
     <div className="container">
-      <Header />
+      <Header pageActive="habitats" />
       <div className="pageContainer">
         <PrevLink link="/" title="Revenir à l'accueil" />
         <div className="heroTitle">

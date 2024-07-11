@@ -19,7 +19,7 @@ const Services = () => {
   }, [services]);
   return (
     <div className="container">
-      <Header />
+      <Header pageActive="services" />
       <div className="pageContainer" id="serviceContainer">
         <PrevLink link="/" title="Revenir à l'accueil" />
         <div className="heroTitle">

@@ -17,7 +17,7 @@ const Contact = () => {
   }, [state]);
   return (
     <div className="container">
-      <Header />
+      <Header pageActive="contact" />
       <div className="pageContainer " id="contactFormContainer">
         <PrevLink link="/" title="Retour à l'accueil" />
         <div className="heroTitle">

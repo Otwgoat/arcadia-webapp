@@ -4,8 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import { getFiles, getViewsData } from "../../services/firebase";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CustomButton from "../CustomButton";
+import { useMediaQuery } from "react-responsive";
 
 const HomeSlider = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 700px)" });
   const [animalsToDisplayTop, setAnimalsToDisplayTop] = useState();
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -77,11 +79,6 @@ const HomeSlider = () => {
     }
   }, [threeAnimals]);
 
-  useEffect(() => {
-    if (animalsToDisplayTop) {
-      console.log(animalsToDisplayTop);
-    }
-  }, [animalsToDisplayTop]);
   return (
     <div id="homeSlider" className="slider">
       <Swiper
@@ -95,7 +92,9 @@ const HomeSlider = () => {
             <SwiperSlide key={index}>
               <img src={animal.imageUrl} alt={`image de ${animal.firstName}`} />
               <CustomButton
-                buttonClassName="smallMobileButton"
+                buttonClassName={
+                  isDesktop ? "smallDesktopButton" : "smallMobileButton"
+                }
                 title={`En savoir plus sur ${animal.firstName}`}
                 path={`habitats/animal/${animal.id}`}
               />

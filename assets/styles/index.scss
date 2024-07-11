@@ -124,14 +124,21 @@ table {
   border-spacing: 0;
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
 html {
   background-color: $color-background-green;
-  width: 100svw;
 
   body {
-    width: 100%;
-    margin: 0;
     min-height: 100svh;
+
     @media screen and (max-width: 600px) {
       .container {
         width: 100%;
@@ -166,6 +173,7 @@ html {
       background-image: url("../../public/images/Background-arcadia-mobile.png");
       h1 {
         @include mobile-h1;
+        text-transform: uppercase;
       }
       h2 {
         @include mobile-h2;
@@ -339,6 +347,90 @@ html {
       }
       button {
         margin-top: $mobile-medium-gap;
+      }
+    }
+
+    @media screen and (min-width: 900px) {
+      .container {
+        width: 100%;
+        min-height: 100vh;
+        box-sizing: border-box;
+        background-image: url("../../public/images/BackgroundArcadiaDesktop.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        .pageContainer {
+          max-width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        h1 {
+          @include desktop-h1;
+          text-transform: uppercase;
+        }
+
+        h2 {
+          @include desktop-h2;
+        }
+        h3 {
+          @include desktop-h3;
+        }
+        p {
+          @include desktop-bodytext;
+        }
+        .subh1 {
+          @include desktop-subh1;
+        }
+        .subh1-light {
+          @include desktop-subh1-light;
+        }
+        .smallDesktopButton {
+          @include desktop-button(
+            $desktop-button-smallWidth,
+            $desktop-button-smallHeight,
+            $color-button-white
+          );
+        }
+        .mediumDesktopButton {
+          @include desktop-button(
+            $desktop-button-mediumWidth,
+            $desktop-button-mediumHeight,
+            $color-button-white
+          );
+        }
+        .largeDesktopButton {
+          @include desktop-button(
+            $desktop-button-largeWidth,
+            $desktop-button-largeHeight,
+            $color-button-white
+          );
+        }
+        .smallDesktopLogoutButton {
+          @include desktop-button(
+            $desktop-button-smallWidth,
+            $desktop-button-smallHeight,
+            $color-button-red
+          );
+          a {
+            color: $color-text-white;
+            font-family: $bellefair-font;
+            text-align: center;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+          }
+        }
+        .navLink {
+          height: 35px;
+          @include desktop-navLink($color-text-white-blur);
+        }
+        .navLinkActive {
+          height: 35px;
+          @include desktop-navLink($color-text-white);
+          border-bottom: 2px solid $color-text-white;
+        }
       }
     }
   }
