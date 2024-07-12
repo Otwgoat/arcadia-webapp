@@ -24,3 +24,41 @@
     }
   }
 }
+@media screen and (min-width: 1024px) {
+  .servicesContainer {
+    width: 80%;
+    min-height: 50vh;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-top: $desktop-small-gap;
+    gap: $desktop-small-gap;
+    .serviceCard {
+      width: 350px;
+      height: 150px;
+      justify-content: space-between;
+      .serviceDescription {
+        overflow-y: hidden;
+      }
+      .seeMoreP {
+        color: $color-text-white-blur;
+      }
+    }
+    .serviceCardActive {
+      width: 350px;
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      border-radius: 5px;
+      background: linear-gradient(180deg, #42605b 0%, #567859 100%);
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      padding: $mobile-medium-gap;
+      margin-top: $mobile-medium-gap;
+      .serviceDescription {
+        text-align: center;
+      }
+    }
+  }
+}

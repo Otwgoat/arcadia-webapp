@@ -120,6 +120,13 @@ const Footer = () => {
               <Link to={"/contact"}>Nous contacter</Link>
             </div>
           </div>
+          <div className="links">
+            <Link to={"/mentions-legales"}>Mentions légales</Link>
+            <Link to={"/politique-confidentialite"}>
+              Politique de confidentialité
+            </Link>
+          </div>
+          <p id="footerBottom">2024 Zoo Arcadia. Tous droits réservés.</p>
         </footer>
       ) : (
         <footer>
@@ -145,6 +152,13 @@ const Footer = () => {
             <p className="subh1">Horaires d'ouverture</p>
             <div id="planningPlaceholders">{planningRender()}</div>
           </div>
+          <div className="links">
+            <Link to={"/mentions-legales"}>Mentions légales</Link>
+            <Link to={"/politique-confidentialite"}>
+              Politique de confidentialité
+            </Link>
+          </div>
+          <p id="footerBottom">2024 Zoo Arcadia. Tous droits réservés.</p>
         </footer>
       )}
     </>

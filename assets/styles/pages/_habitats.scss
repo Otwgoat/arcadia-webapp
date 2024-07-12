@@ -36,3 +36,54 @@
     }
   }
 }
+@media screen and (min-width: 1024px) {
+  .habitatsContainer {
+    width: 1300px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $desktop-small-gap;
+    justify-content: space-around;
+    .heroTitle {
+      width: 100%;
+    }
+    margin-top: $desktop-large-gap;
+    .habitatCard {
+      width: 400px;
+      height: 350px;
+      position: relative;
+      border-radius: 5px;
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        border: none;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+      .cardLink {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        border-radius: 5px;
+        background: rgba(253, 245, 233, 0.4);
+        backdrop-filter: blur(5px);
+        min-width: 200px;
+        height: 40px;
+        a {
+          font-size: 20px;
+          font-family: $merriweather-regular-font;
+          height: 100%;
+          text-decoration: none;
+          color: $color-text-white;
+          padding: 0 5px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          span {
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+    }
+  }
+}

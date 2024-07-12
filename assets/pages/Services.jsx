@@ -4,9 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import servicesApi from "../services/servicesApi";
 import PrevLink from "../components/dashboards/admin/PrevLink";
 import Footer from "../components/Footer";
+import { useMediaQuery } from "react-responsive";
 
 const Services = () => {
   const [loadingError, setLoadingError] = useState();
+  const [cardActive, setCardActive] = useState();
   const { data: services, isError } = useQuery({
     queryKey: ["services"],
     queryFn: servicesApi.getServices,
@@ -14,14 +16,15 @@ const Services = () => {
   if (isError) {
     return setLoadingError("Erreur lors du chargement des services");
   }
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   useEffect(() => {
     console.log(services);
   }, [services]);
   return (
-    <div className="container">
+    <div className="container" id="servicesPage">
       <Header pageActive="services" />
       <div className="pageContainer" id="serviceContainer">
-        <PrevLink link="/" title="Revenir à l'accueil" />
+        {isDesktop ? null : <PrevLink link="/" title="Revenir à l'accueil" />}
         <div className="heroTitle">
           <h1>Nos services</h1>
           <h3>Découvrez nos services</h3>
@@ -30,9 +33,24 @@ const Services = () => {
           {loadingError && <p>{loadingError}</p>}
           {services &&
             services.map((service) => (
-              <div key={service.id} className="serviceCard">
+              <div
+                key={service.id}
+                className={
+                  cardActive === service.id
+                    ? "serviceCardActive"
+                    : "serviceCard"
+                }
+              >
                 <h3>{service.title}</h3>
-                <p>{service.description}</p>
+                <p className="serviceDescription">{service.description}</p>
+                {isDesktop && cardActive !== service.id ? (
+                  <p
+                    className="seeMoreP"
+                    onClick={() => setCardActive(service.id)}
+                  >
+                    Lire la suite
+                  </p>
+                ) : null}
               </div>
             ))}
         </div>

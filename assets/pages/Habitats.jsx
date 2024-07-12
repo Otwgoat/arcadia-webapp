@@ -6,8 +6,11 @@ import habitatsApi from "../services/habitatsApi";
 import { getFiles } from "../services/firebase";
 import CustomButton from "../components/CustomButton";
 import Footer from "../components/Footer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
+import { ArrowSquareIn } from "@phosphor-icons/react";
 const Habitats = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const navigate = useNavigate();
   const [loadingError, setLoadingError] = useState();
   const [updatedHabitats, setUpdatedHabitats] = useState();
@@ -55,7 +58,7 @@ const Habitats = () => {
     <div className="container">
       <Header pageActive="habitats" />
       <div className="pageContainer">
-        <PrevLink link="/" title="Revenir à l'accueil" />
+        {isDesktop ? null : <PrevLink link="/" title="Revenir à l'accueil" />}
         <div className="heroTitle">
           <h1>Nos habitats</h1>
           <h3>Découvrez nos habitats et leurs résidents.</h3>
@@ -65,18 +68,37 @@ const Habitats = () => {
             updatedHabitats.map((habitat) => (
               <div key={habitat.id} className="habitatCard">
                 <img src={habitat.imageUrl} alt="Image de l'habitat" />
-                <div className="habitatCardHeader">
-                  <h3>{habitat.name}</h3>
-                  <p>{habitat.description}</p>
-                </div>
-
-                <CustomButton
-                  title="Découvrir les résidents"
-                  buttonClassName="mediumMobileButton"
-                  onClick={() => {
-                    handleNavigate(habitat);
-                  }}
-                />
+                {isDesktop ? null : (
+                  <div className="habitatCardHeader">
+                    <h3>{habitat.name}</h3>
+                    <p>{habitat.description}</p>
+                  </div>
+                )}
+                {!isDesktop ? (
+                  <CustomButton
+                    title="Découvrir les résidents"
+                    buttonClassName="mediumMobileButton"
+                    onClick={() => {
+                      handleNavigate(habitat);
+                    }}
+                  />
+                ) : null}
+                {isDesktop ? (
+                  <div className="cardLink">
+                    <Link to={`/habitats/${habitat.id}`}>
+                      {habitat.name}{" "}
+                      <span>
+                        {
+                          <ArrowSquareIn
+                            size={20}
+                            color="#fdf5e9"
+                            weight="regular"
+                          />
+                        }
+                      </span>
+                    </Link>
+                  </div>
+                ) : null}
               </div>
             ))}
         </div>

@@ -30,6 +30,8 @@ import AnimalPage from './pages/AnimalPage';
 import AnimalsViewsCountPage from './pages/adminDashboard/AnimalsViewsCountDashboardPage';
 import AnimalsViewsCountDashboardPage from './pages/adminDashboard/AnimalsViewsCountDashboardPage';
 import Contact from './pages/Contact';
+import LegalNotice from './pages/LegalNotice';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 
 
@@ -96,6 +98,8 @@ const App = () => {
                         <Route path="/habitats/:id" element={<HabitatPage />} />
                         <Route path='/habitats/animal/:animalId' element={<AnimalPage />} />
                         <Route path='/contact' element={<Contact />} />
+                        <Route path='/mentions-legales' element={<LegalNotice />} />
+                        <Route path='/politique-confidentialite' element={<PrivacyPolicy />} />
                     </Routes>
                 </BrowserRouter>
             

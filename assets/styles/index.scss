@@ -358,11 +358,19 @@ html {
         background-image: url("../../public/images/BackgroundArcadiaDesktop.png");
         background-size: cover;
         background-repeat: no-repeat;
+
         .pageContainer {
           max-width: 100%;
           display: flex;
           flex-direction: column;
           align-items: center;
+          .heroTitle {
+            width: 80%;
+            margin-top: $desktop-small-gap;
+            h1 {
+              text-align: left;
+            }
+          }
         }
 
         h1 {
@@ -432,6 +440,9 @@ html {
           border-bottom: 2px solid $color-text-white;
         }
       }
+      #servicesPage {
+        background-position: center;
+      }
     }
   }
 }
@@ -448,3 +459,4 @@ html {
 @import "../styles/pages/habitat.scss";
 @import "../styles/pages/animal.scss";
 @import "../styles/components/slider.scss";
+@import "../styles/pages/legalNotice.scss";

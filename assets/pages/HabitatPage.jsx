@@ -120,7 +120,7 @@ const HabitatPage = () => {
   }, [displayHabitatImage]);
   return (
     <div className="container">
-      <Header />
+      <Header pageActive="habitats" />
       <div id="habitatPageContainer">
         <ImageSliderMobile images={habitatImages && habitatImages} />
 
