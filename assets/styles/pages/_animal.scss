@@ -70,3 +70,100 @@
     }
   }
 }
+@media screen and (min-width: 1024px) {
+  #animalPageContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: $desktop-small-gap;
+    align-items: center;
+    #animalImgPlaceholder {
+      width: 90%;
+      display: flex;
+      justify-content: center;
+      img {
+        width: 800px;
+        height: 750px;
+        border-radius: 5px;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        object-fit: cover;
+      }
+    }
+    h1 {
+      width: 100%;
+      text-align: center;
+      margin-top: $desktop-large-gap;
+    }
+    #animalInfosCard {
+      width: 90%;
+      display: flex;
+      justify-content: center;
+
+      margin-top: $desktop-medium-gap;
+      gap: $desktop-small-gap;
+      .animalInfoItem {
+        width: 20%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+        p {
+          font-family: $bellefair-font;
+          font-size: 20px;
+        }
+        .line {
+          content: " ";
+          width: 80%;
+          height: 1px;
+          background-color: $color-text-white;
+        }
+        .animalInfotitle {
+          color: $color-title-sandcolor;
+        }
+      }
+    }
+    .animalContentCard {
+      width: 500px;
+      min-height: 300px;
+      margin-top: $desktop-large-gap;
+      h3 {
+        margin: $desktop-medium-gap;
+      }
+      p {
+        margin: 0 $desktop-medium-gap;
+      }
+    }
+    #animalDescriptionCard {
+      border-radius: 5px;
+      background: linear-gradient(180deg, #42605b 18.07%, #567859 100%);
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+    #animalVeterinaryReportCard {
+      border-radius: 5px;
+      background: rgba(217, 217, 217, 0.1);
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      .veterinaryReportItem {
+        line-height: 1.5;
+      }
+      .reportItemTitle {
+        color: $color-text-white-blur;
+      }
+    }
+
+    .slider {
+      width: calc(1000px + $desktop-small-gap);
+      height: 750px;
+      border-top: none;
+      margin-top: $desktop-medium-gap;
+      border-radius: 5px;
+      box-shadow: $defaultShadow;
+      img {
+        object-fit: cover;
+        height: 750px;
+        box-shadow: $defaultShadow;
+      }
+    }
+  }
+}

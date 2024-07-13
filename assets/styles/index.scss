@@ -143,6 +143,9 @@ html {
       .container {
         width: 100%;
         min-height: 100vh;
+        background-image: url("../../public/images/Background-arcadia-mobile.png");
+        background-size: cover;
+        background-position: bottom;
         #serviceContainer,
         #contactFormContainer {
           min-height: 85vh;
@@ -170,7 +173,7 @@ html {
           }
         }
       }
-      background-image: url("../../public/images/Background-arcadia-mobile.png");
+
       h1 {
         @include mobile-h1;
         text-transform: uppercase;
@@ -460,3 +463,4 @@ html {
 @import "../styles/pages/animal.scss";
 @import "../styles/components/slider.scss";
 @import "../styles/pages/legalNotice.scss";
+@import "../styles/components/breadcrumb.scss";

@@ -7,8 +7,12 @@ import { getFiles } from "../services/firebase";
 import ImageSliderMobile from "../components/ImageSliderMobile";
 import Footer from "../components/Footer";
 import CustomButton from "../components/CustomButton";
+import BreadCrumb from "../components/BreadCrumb";
+import { useMediaQuery } from "react-responsive";
 
 const AnimalPage = () => {
+  const [topImage, setTopImage] = useState();
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const formatDate = (dateString) => {
     const options = {
       day: "2-digit",
@@ -33,22 +37,44 @@ const AnimalPage = () => {
     queryFn: () => getFiles("animals/" + animalId),
     enabled: !!animalId,
   });
-
-  useEffect(() => {
-    if (animal) {
-      console.log(animal);
-    }
-  }, [animal]);
   useEffect(() => {
     if (animalImages) {
-      console.log(animalImages);
+      const getPrincipalImage = async () => {
+        try {
+          const images = animalImages;
+          if (images && images.length > 0) {
+            const principalImage = images.find(
+              (image) => image.isPrincipal === true
+            );
+            setTopImage(principalImage ? principalImage.url : images[0].url);
+            return principalImage ? principalImage.url : images[0].url;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getPrincipalImage();
     }
   }, [animalImages]);
+
   return (
     <div className="container">
-      <Header />
+      <Header pageActive="habitats" />
       <div id="animalPageContainer">
-        <ImageSliderMobile images={animalImages} />
+        {isDesktop && animal ? (
+          <BreadCrumb habitat={animal?.habitatId} animal={animal} />
+        ) : null}
+
+        {isDesktop ? (
+          <div id="animalImgPlaceholder">
+            <img
+              src={topImage && topImage}
+              alt={`image principal de ${animal && animal.firstName}`}
+            />
+          </div>
+        ) : (
+          <ImageSliderMobile images={animalImages} />
+        )}
         <h1>{animal?.firstName}</h1>
         <div id="animalInfosCard">
           <div className="animalInfoItem">
@@ -73,14 +99,18 @@ const AnimalPage = () => {
           </div>
         </div>
         <div className="animalContentCard" id="animalDescriptionCard">
-          <h2>Description</h2>
+          {isDesktop ? <h3>Description</h3> : <h2>Description</h2>}
           <p>{animal?.description}</p>
         </div>
         {animal?.lastVeterinaryReport &&
         animal.lastVeterinaryReport[0] !==
           "Aucun rapport vétérinaire disponible" ? (
           <div className="animalContentCard" id="animalVeterinaryReportCard">
-            <h2>Rapport vétérinaire</h2>
+            {isDesktop ? (
+              <h3>Dernier rapport vétérinaire</h3>
+            ) : (
+              <h2>Rapport vétérinaire</h2>
+            )}
             <p className="veterinaryReportItem">
               <span className="reportItemTitle">État de santé: </span>{" "}
               {animal?.lastVeterinaryReport?.animalState}
@@ -106,12 +136,16 @@ const AnimalPage = () => {
             </p>
           </div>
         ) : null}
-
-        <CustomButton
-          title="Retour à l'habitat"
-          buttonClassName="mediumMobileButton"
-          path={`/habitats/${animal?.habitatId.id}`}
-        />
+        {isDesktop ? <ImageSliderMobile images={animalImages} /> : null}
+        {!isDesktop ? (
+          <CustomButton
+            title="Retour à l'habitat"
+            buttonClassName={
+              isDesktop ? "mediumDesktopButton" : "mediumMobileButton"
+            }
+            path={`/habitats/${animal?.habitatId.id}`}
+          />
+        ) : null}
       </div>
 
       <Footer />

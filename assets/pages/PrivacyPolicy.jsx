@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="container">
+    <div className="container noticePage">
       <Header />
       <main className="noticeContainer">
         <h1>Politique de Confidentialité</h1>

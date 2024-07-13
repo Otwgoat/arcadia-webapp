@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 
 const LegalNotice = () => {
   return (
-    <div className="container">
+    <div className="container noticePage">
       <Header />
       <main className="noticeContainer">
         <h1>Mentions Légales</h1>

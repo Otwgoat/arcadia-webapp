@@ -1,0 +1,30 @@
+.breadcrumbContainer {
+  margin-bottom: $desktop-small-gap;
+  width: 80%;
+  display: flex;
+  justify-content: flex-start;
+  .breadCrumb {
+    height: 25px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(253, 245, 233, 0.4);
+    backdrop-filter: blur(10px);
+    padding: 0 10px;
+    a {
+      text-decoration: none;
+      font-size: 15px;
+      font-family: $merriweather-regular-font;
+      color: $color-text-white-blur;
+      &:last-child {
+        color: $color-text-white;
+      }
+    }
+    span {
+      font-size: 15px;
+      color: $color-text-white-blur;
+    }
+  }
+}
