@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 const SearchContainer = (props) => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [inputValue, setInputValue] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [iterableTerm, setIterableTerm] = useState(props.iterableTerm);
@@ -28,6 +30,7 @@ const SearchContainer = (props) => {
   return (
     <div id={props.searchContainerId} className="searchContainer">
       <form>
+        {isDesktop && <p className="subh1">Recherche</p>}
         <label className="formLabel" htmlFor={props.inputName}>
           {props.label}
         </label>

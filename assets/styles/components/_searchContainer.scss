@@ -21,6 +21,7 @@
       }
     }
   }
+
   .searchResultContainer {
     margin-top: -$mobile-medium-gap;
     margin-bottom: $mobile-medium-gap;
@@ -39,6 +40,25 @@
     }
     .even {
       background-color: rgba(42, 41, 41, 0.4);
+    }
+  }
+}
+@media screen and (min-width: 1024px) {
+  .searchContainer {
+    form {
+      input {
+        width: 390px;
+      }
+    }
+    .searchResultContainer {
+      margin-top: $desktop-small-gap;
+      margin-bottom: $desktop-large-gap;
+      .searchResultItem {
+        width: 390px;
+        svg {
+          color: $color-light-red;
+        }
+      }
     }
   }
 }

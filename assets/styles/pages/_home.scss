@@ -368,7 +368,7 @@
       display: flex;
       flex-direction: column;
       width: 70%;
-      align-items: center;
+      align-items: space-evenly;
       margin-top: calc($desktop-extralarge-gap + $desktop-medium-gap);
 
       .subh1 {

@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import servicesApi from "../../../services/servicesApi";
 import { ArrowClockwise, XCircle } from "@phosphor-icons/react";
 import CreateServiceForm from "./CreateServiceForm";
+import { useMediaQuery } from "react-responsive";
 
 const ServicesList = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [updateServiceFormOpen, setUpdateServiceFormOpen] = useState(null);
   const [servicesList, setServicesList] = useState();
   const {
@@ -37,13 +39,18 @@ const ServicesList = () => {
   }, [services]);
   return (
     <div className="listContainer">
+      {isDesktop && <p className="subh1">Liste des services</p>}
       {servicesList &&
         servicesList.map((service, index) => (
           <div key={service.id} className="listItem">
             <div
               className={`listItemContent ${index % 2 === 0 ? "even" : "odd"}`}
             >
-              <h3>{service.title}</h3>
+              {isDesktop ? (
+                <p className="subh1">{service.title}</p>
+              ) : (
+                <h3>{service.title}</h3>
+              )}
               <div className="listItemActions">
                 <ArrowClockwise
                   size={20}

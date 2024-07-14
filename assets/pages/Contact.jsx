@@ -1,30 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import PrevLink from "../components/dashboards/admin/PrevLink";
 import { ValidationError, useForm } from "@formspree/react";
 import CustomButton from "../components/CustomButton";
 import Footer from "../components/Footer";
+import { useMediaQuery } from "react-responsive";
 
 const Contact = () => {
+  const contactForm = useRef("contactForm");
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [state, handleSubmit, reset] = useForm(
     process.env.REACT_APP_FORMSPREE_ENDPOINT
   );
   useEffect(() => {
     console.log(state);
     if (state.succeeded) {
-      reset();
+      contactForm.current.reset();
     }
   }, [state]);
   return (
     <div className="container">
       <Header pageActive="contact" />
       <div className="pageContainer " id="contactFormContainer">
-        <PrevLink link="/" title="Retour à l'accueil" />
+        {isDesktop ? null : <PrevLink link="/" title="Retour à l'accueil" />}
         <div className="heroTitle">
           <h1>Contact</h1>
           <h3>Nous envoyer un message</h3>
         </div>
-        <form onSubmit={handleSubmit} method="POST" id="contactForm">
+        <form
+          ref={contactForm}
+          onSubmit={handleSubmit}
+          method="POST"
+          id="contactForm"
+        >
           <label htmlFor="name" className="formLabel">
             Votre nom
           </label>
@@ -68,7 +76,9 @@ const Contact = () => {
           <CustomButton
             type="submit"
             title="Envoyer"
-            buttonClassName="mediumMobileButton"
+            buttonClassName={
+              isDesktop ? "mediumDesktopButton" : "mediumMobileButton"
+            }
             disabled={state.submitting}
             submitSuccess={state.succeeded}
             successMessage="Message envoyé"

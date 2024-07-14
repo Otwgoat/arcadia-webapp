@@ -4,8 +4,10 @@ import animalsApi from "../../../services/animalsApi";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { ArrowSquareIn } from "@phosphor-icons/react";
+import { useMediaQuery } from "react-responsive";
 
 const SearchAnimal = (props) => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const navigate = useNavigate();
   const {
     data: animals,
@@ -22,9 +24,15 @@ const SearchAnimal = (props) => {
   const resultTemplate = (item) => {
     return (
       <>
-        <h3 onClick={() => navigateOnClick(item)}>
-          {item.id} {item.firstName}
-        </h3>
+        {isDesktop ? (
+          <p className="subh1" onClick={() => navigateOnClick(item)}>
+            {item.id} {item.firstName}
+          </p>
+        ) : (
+          <h3 onClick={() => navigateOnClick(item)}>
+            {item.id} {item.firstName}
+          </h3>
+        )}
         <ArrowSquareIn size={20} weight="light" color="#fdf5e9" />
       </>
     );

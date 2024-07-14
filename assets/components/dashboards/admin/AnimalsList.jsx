@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import habitatsApi from "../../../services/habitatsApi";
 import { ArrowSquareIn } from "@phosphor-icons/react";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 const AnimalsList = ({ habitat }) => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState();
   const { data: animals, error } = useQuery({
@@ -40,9 +42,15 @@ const AnimalsList = ({ habitat }) => {
             <div
               className={`listItemContent ${index % 2 === 0 ? "even" : "odd"}`}
             >
-              <h3>
-                {animal.id} {animal.firstName}
-              </h3>
+              {isDesktop ? (
+                <p className="subh1">
+                  {animal.id} {animal.firstName}
+                </p>
+              ) : (
+                <h3>
+                  {animal.id} {animal.firstName}
+                </h3>
+              )}
               <div className="listItemActions">
                 <ArrowSquareIn size={20} weight="light" color="#fdf5e9" />
               </div>

@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import CustomButton from "../../CustomButton";
 import habitatsApi from "../../../services/habitatsApi";
+import { useMediaQuery } from "react-responsive";
 
 const UpdateHabitatForm = ({ habitat }) => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   useEffect(() => {
     if (habitat) {
       setNewName(habitat.name || "");
@@ -70,7 +72,9 @@ const UpdateHabitatForm = ({ habitat }) => {
       )}
       <CustomButton
         id="updateHabitatButton"
-        buttonClassName="mediumMobileButton"
+        buttonClassName={
+          isDesktop ? "smallDesktopButton" : "mediumMobileButton"
+        }
         title="Modifier l'habitat"
         type="submit"
         successMessage={successMessage}

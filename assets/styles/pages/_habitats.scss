@@ -42,7 +42,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: $desktop-small-gap;
-    justify-content: center;
+    justify-content: space-evenly;
     .heroTitle {
       width: 100%;
     }

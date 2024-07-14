@@ -16,9 +16,22 @@
     }
     .errorMessage {
       text-align: center;
+      margin-top: $mobile-medium-gap;
+      color: rgb(223, 93, 93);
     }
     button {
       margin-top: $mobile-large-gap;
+    }
+  }
+}
+@media screen and (min-width: 1024px) {
+  #loginFormContainer {
+    form {
+      width: 390px;
+      input,
+      label {
+        width: 100%;
+      }
     }
   }
 }

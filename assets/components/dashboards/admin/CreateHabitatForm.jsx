@@ -3,8 +3,10 @@ import CustomButton from "../../CustomButton";
 
 import { uploadFile } from "../../../services/firebase";
 import habitatsApi from "../../../services/habitatsApi";
+import { useMediaQuery } from "react-responsive";
 
 const CreateHabitatForm = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const formRef = useRef(formRef);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -159,7 +161,9 @@ const CreateHabitatForm = () => {
         id="selectImagesButton"
         type="button"
         title="Sélectionner des images"
-        buttonClassName="mediumMobileButton"
+        buttonClassName={
+          isDesktop ? "mediumDesktopButton" : "mediumMobileButton"
+        }
         onClick={handleButtonClick}
       />
       {selectImagesError && <p className="errorMessage">{selectImagesError}</p>}
@@ -178,7 +182,9 @@ const CreateHabitatForm = () => {
       {errors.images && <p className="errorMessage">{errors.images}</p>}
       <CustomButton
         id="createHabitatButton"
-        buttonClassName="mediumMobileButton"
+        buttonClassName={
+          isDesktop ? "smallDesktopButton" : "mediumMobileButton"
+        }
         title="Créer l'habitat"
         successMessage={successMessage}
         submitSuccess={submitSuccess}

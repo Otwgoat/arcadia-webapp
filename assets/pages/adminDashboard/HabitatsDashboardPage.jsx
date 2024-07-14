@@ -4,10 +4,12 @@ import PrevLink from "../../components/dashboards/admin/PrevLink";
 import DashboardNavItem from "../../components/dashboards/DashboardNavItem";
 import CreateHabitatForm from "../../components/dashboards/admin/CreateHabitatForm";
 import HabitatsList from "../../components/dashboards/admin/HabitatsList";
+import { useMediaQuery } from "react-responsive";
+import CustomButton from "../../components/CustomButton";
 
 const HabitatsDashboardPage = () => {
-  const [createHabitatFormOpen, setCreateHabitatFormOpen] = useState(false);
-  const [habitatsListOpen, setHabitatsListOpen] = useState(false);
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
+  const [isActive, setIsActive] = useState("");
 
   return (
     <div className="container">
@@ -21,25 +23,49 @@ const HabitatsDashboardPage = () => {
         <div className="dashboardNav">
           <DashboardNavItem
             title={
-              createHabitatFormOpen ? "Annuler la création" : "Créer un habitat"
+              isActive === "createForm"
+                ? "Annuler la création"
+                : "Créer un habitat"
             }
             dashboardNavItemClassName={
-              createHabitatFormOpen
+              isActive === "createForm"
                 ? "dashboardNavItem active"
                 : "dashboardNavItem"
             }
-            onClick={() => setCreateHabitatFormOpen(!createHabitatFormOpen)}
+            onClick={() =>
+              isActive === "createForm"
+                ? setIsActive("")
+                : setIsActive("createForm")
+            }
           />
-          {createHabitatFormOpen && <CreateHabitatForm />}
+          {isActive === "createForm" && !isDesktop && <CreateHabitatForm />}
+
+          <DashboardNavItem
+            title={
+              isActive === "habitatsList" ? "Fermer" : "Liste des habitats"
+            }
+            dashboardNavItemClassName={
+              isActive === "habitatsList"
+                ? "dashboardNavItem active"
+                : "dashboardNavItem"
+            }
+            onClick={() =>
+              isActive === "habitatsList"
+                ? setIsActive("")
+                : setIsActive("habitatsList")
+            }
+          />
+          {isActive === "createForm" && isDesktop && <CreateHabitatForm />}
+          {isActive === "habitatsList" && <HabitatsList />}
         </div>
-        <DashboardNavItem
-          title={habitatsListOpen ? "Fermer" : "Liste des habitats"}
-          dashboardNavItemClassName={
-            habitatsListOpen ? "dashboardNavItem active" : "dashboardNavItem"
-          }
-          onClick={() => setHabitatsListOpen(!habitatsListOpen)}
-        />
-        {habitatsListOpen && <HabitatsList />}
+        {isDesktop && (
+          <CustomButton
+            id="prevButton"
+            buttonClassName="mediumDesktopButton"
+            title="Revenir au dashboard"
+            path="/dashboard"
+          />
+        )}
       </div>
     </div>
   );

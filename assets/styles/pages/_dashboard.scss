@@ -97,7 +97,9 @@
     flex-direction: column;
     align-items: center;
     margin-top: $mobile-medium-gap;
-
+    .infoMessage {
+      color: $color-text-white-blur;
+    }
     .listItem {
       width: 290px;
       display: flex;
@@ -147,6 +149,7 @@
           .deleteIcon {
             width: 30px;
             height: 30px;
+            cursor: pointer;
           }
         }
         .dashboardImage {
@@ -211,6 +214,9 @@
     align-items: center;
     justify-content: center;
     margin-bottom: $mobile-large-gap;
+    .infoMessage {
+      color: $color-text-white-blur;
+    }
     .reportPlaceholder {
       margin-top: $mobile-medium-gap;
       display: flex;
@@ -294,6 +300,121 @@
     }
     .even {
       background-color: rgba(42, 41, 41, 0.4);
+    }
+  }
+}
+@media screen and (min-width: 1024px) {
+  .dashboardContainer {
+    #prevButton {
+      margin-top: $mobile-extralarge-gap;
+      margin-bottom: $desktop-large-gap;
+    }
+    .infoMessage {
+      color: $color-text-white-blur;
+    }
+    .heroTitle {
+      display: flex;
+      align-items: center;
+    }
+    .smallDesktopLogoutButton {
+      margin-top: $desktop-large-gap;
+    }
+
+    .dashboardNav {
+      width: 70%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      gap: $desktop-medium-gap;
+      margin-top: $desktop-large-gap;
+    }
+    .dashboardNavItem {
+      width: 390px;
+
+      display: flex;
+      margin-top: 0;
+
+      &:first-child {
+        margin-top: 0;
+      }
+      &:is(.active) {
+        background: none;
+        background-color: $color-button-red;
+      }
+    }
+    form {
+      width: 100%;
+      .formLabel,
+      .formInput,
+      .input {
+        width: 390px;
+      }
+      .formInput {
+        height: 30px;
+      }
+      .passwordContainer {
+        width: 100%;
+
+        .formInput {
+          height: 30px;
+          width: 390px;
+          padding-right: 0px;
+          padding-left: -5px;
+        }
+        .formInputError {
+          height: 30px;
+          width: 390px;
+          border-radius: 5px;
+          margin-top: $mobile-small-gap;
+          background-color: rgba(217, 217, 217, 0.44);
+          border: solid 1px $color-light-red;
+          padding: 0px 5px;
+        }
+      }
+    }
+    .listContainer {
+      width: 100%;
+      .listItem {
+        width: 390px;
+        .imageListItemContent {
+          width: 100%;
+          flex-direction: column;
+          align-items: center;
+          .listItemContentHeader {
+            width: 90%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: $mobile-small-gap;
+            .subh1 {
+              width: 80%;
+              overflow-x: hidden;
+            }
+            #exclamation,
+            .deleteIcon {
+              width: 30px;
+              height: 30px;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+    .reportsContainer {
+      .reportNavLink {
+        width: 390px;
+      }
+      .reportNavLinkActive {
+        width: 390px;
+        .reportDetails {
+          align-items: flex-start;
+          p {
+            padding-left: $desktop-small-gap;
+            text-align: left;
+          }
+        }
+      }
     }
   }
 }

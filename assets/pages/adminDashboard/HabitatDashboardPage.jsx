@@ -9,11 +9,11 @@ import UpdateHabitatForm from "../../components/dashboards/admin/UpdateHabitatFo
 import CustomButton from "../../components/CustomButton";
 import UpdateHabitatImages from "../../components/dashboards/admin/UpdateHabitatImages";
 import AnimalsList from "../../components/dashboards/admin/AnimalsList";
+import { useMediaQuery } from "react-responsive";
 
 const HabitatDashboardPage = () => {
-  const [habitatDataOpen, setHabitatDataOpen] = useState(false);
-  const [updateHabitatImageOpen, setUpdateHabitatImageOpen] = useState(false);
-  const [animalsListOpen, setAnimalsListOpen] = useState(false);
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
+  const [isActive, setIsActive] = useState("");
   const [deleteError, setDeleteError] = useState();
   const location = useLocation();
   const { id: paramHabitatId } = useParams();
@@ -55,50 +55,84 @@ const HabitatDashboardPage = () => {
         <div className="dashboardNav">
           <DashboardNavItem
             title={
-              habitatDataOpen
+              isActive === "habitatData"
                 ? "Fermer"
                 : "Modifier les informations de l'habitat"
             }
             dashboardNavItemClassName={
-              habitatDataOpen ? "dashboardNavItem active" : "dashboardNavItem"
+              isActive === "habitatData"
+                ? "dashboardNavItem active"
+                : "dashboardNavItem"
             }
-            onClick={() => setHabitatDataOpen(!habitatDataOpen)}
+            onClick={() =>
+              isActive === "habitatData"
+                ? setIsActive("")
+                : setIsActive("habitatData")
+            }
           />
-          {habitatDataOpen && habitat && (
+          {isActive && !isDesktop === "habitatData" && habitat && (
             <UpdateHabitatForm habitat={habitat && habitat} />
           )}
           <DashboardNavItem
             title={
-              updateHabitatImageOpen
+              isActive === "updateHabitatImage"
                 ? "Fermer"
                 : "Modifier les images de l'habitat"
             }
             dashboardNavItemClassName={
-              updateHabitatImageOpen
+              isActive === "updateHabitatImage"
                 ? "dashboardNavItem active"
                 : "dashboardNavItem"
             }
-            onClick={() => setUpdateHabitatImageOpen(!updateHabitatImageOpen)}
+            onClick={() =>
+              isActive === "updateHabitatImage"
+                ? setIsActive("")
+                : setIsActive("updateHabitatImage")
+            }
           />
-          {updateHabitatImageOpen && (
+          {isActive === "updateHabitatImage" && !isDesktop && (
             <UpdateHabitatImages habitat={habitat && habitat} />
           )}
           <DashboardNavItem
-            title={animalsListOpen ? "Fermer" : "Liste des animaux"}
+            title={isActive === "animalList" ? "Fermer" : "Liste des animaux"}
             dashboardNavItemClassName={
-              animalsListOpen ? "dashboardNavItem active" : "dashboardNavItem"
+              isActive === "animalList"
+                ? "dashboardNavItem active"
+                : "dashboardNavItem"
             }
-            onClick={() => setAnimalsListOpen(!animalsListOpen)}
+            onClick={() =>
+              isActive === "animalList"
+                ? setIsActive("")
+                : setIsActive("animalList")
+            }
           />
-          {animalsListOpen && <AnimalsList habitat={habitat && habitat} />}
+          {isActive === "animalList" && (
+            <AnimalsList habitat={habitat && habitat} />
+          )}
+          {isActive === "habitatData" && isDesktop && habitat && (
+            <UpdateHabitatForm habitat={habitat && habitat} />
+          )}
+          {isActive === "updateHabitatImage" && isDesktop && (
+            <UpdateHabitatImages habitat={habitat && habitat} />
+          )}
           {deleteError && <p className="errorMessage">{deleteError}</p>}
-          <CustomButton
-            buttonClassName="mediumLogoutButton"
-            id="deleteButton"
-            title="Supprimer l'habitat"
-            onClick={() => handleDelete(habitatId)}
-          />
         </div>
+        <CustomButton
+          buttonClassName={
+            isDesktop ? "smallDesktopLogoutButton" : "mediumMobileLogoutButton"
+          }
+          id="deleteButton"
+          title="Supprimer l'habitat"
+          onClick={() => handleDelete(habitatId)}
+        />
+        {isDesktop && (
+          <CustomButton
+            id="prevButton"
+            buttonClassName="mediumDesktopButton"
+            title="Revenir au dashboard"
+            path="/dashboard"
+          />
+        )}
       </div>
     </div>
   );

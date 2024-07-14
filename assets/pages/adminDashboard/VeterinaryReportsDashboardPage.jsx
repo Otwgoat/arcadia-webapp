@@ -4,12 +4,12 @@ import PrevLink from "../../components/dashboards/admin/PrevLink";
 import DashboardNavItem from "../../components/dashboards/DashboardNavItem";
 import ReportsByAnimal from "../../components/dashboards/admin/ReportsByAnimal";
 import ReportsByDate from "../../components/dashboards/admin/ReportsByDate";
+import CustomButton from "../../components/CustomButton";
+import { useMediaQuery } from "react-responsive";
 
 const VeterinaryReportsDashboardPage = () => {
-  const [reportsFilteredByAnimalNameOpen, setReportsFilteredByAnimalNameOpen] =
-    useState(false);
-  const [reportsFilteredByDateOpen, setReportsFilteredByDateOpen] =
-    useState(false);
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
+  const [isActive, setIsActive] = useState("");
 
   return (
     <div className="container">
@@ -23,34 +23,41 @@ const VeterinaryReportsDashboardPage = () => {
         <div className="dashboardNav">
           <DashboardNavItem
             title={
-              reportsFilteredByAnimalNameOpen ? "Fermer" : "Filtrer par animal"
+              isActive === "filterByName" ? "Fermer" : "Filtrer par animal"
             }
             dashboardNavItemClassName={
-              reportsFilteredByAnimalNameOpen
+              isActive === "filterByName"
                 ? "dashboardNavItem active"
                 : "dashboardNavItem"
             }
             onClick={() =>
-              setReportsFilteredByAnimalNameOpen(
-                !reportsFilteredByAnimalNameOpen
-              )
+              setIsActive(isActive === "filterByName" ? "" : "filterByName")
             }
           />
 
-          {reportsFilteredByAnimalNameOpen && <ReportsByAnimal />}
+          {isActive === "filterByName" && !isDesktop && <ReportsByAnimal />}
           <DashboardNavItem
-            title={reportsFilteredByDateOpen ? "Fermer" : "Filtrer par date"}
+            title={isActive === "filterByDate" ? "Fermer" : "Filtrer par date"}
             dashboardNavItemClassName={
-              reportsFilteredByDateOpen
+              isActive === "filterByDate"
                 ? "dashboardNavItem active"
                 : "dashboardNavItem"
             }
             onClick={() =>
-              setReportsFilteredByDateOpen(!reportsFilteredByDateOpen)
+              setIsActive(isActive === "filterByDate" ? "" : "filterByDate")
             }
           />
-          {reportsFilteredByDateOpen && <ReportsByDate />}
+          {isActive === "filterByName" && isDesktop && <ReportsByAnimal />}
+          {isActive === "filterByDate" && <ReportsByDate />}
         </div>
+        {isDesktop && (
+          <CustomButton
+            id="prevButton"
+            buttonClassName="mediumDesktopButton"
+            title="Revenir au dashboard"
+            path="/dashboard"
+          />
+        )}
       </div>
     </div>
   );

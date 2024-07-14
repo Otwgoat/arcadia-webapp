@@ -4,8 +4,10 @@ import { deleteFile, getFiles } from "../../../services/firebase";
 import { uploadFile } from "../../../services/firebase";
 import CustomButton from "../../CustomButton";
 import { ExclamationMark, XCircle } from "@phosphor-icons/react";
+import { useMediaQuery } from "react-responsive";
 
 const UpdateHabitatImages = ({ habitat }) => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [files, setFiles] = useState();
   const [selectImagesError, setSelectImagesError] = useState();
   const [imagesLoading, setImagesLoading] = useState(false);
@@ -123,7 +125,9 @@ const UpdateHabitatImages = ({ habitat }) => {
           id="selectImagesButton"
           type="button"
           title="Sélectionner des images"
-          buttonClassName="mediumMobileButton"
+          buttonClassName={
+            isDesktop ? "mediumDesktopButton" : "mediumMobileButton"
+          }
           onClick={handleButtonClick}
         />
         {selectImagesError && (
@@ -143,7 +147,9 @@ const UpdateHabitatImages = ({ habitat }) => {
             id="submitImages"
             type="submit"
             title="Valider les images"
-            buttonClassName="mediumMobileButton"
+            buttonClassName={
+              isDesktop ? "smallDesktopButton" : "mediumMobileButton"
+            }
             submitSuccess={submitSuccess}
             successMessage={
               !imagesLoading && submitSuccess ? successMessage : null

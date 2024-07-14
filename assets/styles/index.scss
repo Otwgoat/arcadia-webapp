@@ -442,9 +442,61 @@ html {
           @include desktop-navLink($color-text-white);
           border-bottom: 2px solid $color-text-white;
         }
+        .prevLink {
+          display: none;
+        }
+        .infoMessage {
+          color: $color-text-white;
+          width: 390px;
+          margin-bottom: $desktop-medium-gap;
+          text-align: center;
+        }
+        .errorMessage,
+        .successMessage {
+          margin-top: $desktop-small-gap;
+          width: 390px;
+          text-align: center;
+        }
+        .errorMessage {
+          color: $color-light-red;
+        }
+        .successMessage {
+          color: $color-background-light-green;
+          width: 100%;
+          margin-top: 0;
+        }
+        .formInputError {
+          width: 390px;
+          border-radius: 5px;
+          margin-top: $mobile-small-gap;
+          background-color: rgba(217, 217, 217, 0.44);
+          border: solid 1px $color-light-red;
+          padding: 0px 5px;
+        }
+        textarea {
+          min-height: 80px;
+          @include desktop-bodytext;
+        }
       }
       #servicesPage {
         background-position: center;
+      }
+      #contactFormContainer {
+        min-height: 85vh;
+        #contactForm {
+          width: 390px;
+          .formLabel {
+            width: 100%;
+            text-align: left;
+          }
+          .formInput,
+          .input {
+            width: 100%;
+          }
+          .input {
+            min-height: 80px;
+          }
+        }
       }
     }
   }

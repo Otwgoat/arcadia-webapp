@@ -10,7 +10,10 @@ import animalsApi from "../../services/animalsApi";
 import DashboardNavItem from "../../components/dashboards/DashboardNavItem";
 import UpdateAnimalImages from "../../components/dashboards/admin/UpdateAnimalImages";
 import { deleteFile } from "../../services/firebase";
+import { useMediaQuery } from "react-responsive";
 const AnimalDashboardPage = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
+  const [isActive, setIsActive] = useState("");
   const navigate = useNavigate();
   const [deleteError, setDeleteError] = useState();
   const formRef = useRef(formRef);
@@ -36,8 +39,7 @@ const AnimalDashboardPage = () => {
     enabled: !!animalId,
   });
   const [habitatsData, setHabitatsData] = useState();
-  const [animalDataOpen, setAnimalDataOpen] = useState(false);
-  const [updateAnimalImageOpen, setUpdateAnimalImageOpen] = useState(false);
+
   const handleDeleteAnimal = async (animalId) => {
     try {
       await animalsApi.deleteAnimal(animalId);
@@ -64,17 +66,21 @@ const AnimalDashboardPage = () => {
         <div className="dashboardNav">
           <DashboardNavItem
             title={
-              animalDataOpen
+              isActive === "animalForm"
                 ? "Fermer"
                 : "Modifier les informations de l'animal"
             }
             dashboardNavItemClassName={
-              animalDataOpen ? "dashboardNavItem active" : "dashboardNavItem"
+              isActive === "animalForm"
+                ? "dashboardNavItem active"
+                : "dashboardNavItem"
             }
-            onClick={() => setAnimalDataOpen(!animalDataOpen)}
+            onClick={() =>
+              setIsActive(isActive === "animalForm" ? "" : "animalForm")
+            }
           />
 
-          {animalDataOpen && animaldata && (
+          {isActive === "animalForm" && !isDesktop && animaldata && (
             <UpdateAnimalForm
               animal={animaldata && animaldata}
               habitats={habitatsData}
@@ -83,28 +89,48 @@ const AnimalDashboardPage = () => {
 
           <DashboardNavItem
             title={
-              updateAnimalImageOpen
+              isActive === "animalImages"
                 ? "Fermer"
                 : "Modifier les photos de l'animal"
             }
             dashboardNavItemClassName={
-              updateAnimalImageOpen
+              isActive === "animalImages"
                 ? "dashboardNavItem active"
                 : "dashboardNavItem"
             }
-            onClick={() => setUpdateAnimalImageOpen(!updateAnimalImageOpen)}
+            onClick={() =>
+              isActive === "animalImages"
+                ? setIsActive("")
+                : setIsActive("animalImages")
+            }
           />
-          {updateAnimalImageOpen && (
+          {isActive === "animalImages" && (
             <UpdateAnimalImages animal={animaldata && animaldata} />
           )}
+          {isActive === "animalForm" && isDesktop && animaldata && (
+            <UpdateAnimalForm
+              animal={animaldata && animaldata}
+              habitats={habitatsData}
+            />
+          )}
           {deleteError && <p className="errorMessage">{deleteError}</p>}
-          <CustomButton
-            buttonClassName="mediumLogoutButton"
-            id="deleteButton"
-            title="Supprimer l'animal"
-            onClick={() => handleDeleteAnimal(animalId)}
-          />
         </div>
+        <CustomButton
+          buttonClassName={
+            isDesktop ? "smallDesktopLogoutButton" : "mediumLogoutButton"
+          }
+          id="deleteButton"
+          title="Supprimer l'animal"
+          onClick={() => handleDeleteAnimal(animalId)}
+        />
+        {isDesktop && (
+          <CustomButton
+            id="prevButton"
+            buttonClassName="mediumDesktopButton"
+            title="Revenir au dashboard"
+            path="/dashboard"
+          />
+        )}
       </div>
     </div>
   );

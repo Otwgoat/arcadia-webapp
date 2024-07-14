@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import CustomButton from "../../CustomButton";
 import animalsApi from "../../../services/animalsApi";
+import { useMediaQuery } from "react-responsive";
 
 const UpdateAnimalForm = ({ animal, habitats }) => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const formRef = useRef(formRef);
   useEffect(() => {
     if (animal) {
@@ -135,7 +137,9 @@ const UpdateAnimalForm = ({ animal, habitats }) => {
       </select>
       <CustomButton
         id="updateAnimal"
-        buttonClassName="mediumMobileButton"
+        buttonClassName={
+          isDesktop ? "smallDesktopButton" : "mediumMobileButton"
+        }
         title="Modifier l'animal"
         type="submit"
         successMessage={successMessage}

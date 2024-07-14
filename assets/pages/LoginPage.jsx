@@ -5,8 +5,10 @@ import Footer from "../components/Footer";
 import AuthContext, { useAuth } from "../context/AuthContext";
 import authApi from "../services/authApi";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 const LoginPage = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const navigate = useNavigate();
   const { isAuthenticated, setIsAuthenticated, setCurrentUser } = useAuth();
   const [email, setEmail] = useState();
@@ -75,7 +77,9 @@ const LoginPage = () => {
           <CustomButton
             id="postLoginFormButton"
             title="Se connecter"
-            buttonClassName="largeMobileButton"
+            buttonClassName={
+              isDesktop ? "mediumDesktopButton" : "largeMobileButton"
+            }
             type="submit"
             onClick={handleSubmit}
           />

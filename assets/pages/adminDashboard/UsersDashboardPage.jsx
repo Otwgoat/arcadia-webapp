@@ -4,8 +4,11 @@ import DashboardNavItem from "../../components/dashboards/DashboardNavItem";
 import CreateUserForm from "../../components/dashboards/admin/CreateUserForm";
 import SearchUser from "../../components/dashboards/admin/SearchUser";
 import PrevLink from "../../components/dashboards/admin/PrevLink";
+import { useMediaQuery } from "react-responsive";
+import CustomButton from "../../components/CustomButton";
 
 const UsersDashboardPage = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [createUserFormOpen, setCreateUserFormOpen] = useState(false);
   const [userSearchBarOpen, setUserSearchBarOpen] = useState(false);
   const handleOpenCreateUserForm = () => {
@@ -18,7 +21,9 @@ const UsersDashboardPage = () => {
     <div className="container">
       <DashboardHeader />
       <div className="pageContainer dashboardContainer">
-        <PrevLink link="/dashboard" title="Revenir au dashboard" />
+        {isDesktop ? null : (
+          <PrevLink link="/dashboard" title="Revenir au dashboard" />
+        )}
         <div className="heroTitle">
           <h1>Utilisateurs</h1>
           <h3>Gestion des utilisateurs</h3>
@@ -37,7 +42,7 @@ const UsersDashboardPage = () => {
             }
             onClick={handleOpenCreateUserForm}
           />
-          {createUserFormOpen ? <CreateUserForm /> : ""}
+          {createUserFormOpen && !isDesktop ? <CreateUserForm /> : null}
           <DashboardNavItem
             title={
               userSearchBarOpen
@@ -47,13 +52,23 @@ const UsersDashboardPage = () => {
             dashboardNavItemClassName={
               userSearchBarOpen ? "dashboardNavItem active" : "dashboardNavItem"
             }
-            onClick={handleOpenUserSearchBar}
+            onClick={() => {
+              handleOpenUserSearchBar();
+            }}
           />
+          {createUserFormOpen && isDesktop ? <CreateUserForm /> : null}
           {userSearchBarOpen ? <SearchUser /> : null}
         </div>
+        {isDesktop && (
+          <CustomButton
+            id="prevButton"
+            buttonClassName="mediumDesktopButton"
+            title="Revenir au dashboard"
+            path="/dashboard"
+          />
+        )}
       </div>
     </div>
   );
 };
-
 export default UsersDashboardPage;

@@ -4,8 +4,10 @@ import { deleteFile, getFiles } from "../../../services/firebase";
 import { useQuery } from "@tanstack/react-query";
 import CustomButton from "../../CustomButton";
 import { uploadFile } from "../../../services/firebase";
+import { useMediaQuery } from "react-responsive";
 
 const UpdateAnimalImages = ({ animal }) => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [files, setFiles] = useState();
   const [selectImagesError, setSelectImagesError] = useState();
   const [imagesLoading, setImagesLoading] = useState(false);
@@ -83,9 +85,18 @@ const UpdateAnimalImages = ({ animal }) => {
           <div key={image.name} className="listItem imageListItem">
             <div className="listItemContent imageListItemContent">
               <div className="listItemContentHeader">
-                <h3>{image.name}</h3>
+                {isDesktop ? (
+                  <p className="subh1">{image.name}</p>
+                ) : (
+                  <h3>{image.name}</h3>
+                )}
                 {image.isPrincipal === "true" ? (
-                  <ExclamationMark size={30} weight="regular" color="#fdf5e9" />
+                  <ExclamationMark
+                    size={30}
+                    weight="regular"
+                    color="#fdf5e9"
+                    id="exclamation"
+                  />
                 ) : (
                   ""
                 )}
@@ -123,7 +134,9 @@ const UpdateAnimalImages = ({ animal }) => {
           id="selectImagesButton"
           type="button"
           title="Sélectionner des images"
-          buttonClassName="mediumMobileButton"
+          buttonClassName={
+            isDesktop ? "mediumDesktopButton" : "mediumMobileButton"
+          }
           onClick={handleButtonClick}
         />
         {selectImagesError && (
@@ -143,7 +156,9 @@ const UpdateAnimalImages = ({ animal }) => {
             id="submitImages"
             type="submit"
             title="Valider les images"
-            buttonClassName="mediumMobileButton"
+            buttonClassName={
+              isDesktop ? "mediumDesktopButton" : "mediumMobileButton"
+            }
             successMessage={successMessage}
             submitSuccess={submitSuccess}
             onClick={handleSubmit}

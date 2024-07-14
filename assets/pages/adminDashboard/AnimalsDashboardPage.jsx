@@ -6,8 +6,12 @@ import CreateAnimalForm from "../../components/dashboards/admin/CreateAnimalForm
 import SearchAnimal from "../../components/dashboards/admin/SearchAnimal";
 import habitatsApi from "../../services/habitatsApi";
 import { useQuery } from "@tanstack/react-query";
+import CustomButton from "../../components/CustomButton";
+import { useMediaQuery } from "react-responsive";
 
 const AnimalsDashboardPage = () => {
+  const [isActive, setIsActive] = useState("");
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const { data: habitats, isError } = useQuery({
     queryKey: ["habitats"],
     queryFn: habitatsApi.getHabitats,
@@ -17,8 +21,7 @@ const AnimalsDashboardPage = () => {
       "Une erreur est survenue lors du chargement des habitats."
     );
   }
-  const [createAnimalFormOpen, setCreateAnimalFormOpen] = useState(false);
-  const [animalsSearchBarOpen, setAnimalsSearchBarOpen] = useState(false);
+
   return (
     <div className="container">
       <DashboardHeader />
@@ -31,35 +34,56 @@ const AnimalsDashboardPage = () => {
         <div className="dashboardNav">
           <DashboardNavItem
             title={
-              createAnimalFormOpen ? "Annuler la création" : "Créer un animal"
+              isActive === "createForm"
+                ? "Annuler la création"
+                : "Créer un animal"
             }
             dashboardNavItemClassName={
-              createAnimalFormOpen
+              isActive === "createForm"
                 ? "dashboardNavItem active"
                 : "dashboardNavItem"
             }
-            onClick={() => setCreateAnimalFormOpen(!createAnimalFormOpen)}
+            onClick={() =>
+              isActive !== "createForm"
+                ? setIsActive("createForm")
+                : setIsActive("")
+            }
           />
-          {createAnimalFormOpen ? (
+          {isActive === "createForm" && !isDesktop ? (
             <CreateAnimalForm habitatsData={habitats} />
-          ) : (
-            ""
-          )}
+          ) : null}
           <DashboardNavItem
             title={
-              animalsSearchBarOpen
+              isActive === "searchAnimals"
                 ? "Fermer la recherche"
                 : "Rechercher un animal"
             }
             dashboardNavItemClassName={
-              animalsSearchBarOpen
+              isActive === "searchAnimals"
                 ? "dashboardNavItem active"
                 : "dashboardNavItem"
             }
-            onClick={() => setAnimalsSearchBarOpen(!animalsSearchBarOpen)}
+            onClick={() =>
+              isActive !== "searchAnimals"
+                ? setIsActive("searchAnimals")
+                : setIsActive("")
+            }
           />
-          {animalsSearchBarOpen ? <SearchAnimal habitatsData={habitats} /> : ""}
+          {isActive === "searchAnimals" ? (
+            <SearchAnimal habitatsData={habitats} />
+          ) : null}
+          {isDesktop && isActive === "createForm" ? (
+            <CreateAnimalForm habitatsData={habitats} />
+          ) : null}
         </div>
+        {isDesktop && (
+          <CustomButton
+            id="prevButton"
+            buttonClassName="mediumDesktopButton"
+            title="Revenir au dashboard"
+            path="/dashboard"
+          />
+        )}
       </div>
     </div>
   );

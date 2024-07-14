@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import SearchContainer from "../../SearchContainer";
 import { useQuery } from "@tanstack/react-query";
 import userApi from "../../../services/userApi";
+import { XCircle } from "@phosphor-icons/react";
+import { useMediaQuery } from "react-responsive";
 
 const SearchUser = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [rerender, setRerender] = useState(false);
   const {
     data: users,
@@ -29,9 +32,16 @@ const SearchUser = () => {
   const resultTemplate = (item) => {
     return (
       <>
-        <h3>
-          {item.lastName} {item.firstName}
-        </h3>
+        {isDesktop ? (
+          <p className="subh1">
+            {item.lastName} {item.firstName}
+          </p>
+        ) : (
+          <h3>
+            {item.lastName} {item.firstName}
+          </h3>
+        )}
+
         <XCircle
           size={20}
           weight="light"

@@ -3,8 +3,10 @@ import SelectAnimal from "../SelectAnimal";
 import { useQuery } from "@tanstack/react-query";
 import animalsApi from "../../../services/animalsApi";
 import CustomButton from "../../CustomButton";
+import { useMediaQuery } from "react-responsive";
 
 const ReportsByAnimal = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 700px)" });
   const [isSorted, setIsSorted] = useState(false);
   const formatDate = (dateString) => {
     const options = {
@@ -123,7 +125,9 @@ const ReportsByAnimal = () => {
               <CustomButton
                 title="Voir plus de rapports"
                 type="button"
-                buttonClassName="mediumMobileButton"
+                buttonClassName={
+                  isDesktop ? "smallDesktopButton" : "smallMobileButton"
+                }
                 onClick={() => {
                   veterinaryReports &&
                     veterinaryReports.reports.length !==

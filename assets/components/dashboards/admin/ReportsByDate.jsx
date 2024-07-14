@@ -4,6 +4,7 @@ import animalsApi from "../../../services/animalsApi";
 import CustomButton from "../../CustomButton";
 
 const ReportsByDate = () => {
+  const [reports, setReports] = useState();
   const getTodayDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -47,6 +48,31 @@ const ReportsByDate = () => {
   useEffect(() => {
     checkData();
   }, [dateInput]);
+
+  const getAnimalName = async (animalId) => {
+    const animal = await animalsApi.getAnimal(animalId);
+    return animal ? animal.firstName : "";
+  };
+  useEffect(() => {
+    const getReportsWithAnimalName = async () => {
+      if (veterinaryReports && veterinaryReports.reports) {
+        const updatedReports = await Promise.all(
+          veterinaryReports.reports.map(async (report) => {
+            const name = await getAnimalName(report.animalId);
+            return { ...report, animalName: name };
+          })
+        );
+        setReports(updatedReports);
+      }
+    };
+
+    getReportsWithAnimalName();
+  }, [veterinaryReports]);
+  useEffect(() => {
+    if (reports && reports.length > 0) {
+      console.log(reports);
+    }
+  }, [reports]);
   return (
     <>
       <form>
@@ -61,10 +87,8 @@ const ReportsByDate = () => {
         />
       </form>
       <div className="reportsContainer">
-        {veterinaryReports &&
-        veterinaryReports.reports &&
-        veterinaryReports.reports.length > 1 ? (
-          veterinaryReports.reports.map((report) => (
+        {reports && reports.length > 1 ? (
+          reports.map((report) => (
             <div className="reportPlaceholder" key={report.id}>
               <div
                 className={
@@ -74,10 +98,7 @@ const ReportsByDate = () => {
                 }
                 onClick={() => handleReportClick(report)}
               >
-                <p>
-                  Rapport vétérinaire du{" "}
-                  <span className="reportDate">{formatDate(report.date)}</span>
-                </p>
+                <p>Rapport vétérinaire sur {report && report.animalName}</p>
                 {selectedReport && selectedReport.id === report.id && (
                   <div className="reportDetails">
                     <p>

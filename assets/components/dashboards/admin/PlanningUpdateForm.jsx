@@ -3,8 +3,10 @@ import PlanningFormGroup from "./PlanningFormGroup";
 import CustomButton from "../../CustomButton";
 import servicesApi from "../../../services/servicesApi";
 import { useQuery } from "@tanstack/react-query";
+import { useMediaQuery } from "react-responsive";
 
 const PlanningUpdateForm = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [successMessage, setSuccessMessage] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -86,7 +88,9 @@ const PlanningUpdateForm = () => {
 
       {errorMessage && <p className="errorMessage">{errorMessage}</p>}
       <CustomButton
-        buttonClassName="mediumMobileButton"
+        buttonClassName={
+          isDesktop ? "smallDesktopButton" : "mediumMobileButton"
+        }
         title="Mettre à jour"
         successMessage={successMessage}
         submitSuccess={submitSuccess}

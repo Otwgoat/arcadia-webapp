@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import CustomButton from "../../CustomButton";
 import animalsApi from "../../../services/animalsApi";
 import { uploadFile } from "../../../services/firebase";
+import { useMediaQuery } from "react-responsive";
 
 const CreateAnimalForm = (props) => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const formRef = useRef(formRef);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -217,7 +219,9 @@ const CreateAnimalForm = (props) => {
         id="selectImagesButton"
         type="button"
         title="Sélectionner des images"
-        buttonClassName="mediumMobileButton"
+        buttonClassName={
+          isDesktop ? "mediumDesktopButton" : "mediumMobileButton"
+        }
         onClick={handleButtonClick}
       />
       {selectImagesError && <p className="errorMessage">{selectImagesError}</p>}
@@ -237,7 +241,9 @@ const CreateAnimalForm = (props) => {
 
       <CustomButton
         id="createAnimalButton"
-        buttonClassName="mediumMobileButton"
+        buttonClassName={
+          isDesktop ? "smallDesktopButton" : "mediumMobileButton"
+        }
         title="Créer l'animal"
         successMessage={successMessage}
         submitSuccess={submitSuccess}

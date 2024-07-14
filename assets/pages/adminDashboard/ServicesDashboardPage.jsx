@@ -5,15 +5,22 @@ import CreateServiceForm from "../../components/dashboards/admin/CreateServiceFo
 import ServicesList from "../../components/dashboards/admin/ServicesList";
 import PlanningUpdateForm from "../../components/dashboards/admin/PlanningUpdateForm";
 import PrevLink from "../../components/dashboards/admin/PrevLink";
+import { useMediaQuery } from "react-responsive";
+import CustomButton from "../../components/CustomButton";
 
 const ServicesDashboardPage = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [createServiceFormOpen, setCreateServiceFormOpen] = useState(false);
   const [servicesListOpen, setServicesListOpen] = useState(false);
   const [planningFormOpen, setPlanningFormOpen] = useState(false);
+  const [isActive, setIsActive] = useState("");
   return (
     <div className="container">
       <DashboardHeader />
-      <div className="pageContainer dashboardContainer">
+      <div
+        className="pageContainer dashboardContainer"
+        id="serviceDashboardPage"
+      >
         <PrevLink link="/dashboard" title="Revenir au dashboard" />
         <div className="heroTitle">
           <h1>Services</h1>
@@ -22,46 +29,83 @@ const ServicesDashboardPage = () => {
         <div className="dashboardNav">
           <DashboardNavItem
             title={
-              createServiceFormOpen ? "Annuler la création" : "Créer un service"
+              isActive === "serviceForm"
+                ? "Annuler la création"
+                : "Créer un service"
             }
             dashboardNavItemClassName={
-              createServiceFormOpen
+              isActive === "serviceForm"
                 ? "dashboardNavItem active"
                 : "dashboardNavItem"
             }
-            onClick={() => setCreateServiceFormOpen(!createServiceFormOpen)}
+            onClick={() =>
+              isActive !== "serviceForm"
+                ? setIsActive("serviceForm")
+                : setIsActive("")
+            }
           />
-          {createServiceFormOpen ? (
+          {isActive === "serviceForm" && !isDesktop ? (
             <CreateServiceForm
               isUpdate={false}
               successMessage="Service créé avec succès"
               formMethod="POST"
               submitButtonTitle="Créer le service"
             />
-          ) : (
-            ""
-          )}
-          <DashboardNavItem
-            title={servicesListOpen ? "Fermer la liste" : "Liste des services"}
-            dashboardNavItemClassName={
-              servicesListOpen ? "dashboardNavItem active" : "dashboardNavItem"
-            }
-            onClick={() => setServicesListOpen(!servicesListOpen)}
-          />
-          {servicesListOpen ? <ServicesList /> : ""}
+          ) : null}
           <DashboardNavItem
             title={
-              planningFormOpen
+              isActive === "serviceList"
+                ? "Fermer la liste"
+                : "Liste des services"
+            }
+            dashboardNavItemClassName={
+              isActive === "serviceList"
+                ? "dashboardNavItem active"
+                : "dashboardNavItem"
+            }
+            onClick={() =>
+              isActive !== "serviceList"
+                ? setIsActive("serviceList")
+                : setIsActive("")
+            }
+          />
+          {isActive === "serviceList" && !isDesktop ? <ServicesList /> : null}
+          <DashboardNavItem
+            title={
+              isActive === "planningForm"
                 ? "Fermer le planning"
                 : "Modifier les horaires du parc"
             }
             dashboardNavItemClassName={
-              planningFormOpen ? "dashboardNavItem active" : "dashboardNavItem"
+              isActive === "planningForm"
+                ? "dashboardNavItem active"
+                : "dashboardNavItem"
             }
-            onClick={() => setPlanningFormOpen(!planningFormOpen)}
+            onClick={() =>
+              isActive !== "planningForm"
+                ? setIsActive("planningForm")
+                : setIsActive("")
+            }
           />
-          {planningFormOpen ? <PlanningUpdateForm /> : null}
+          {isActive === "serviceForm" && isDesktop ? (
+            <CreateServiceForm
+              isUpdate={false}
+              successMessage="Service créé avec succès"
+              formMethod="POST"
+              submitButtonTitle="Créer le service"
+            />
+          ) : null}
+          {isActive === "serviceList" && isDesktop ? <ServicesList /> : null}
+          {isActive === "planningForm" ? <PlanningUpdateForm /> : null}
         </div>
+        {isDesktop && (
+          <CustomButton
+            id="prevButton"
+            buttonClassName="mediumDesktopButton"
+            title="Revenir au dashboard"
+            path="/dashboard"
+          />
+        )}
       </div>
     </div>
   );

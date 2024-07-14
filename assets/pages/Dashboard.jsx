@@ -7,8 +7,10 @@ import DashboardHeader from "../components/dashboards/DashboardHeader";
 import CustomButton from "../components/CustomButton";
 import VeterinaryDashboard from "../components/dashboards/veterinary/VeterinaryDashboard";
 import EmployeeDashboard from "../components/dashboards/employee/EmployeeDashboard";
+import { useMediaQuery } from "react-responsive";
 
 const Dashboard = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const navigate = useNavigate();
   const { isAuthenticated, currentUser, setIsAuthenticated, logout } =
     useAuth();
@@ -45,7 +47,9 @@ const Dashboard = () => {
           ""
         )}
         <CustomButton
-          buttonClassName="largeLogoutButton"
+          buttonClassName={
+            isDesktop ? "smallDesktopLogoutButton" : "largeLogoutButton"
+          }
           title="Déconnexion"
           onClick={handleLogout}
         />

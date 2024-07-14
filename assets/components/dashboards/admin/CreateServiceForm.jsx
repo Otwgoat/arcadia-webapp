@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import CustomButton from "../../CustomButton";
 import servicesApi from "../../../services/servicesApi";
+import { useMediaQuery } from "react-responsive";
 
 const CreateServiceForm = (props) => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const formRef = useRef(formRef);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -65,6 +67,7 @@ const CreateServiceForm = (props) => {
   }, [successMessage]);
   return (
     <form ref={formRef} method={props.formMethod}>
+      {isDesktop ? <p className="subh1">Créer un service</p> : null}
       <label className="formLabel" htmlFor="serviceTitle">
         Titre du service
       </label>
@@ -92,7 +95,9 @@ const CreateServiceForm = (props) => {
       )}
 
       <CustomButton
-        buttonClassName="mediumMobileButton"
+        buttonClassName={
+          isDesktop ? "smallDesktopButton" : "mediumMobileButton"
+        }
         title={props.submitButtonTitle}
         successMessage={successMessage}
         submitSuccess={submitSuccess}

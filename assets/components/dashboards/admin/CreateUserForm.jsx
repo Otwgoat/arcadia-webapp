@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import CustomButton from "../../CustomButton";
 import { Eye, EyeClosed } from "@phosphor-icons/react";
 import userApi from "../../../services/userApi";
+import { useMediaQuery } from "react-responsive";
 
 const CreateUserForm = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const formRef = useRef(formRef);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [userType, setUserType] = useState("Employé");
@@ -31,7 +33,9 @@ const CreateUserForm = () => {
       lastName: capitalizeFirstLetter(lastname),
       password: password,
     };
-
+    if (password === "" || password === undefined) {
+      setErrors({ password: "Veuillez entrer un mot de passe." });
+    }
     try {
       await userApi.createUser(userData);
       formRef.current.reset();
@@ -64,11 +68,10 @@ const CreateUserForm = () => {
       }
     }
   };
-  useEffect(() => {
-    console.log(passwordShown);
-  }, [passwordShown]);
+
   return (
     <form method="POST" ref={formRef}>
+      {isDesktop && <p className="subh1">Créer un utilisateur </p>}
       <label className="formLabel" htmlFor="userType">
         Type d'utilisateur
       </label>
@@ -92,30 +95,16 @@ const CreateUserForm = () => {
         onChange={(e) => setEmail(e.target.value)}
       />
       {errors.email && <p className="errorMessage">{errors.email}</p>}
-      <div className="passwordContainer">
-        <label className="formLabel" htmlFor="password">
-          Mot de passe
-        </label>
-        <input
-          type={passwordShown ? "text" : "password"}
-          className={errors.password ? "formInputError" : "formInput"}
-          id="passwordField"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <span className="iconPlaceholder" onClick={handleShowPassword}>
-          {passwordShown ? (
-            <EyeClosed size={16} weight="regular" color="#fdf5e9" />
-          ) : (
-            <Eye
-              size={16}
-              weight="regular"
-              color="#fdf5e9"
-              className="eyeIcon"
-            />
-          )}
-        </span>
-      </div>
+      <label className="formLabel" htmlFor="password">
+        Mot de passe
+      </label>
+      <input
+        type={passwordShown ? "text" : "password"}
+        className={errors.password ? "formInputError" : "formInput"}
+        id="passwordField"
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
       {errors.password && <p className="errorMessage">{errors.password}</p>}
       <label className="formLabel" htmlFor="firstname">
         Prénom
@@ -141,7 +130,9 @@ const CreateUserForm = () => {
       {errors.lastName && <p className="errorMessage">{errors.lastName}</p>}
       <CustomButton
         type="submit"
-        buttonClassName="mediumMobileButton"
+        buttonClassName={
+          isDesktop ? "mediumDesktopButton" : "mediumMobileButton"
+        }
         title="Envoyer"
         successMessage={successMessage}
         submitSuccess={submitSuccess}
