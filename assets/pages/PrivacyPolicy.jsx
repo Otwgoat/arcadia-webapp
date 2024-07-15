@@ -7,7 +7,7 @@ const PrivacyPolicy = () => {
     <div className="container noticePage">
       <Header />
       <main className="noticeContainer">
-        <h1>Politique de Confidentialité</h1>
+        <h1 id="privacyPolicyTitle">Politique de Confidentialité</h1>
         <p>
           Chez Zoo Arcadia, nous nous engageons à protéger la vie privée de nos
           visiteurs. Cette politique de confidentialité explique comment nous

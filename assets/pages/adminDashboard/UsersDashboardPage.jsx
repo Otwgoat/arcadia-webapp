@@ -9,14 +9,7 @@ import CustomButton from "../../components/CustomButton";
 
 const UsersDashboardPage = () => {
   const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
-  const [createUserFormOpen, setCreateUserFormOpen] = useState(false);
-  const [userSearchBarOpen, setUserSearchBarOpen] = useState(false);
-  const handleOpenCreateUserForm = () => {
-    setCreateUserFormOpen(!createUserFormOpen);
-  };
-  const handleOpenUserSearchBar = () => {
-    setUserSearchBarOpen(!userSearchBarOpen);
-  };
+  const [isActive, setIsActive] = useState("");
   return (
     <div className="container">
       <DashboardHeader />
@@ -31,33 +24,41 @@ const UsersDashboardPage = () => {
         <div className="dashboardNav">
           <DashboardNavItem
             title={
-              createUserFormOpen
+              isActive === "createForm"
                 ? "Annuler la création"
                 : "Créer un utilisateur"
             }
             dashboardNavItemClassName={
-              createUserFormOpen
+              isActive === "createForm"
                 ? "dashboardNavItem active"
                 : "dashboardNavItem"
             }
-            onClick={handleOpenCreateUserForm}
+            onClick={() =>
+              isActive !== "createForm"
+                ? setIsActive("createForm")
+                : setIsActive("")
+            }
           />
-          {createUserFormOpen && !isDesktop ? <CreateUserForm /> : null}
+          {isActive === "createForm" && !isDesktop ? <CreateUserForm /> : null}
           <DashboardNavItem
             title={
-              userSearchBarOpen
+              isActive === "searchUsers"
                 ? "Fermer la recherche"
                 : "Rechercher un utilisateur"
             }
             dashboardNavItemClassName={
-              userSearchBarOpen ? "dashboardNavItem active" : "dashboardNavItem"
+              isActive === "searchUsers"
+                ? "dashboardNavItem active"
+                : "dashboardNavItem"
             }
-            onClick={() => {
-              handleOpenUserSearchBar();
-            }}
+            onClick={() =>
+              isActive !== "searchUsers"
+                ? setIsActive("searchUsers")
+                : setIsActive("")
+            }
           />
-          {createUserFormOpen && isDesktop ? <CreateUserForm /> : null}
-          {userSearchBarOpen ? <SearchUser /> : null}
+          {isActive === "createForm" && isDesktop ? <CreateUserForm /> : null}
+          {isActive === "searchUsers" ? <SearchUser /> : null}
         </div>
         {isDesktop && (
           <CustomButton

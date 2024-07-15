@@ -3,8 +3,11 @@ import DashboardHeader from "../../components/dashboards/DashboardHeader";
 import PrevLink from "../../components/dashboards/admin/PrevLink";
 import AnimalFiles from "../../components/dashboards/veterinary/AnimalFiles";
 import SelectAnimal from "../../components/dashboards/SelectAnimal";
+import { useMediaQuery } from "react-responsive";
+import CustomButton from "../../components/CustomButton";
 
 const AnimalFilesDashboardPage = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [animalId, setAnimalId] = useState();
   const [displayAnimalCard, setDisplayAnimalCard] = useState(false);
 
@@ -28,6 +31,14 @@ const AnimalFilesDashboardPage = () => {
           <SelectAnimal selectAnimalOnChange={selectAnimalOnChange} />
         </form>
         {displayAnimalCard && <AnimalFiles animalId={animalId} />}
+        {isDesktop && (
+          <CustomButton
+            id="prevButton"
+            buttonClassName="mediumDesktopButton"
+            title="Revenir au dashboard"
+            path="/dashboard"
+          />
+        )}
       </div>
     </div>
   );

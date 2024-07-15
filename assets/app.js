@@ -32,6 +32,7 @@ import AnimalsViewsCountDashboardPage from './pages/adminDashboard/AnimalsViewsC
 import Contact from './pages/Contact';
 import LegalNotice from './pages/LegalNotice';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 
 
@@ -39,8 +40,16 @@ authApi.setup();
 const queryClient = new QueryClient();
 const App = () => {
 
-    
+  
     return (
+        <HelmetProvider>
+        <Helmet>
+          <title>Arcadia Zoo</title>
+          <meta name="description" content="Bienvenue sur le site du zoo Arcadia. Situé aux alentours de Brocéliande en Bretagne, nous sommes heureux de vous faire découvrir le monde animal à travers des habitats naturels diversifiés où cohabitent des espèces rares et exotiques." />
+          <link  id="favicon" rel='icon' href='images/logo-arcadia.png' sizes='16x16' type='image/png' data-react-helmet="true" />
+        </Helmet>
+
+      
         <QueryClientProvider client={queryClient}>
             <AuthProvider>
            
@@ -105,6 +114,7 @@ const App = () => {
             
             </AuthProvider>
         </QueryClientProvider>
+        </HelmetProvider>
     );
 
 }

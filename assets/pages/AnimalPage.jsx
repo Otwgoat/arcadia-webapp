@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 import CustomButton from "../components/CustomButton";
 import BreadCrumb from "../components/BreadCrumb";
 import { useMediaQuery } from "react-responsive";
+import { Helmet } from "react-helmet-async";
 
 const AnimalPage = () => {
   const [topImage, setTopImage] = useState();
@@ -58,98 +59,104 @@ const AnimalPage = () => {
   }, [animalImages]);
 
   return (
-    <div className="container">
-      <Header pageActive="habitats" />
-      <div id="animalPageContainer">
-        {isDesktop && animal ? (
-          <BreadCrumb habitat={animal?.habitatId} animal={animal} />
-        ) : null}
+    <>
+      <Helmet>
+        <title>{animal && `Arcadia Zoo - ${animal.firstName}`}</title>
+        <meta name="description" content={animal && animal.description} />
+      </Helmet>
+      <div className="container">
+        <Header pageActive="habitats" />
+        <div id="animalPageContainer">
+          {isDesktop && animal ? (
+            <BreadCrumb habitat={animal?.habitatId} animal={animal} />
+          ) : null}
 
-        {isDesktop ? (
-          <div id="animalImgPlaceholder">
-            <img
-              src={topImage && topImage}
-              alt={`image principal de ${animal && animal.firstName}`}
-            />
+          {isDesktop ? (
+            <div id="animalImgPlaceholder">
+              <img
+                src={topImage && topImage}
+                alt={`image principal de ${animal && animal.firstName}`}
+              />
+            </div>
+          ) : (
+            <ImageSliderMobile images={animalImages} />
+          )}
+          <h1>{animal?.firstName}</h1>
+          <div id="animalInfosCard">
+            <div className="animalInfoItem">
+              <p className="animalInfotitle">Espèce</p>
+              <span className="line"></span>
+              <p>{animal?.race}</p>
+            </div>
+            <div className="animalInfoItem">
+              <p className="animalInfotitle">Genre</p>
+              <span className="line"></span>
+              <p>{animal?.gender === "male" ? "Mâle" : "Femelle"}</p>
+            </div>
+            <div className="animalInfoItem">
+              <p className="animalInfotitle">Naissance</p>
+              <span className="line"></span>
+              <p>{formatDate(animal?.birthDate)}</p>
+            </div>
+            <div className="animalInfoItem">
+              <p className="animalInfotitle">Habitat</p>
+              <span className="line"></span>
+              <p>{animal?.habitatId.name}</p>
+            </div>
           </div>
-        ) : (
-          <ImageSliderMobile images={animalImages} />
-        )}
-        <h1>{animal?.firstName}</h1>
-        <div id="animalInfosCard">
-          <div className="animalInfoItem">
-            <p className="animalInfotitle">Espèce</p>
-            <span className="line"></span>
-            <p>{animal?.race}</p>
+          <div className="animalContentCard" id="animalDescriptionCard">
+            {isDesktop ? <h3>Description</h3> : <h2>Description</h2>}
+            <p>{animal?.description}</p>
           </div>
-          <div className="animalInfoItem">
-            <p className="animalInfotitle">Genre</p>
-            <span className="line"></span>
-            <p>{animal?.gender === "male" ? "Mâle" : "Femelle"}</p>
-          </div>
-          <div className="animalInfoItem">
-            <p className="animalInfotitle">Naissance</p>
-            <span className="line"></span>
-            <p>{formatDate(animal?.birthDate)}</p>
-          </div>
-          <div className="animalInfoItem">
-            <p className="animalInfotitle">Habitat</p>
-            <span className="line"></span>
-            <p>{animal?.habitatId.name}</p>
-          </div>
-        </div>
-        <div className="animalContentCard" id="animalDescriptionCard">
-          {isDesktop ? <h3>Description</h3> : <h2>Description</h2>}
-          <p>{animal?.description}</p>
-        </div>
-        {animal?.lastVeterinaryReport &&
-        animal.lastVeterinaryReport[0] !==
-          "Aucun rapport vétérinaire disponible" ? (
-          <div className="animalContentCard" id="animalVeterinaryReportCard">
-            {isDesktop ? (
-              <h3>Dernier rapport vétérinaire</h3>
-            ) : (
-              <h2>Rapport vétérinaire</h2>
-            )}
-            <p className="veterinaryReportItem">
-              <span className="reportItemTitle">État de santé: </span>{" "}
-              {animal?.lastVeterinaryReport?.animalState}
-            </p>
-            {animal?.lastVeterinaryReport?.animalStateDetails !== "" && (
+          {animal?.lastVeterinaryReport &&
+          animal.lastVeterinaryReport[0] !==
+            "Aucun rapport vétérinaire disponible" ? (
+            <div className="animalContentCard" id="animalVeterinaryReportCard">
+              {isDesktop ? (
+                <h3>Dernier rapport vétérinaire</h3>
+              ) : (
+                <h2>Rapport vétérinaire</h2>
+              )}
               <p className="veterinaryReportItem">
-                <span className="reportItemTitle">Détails: </span>
-                {animal?.lastVeterinaryReport?.animalStateDetails}
+                <span className="reportItemTitle">État de santé: </span>{" "}
+                {animal?.lastVeterinaryReport?.animalState}
               </p>
-            )}
+              {animal?.lastVeterinaryReport?.animalStateDetails !== "" && (
+                <p className="veterinaryReportItem">
+                  <span className="reportItemTitle">Détails: </span>
+                  {animal?.lastVeterinaryReport?.animalStateDetails}
+                </p>
+              )}
 
-            <p className="veterinaryReportItem">
-              <span className="reportItemTitle">Date du rapport: </span>
-              {formatDate(animal?.lastVeterinaryReport?.date)}
-            </p>
-            <p className="veterinaryReportItem">
-              <span className="reportItemTitle">Nourriture proposée: </span>
-              {animal?.lastVeterinaryReport?.foodProvided}
-            </p>
-            <p className="veterinaryReportItem">
-              <span className="reportItemTitle">Quantité proposée: </span>
-              {animal?.lastVeterinaryReport?.foodAmountGrams}g / jour
-            </p>
-          </div>
-        ) : null}
-        {isDesktop ? <ImageSliderMobile images={animalImages} /> : null}
-        {!isDesktop ? (
-          <CustomButton
-            title="Retour à l'habitat"
-            buttonClassName={
-              isDesktop ? "mediumDesktopButton" : "mediumMobileButton"
-            }
-            path={`/habitats/${animal?.habitatId.id}`}
-          />
-        ) : null}
+              <p className="veterinaryReportItem">
+                <span className="reportItemTitle">Date du rapport: </span>
+                {formatDate(animal?.lastVeterinaryReport?.date)}
+              </p>
+              <p className="veterinaryReportItem">
+                <span className="reportItemTitle">Nourriture proposée: </span>
+                {animal?.lastVeterinaryReport?.foodProvided}
+              </p>
+              <p className="veterinaryReportItem">
+                <span className="reportItemTitle">Quantité proposée: </span>
+                {animal?.lastVeterinaryReport?.foodAmountGrams}g / jour
+              </p>
+            </div>
+          ) : null}
+          {isDesktop ? <ImageSliderMobile images={animalImages} /> : null}
+          {!isDesktop ? (
+            <CustomButton
+              title="Retour à l'habitat"
+              buttonClassName={
+                isDesktop ? "mediumDesktopButton" : "mediumMobileButton"
+              }
+              path={`/habitats/${animal?.habitatId.id}`}
+            />
+          ) : null}
+        </div>
+
+        <Footer />
       </div>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 

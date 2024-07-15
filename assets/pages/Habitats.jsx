@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { ArrowSquareIn } from "@phosphor-icons/react";
+import { Helmet } from "react-helmet-async";
 const Habitats = () => {
   const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const navigate = useNavigate();
@@ -55,56 +56,65 @@ const Habitats = () => {
     navigate(`/habitats/${habitat.id}`, { state: { habitat: habitat } });
   };
   return (
-    <div className="container">
-      <Header pageActive="habitats" />
-      <div className="pageContainer">
-        {isDesktop ? null : <PrevLink link="/" title="Revenir à l'accueil" />}
-        <div className="heroTitle">
-          <h1>Nos habitats</h1>
-          <h3>Découvrez nos habitats et leurs résidents.</h3>
+    <>
+      <Helmet>
+        <title>Arcadia Zoo - Nos habitats</title>
+        <meta
+          name="description"
+          content="Découvrez les habitats de nos animaux. Nous avons à coeur de représenter au maximum l'habitat naturel de chaque résident, pour que ce parc se mue en un véritable sanctuaire."
+        />
+      </Helmet>
+      <div className="container">
+        <Header pageActive="habitats" />
+        <div className="pageContainer">
+          {isDesktop ? null : <PrevLink link="/" title="Revenir à l'accueil" />}
+          <div className="heroTitle">
+            <h1>Nos habitats</h1>
+            <h3>Découvrez nos habitats et leurs résidents.</h3>
+          </div>
+          <div className="habitatsContainer">
+            {updatedHabitats &&
+              updatedHabitats.map((habitat) => (
+                <div key={habitat.id} className="habitatCard">
+                  <img src={habitat.imageUrl} alt="Image de l'habitat" />
+                  {isDesktop ? null : (
+                    <div className="habitatCardHeader">
+                      <h3>{habitat.name}</h3>
+                      <p>{habitat.description}</p>
+                    </div>
+                  )}
+                  {!isDesktop ? (
+                    <CustomButton
+                      title="Découvrir les résidents"
+                      buttonClassName="mediumMobileButton"
+                      onClick={() => {
+                        handleNavigate(habitat);
+                      }}
+                    />
+                  ) : null}
+                  {isDesktop ? (
+                    <div className="cardLink">
+                      <Link to={`/habitats/${habitat.id}`}>
+                        {habitat.name}{" "}
+                        <span>
+                          {
+                            <ArrowSquareIn
+                              size={20}
+                              color="#fdf5e9"
+                              weight="regular"
+                            />
+                          }
+                        </span>
+                      </Link>
+                    </div>
+                  ) : null}
+                </div>
+              ))}
+          </div>
         </div>
-        <div className="habitatsContainer">
-          {updatedHabitats &&
-            updatedHabitats.map((habitat) => (
-              <div key={habitat.id} className="habitatCard">
-                <img src={habitat.imageUrl} alt="Image de l'habitat" />
-                {isDesktop ? null : (
-                  <div className="habitatCardHeader">
-                    <h3>{habitat.name}</h3>
-                    <p>{habitat.description}</p>
-                  </div>
-                )}
-                {!isDesktop ? (
-                  <CustomButton
-                    title="Découvrir les résidents"
-                    buttonClassName="mediumMobileButton"
-                    onClick={() => {
-                      handleNavigate(habitat);
-                    }}
-                  />
-                ) : null}
-                {isDesktop ? (
-                  <div className="cardLink">
-                    <Link to={`/habitats/${habitat.id}`}>
-                      {habitat.name}{" "}
-                      <span>
-                        {
-                          <ArrowSquareIn
-                            size={20}
-                            color="#fdf5e9"
-                            weight="regular"
-                          />
-                        }
-                      </span>
-                    </Link>
-                  </div>
-                ) : null}
-              </div>
-            ))}
-        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 };
 

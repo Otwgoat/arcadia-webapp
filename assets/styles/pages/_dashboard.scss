@@ -178,6 +178,7 @@
     margin-top: $mobile-medium-gap;
     margin-bottom: calc($mobile-large-gap * 2);
     .reviewCard {
+      background-color: rgba(217, 217, 217, 0.1);
       border: 1px solid #fdf5e9;
       border-radius: 5px;
       width: 100%;
@@ -375,12 +376,21 @@
     }
     .listContainer {
       width: 100%;
+      .subh1 {
+        margin: $desktop-small-gap;
+      }
       .listItem {
         width: 390px;
+        .listItemContent {
+          .subh1 {
+            margin: $desktop-small-gap;
+          }
+        }
         .imageListItemContent {
           width: 100%;
           flex-direction: column;
           align-items: center;
+
           .listItemContentHeader {
             width: 90%;
             display: flex;
@@ -414,6 +424,25 @@
             text-align: left;
           }
         }
+      }
+    }
+    #animalsLeaderBoardContainer {
+      .leaderBoardItem {
+        width: 390px;
+      }
+    }
+    #reviewsList {
+      width: 400px;
+      .infoMessage {
+        color: $color-text-white-blur;
+      }
+      .reviewCard {
+        background-color: rgba(217, 217, 217, 0.1);
+        height: 250px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        gap: $desktop-medium-gap;
       }
     }
   }

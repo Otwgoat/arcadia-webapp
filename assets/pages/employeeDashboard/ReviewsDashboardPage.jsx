@@ -4,8 +4,11 @@ import PrevLink from "../../components/dashboards/admin/PrevLink";
 import { useQuery } from "@tanstack/react-query";
 import reviewsApi from "../../services/reviewsApi";
 import CustomButton from "../../components/CustomButton";
+import { useMediaQuery } from "react-responsive";
 
 const ReviewsDashboardPage = () => {
+  const [noMoreReviews, setNoMoreReviews] = useState(false);
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const { data: unapprovedReviews, error } = useQuery({
     queryKey: ["unapprovedReviews"],
     queryFn: () => reviewsApi.getUnapprovedReviews(),
@@ -23,6 +26,12 @@ const ReviewsDashboardPage = () => {
     await reviewsApi.deleteReview(id);
     setReviews(reviews.filter((review) => review.id !== id));
   };
+
+  useEffect(() => {
+    if (reviews && reviews.length === 0) {
+      setNoMoreReviews(true);
+    }
+  }, [reviews]);
   return (
     <div className="container">
       <DashboardHeader />
@@ -33,7 +42,7 @@ const ReviewsDashboardPage = () => {
           <h3>Valider les avis de nos visiteurs</h3>
         </div>
         <div id="reviewsList">
-          {reviews ? (
+          {reviews && reviews.length > 0 ? (
             reviews.map((review) => (
               <div key={review.id} className="reviewCard">
                 <p className="subh1">{review.username}</p>
@@ -41,13 +50,19 @@ const ReviewsDashboardPage = () => {
                 <div className="actionButtons">
                   <CustomButton
                     title="Approuver le commentaire"
-                    buttonClassName="smallMobileButton"
+                    buttonClassName={
+                      isDesktop ? "smallDesktopButton" : "smallMobileButton"
+                    }
                     type="button"
                     onClick={() => handleApproveReview(review.id)}
                   />
                   <CustomButton
                     title="Supprimer le commentaire"
-                    buttonClassName="smallLogoutButton"
+                    buttonClassName={
+                      isDesktop
+                        ? "smallDesktopLogoutButton"
+                        : "smallLogoutButton"
+                    }
                     type="button"
                     onClick={() => handleDeleteReview(review.id)}
                   />
@@ -55,9 +70,19 @@ const ReviewsDashboardPage = () => {
               </div>
             ))
           ) : (
-            <p>Aucun avis à valider</p>
+            <p className="infoMessage">
+              {noMoreReviews && "Aucun avis à approuver"}
+            </p>
           )}
         </div>
+        {isDesktop && (
+          <CustomButton
+            id="prevButton"
+            buttonClassName="mediumDesktopButton"
+            title="Revenir au dashboard"
+            path="/dashboard"
+          />
+        )}
       </div>
     </div>
   );

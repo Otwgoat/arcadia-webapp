@@ -11,6 +11,7 @@ import Footer from "../components/Footer";
 import ImageSliderMobile from "../components/ImageSliderMobile";
 import { useMediaQuery } from "react-responsive";
 import BreadCrumb from "../components/BreadCrumb";
+import { Helmet } from "react-helmet-async";
 
 const HabitatPage = () => {
   const [topImage, setTopImage] = useState();
@@ -138,95 +139,105 @@ const HabitatPage = () => {
     }
   }, [habitatImages]);
   return (
-    <div className="container">
-      <Header pageActive="habitats" />
-      <div id="habitatPageContainer">
-        {isDesktop && habitat ? (
-          <BreadCrumb habitat={habitat && habitat} />
-        ) : null}
-        {isDesktop ? (
-          <div id="habitatImgPlaceholder">
-            <img
-              src={topImage && topImage}
-              alt={`image de l'habitat ${habitat && habitat.name}`}
-            />
-          </div>
-        ) : (
-          <ImageSliderMobile images={habitatImages && habitatImages} />
-        )}
-
-        <h1>{habitat && habitat.name}</h1>
-        <p className="subh1">{habitat && habitat.description}</p>
-
-        {isDesktop ? <h3>Découvrir les animaux de cet habitat</h3> : null}
-        <form>
-          <select
-            className="formInput selectInput"
-            onChange={(e) => setSpecyDisplayed(e.target.value)}
-          >
-            <option value="">Filtrer par espèce</option>
-            {species &&
-              species.length > 0 &&
-              species.map((specy) => (
-                <option key={specy} value={specy}>
-                  {specy}
-                </option>
-              ))}
-          </select>
-        </form>
-        <div id="animalsContainer">
-          {displayedAnimals && displayedAnimals.length > 0 ? (
-            displayedAnimals.map((animal) => (
-              <Link
-                key={animal.id}
-                className="animalCard"
-                onClick={() => handleAnimalClick(animal.id)}
-              >
-                <img
-                  src={animal.imageUrl}
-                  alt={`Image de ${animal.firstName}`}
-                />
-                <div className="animalCardLink">
-                  <p className="subh1">
-                    {animal.firstName} - {animal.race}
-                  </p>
-                  <span>
-                    <ArrowSquareIn size={20} color="#fdf5e9" weight="regular" />
-                  </span>
-                </div>
-              </Link>
-            ))
+    <>
+      <Helmet>
+        <title>{habitat && `Arcadia Zoo - ${habitat.name}`}</title>
+        <meta name="description" content={habitat && habitat.description} />
+      </Helmet>
+      <div className="container">
+        <Header pageActive="habitats" />
+        <div id="habitatPageContainer">
+          {isDesktop && habitat ? (
+            <BreadCrumb habitat={habitat && habitat} />
+          ) : null}
+          {isDesktop ? (
+            <div id="habitatImgPlaceholder">
+              <img
+                src={topImage && topImage}
+                alt={`image de l'habitat ${habitat && habitat.name}`}
+              />
+            </div>
           ) : (
-            <p className="infoMessage">{displayAnimalsError}</p>
+            <ImageSliderMobile images={habitatImages && habitatImages} />
           )}
-          <div className="habitatButtons">
-            {displayedAnimals &&
-            displayedAnimals.length > 0 &&
-            filteredAnimalsTotalCount &&
-            itemCount < filteredAnimalsTotalCount ? (
+
+          <h1>{habitat && habitat.name}</h1>
+          <p className="subh1">{habitat && habitat.description}</p>
+
+          {isDesktop ? <h3>Découvrir les animaux de cet habitat</h3> : null}
+          <form>
+            <select
+              className="formInput selectInput"
+              onChange={(e) => setSpecyDisplayed(e.target.value)}
+            >
+              <option value="">Filtrer par espèce</option>
+              {species &&
+                species.length > 0 &&
+                species.map((specy) => (
+                  <option key={specy} value={specy}>
+                    {specy}
+                  </option>
+                ))}
+            </select>
+          </form>
+          <div id="animalsContainer">
+            {displayedAnimals && displayedAnimals.length > 0 ? (
+              displayedAnimals.map((animal) => (
+                <Link
+                  key={animal.id}
+                  className="animalCard"
+                  onClick={() => handleAnimalClick(animal.id)}
+                >
+                  <img
+                    src={animal.imageUrl}
+                    alt={`Image de ${animal.firstName}`}
+                  />
+                  <div className="animalCardLink">
+                    <p className="subh1">
+                      {animal.firstName} - {animal.race}
+                    </p>
+                    <span>
+                      <ArrowSquareIn
+                        size={20}
+                        color="#fdf5e9"
+                        weight="regular"
+                      />
+                    </span>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <p className="infoMessage">{displayAnimalsError}</p>
+            )}
+            <div className="habitatButtons">
+              {displayedAnimals &&
+              displayedAnimals.length > 0 &&
+              filteredAnimalsTotalCount &&
+              itemCount < filteredAnimalsTotalCount ? (
+                <CustomButton
+                  title="En voir plus"
+                  buttonClassName={
+                    isDesktop ? "mediumDesktopButton" : "mediumMobileButton"
+                  }
+                  onClick={() =>
+                    itemCount < filteredAnimalsTotalCount &&
+                    setItemCount(isDesktop ? itemCount + 6 : itemCount + 3)
+                  }
+                />
+              ) : null}
               <CustomButton
-                title="En voir plus"
+                title="Retour à la liste des habitats"
                 buttonClassName={
                   isDesktop ? "mediumDesktopButton" : "mediumMobileButton"
                 }
-                onClick={() =>
-                  itemCount < filteredAnimalsTotalCount &&
-                  setItemCount(isDesktop ? itemCount + 6 : itemCount + 3)
-                }
+                path="/habitats"
               />
-            ) : null}
-            <CustomButton
-              title="Retour à la liste des habitats"
-              buttonClassName={
-                isDesktop ? "mediumDesktopButton" : "mediumMobileButton"
-              }
-              path="/habitats"
-            />
+            </div>
           </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 };
 

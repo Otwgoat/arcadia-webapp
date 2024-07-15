@@ -131,7 +131,7 @@ const CreateUserForm = () => {
       <CustomButton
         type="submit"
         buttonClassName={
-          isDesktop ? "mediumDesktopButton" : "mediumMobileButton"
+          isDesktop ? "smallDesktopButton" : "mediumMobileButton"
         }
         title="Envoyer"
         successMessage={successMessage}

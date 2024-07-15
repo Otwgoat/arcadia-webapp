@@ -5,15 +5,24 @@ import { getFiles } from "../../../services/firebase";
 import CustomButton from "../../CustomButton";
 
 const AnimalFiles = ({ animalId }) => {
-  const formatDate = (dateString) => {
-    const options = {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    };
-    return new Date(dateString).toLocaleDateString("fr-FR", options);
+  const formatDate = (dateString, withHours) => {
+    if (!withHours) {
+      const options = {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      };
+      return new Date(dateString).toLocaleDateString("fr-FR", options);
+    } else {
+      const options = {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      };
+      return new Date(dateString).toLocaleDateString("fr-FR", options);
+    }
   };
   const [displayedImage, setDisplayedImage] = useState();
   const [selectedReport, setSelectedReport] = useState(null);
@@ -97,7 +106,8 @@ const AnimalFiles = ({ animalId }) => {
                   : "Femelle"}
               </p>
               <p className="subh1">
-                <span>Date de naissance:</span> {formatDate(animal?.birthDate)}
+                <span>Date de naissance:</span>{" "}
+                {formatDate(animal?.birthDate, false)}
               </p>
               <p className="subh1">
                 <span>Habitat:</span> {animal?.habitatId.name}
@@ -120,7 +130,7 @@ const AnimalFiles = ({ animalId }) => {
                       <p>
                         Rapport vétérinaire du{" "}
                         <span className="reportDate">
-                          {formatDate(report.date)}
+                          {formatDate(report.date, false)}
                         </span>
                       </p>
                       {selectedReport && selectedReport.id === report.id && (
@@ -186,7 +196,7 @@ const AnimalFiles = ({ animalId }) => {
                     >
                       <p>
                         Rapport d'alimentation du{" "}
-                        <span>{formatDate(report.date)}</span>{" "}
+                        <span>{formatDate(report.date, true)}</span>{" "}
                       </p>
                       {selectedFeedingReport &&
                         selectedFeedingReport.id === report.id && (

@@ -85,7 +85,11 @@ const UpdateHabitatImages = ({ habitat }) => {
           <div key={image.name} className="listItem imageListItem">
             <div className="listItemContent imageListItemContent">
               <div className="listItemContentHeader">
-                <h3>{image.name}</h3>
+                {isDesktop ? (
+                  <p className="subh1">{image.name}</p>
+                ) : (
+                  <h3>{image.name}</h3>
+                )}
                 {image.isPrincipal === "true" ? (
                   <ExclamationMark size={30} weight="regular" color="#fdf5e9" />
                 ) : (

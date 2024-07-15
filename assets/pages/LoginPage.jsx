@@ -6,6 +6,7 @@ import AuthContext, { useAuth } from "../context/AuthContext";
 import authApi from "../services/authApi";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
+import { Helmet } from "react-helmet-async";
 
 const LoginPage = () => {
   const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
@@ -41,52 +42,57 @@ const LoginPage = () => {
     }
   };
   return (
-    <div className="container">
-      <Header />
-      <main className="pageContainer" id="loginFormContainer">
-        <h1>Connexion</h1>
-        <p className="subh1">
-          Connexion reservée aux employés et vétérinaires du parc.
-        </p>
-        <form>
-          <label htmlFor="email" className="formLabel">
-            Email
-          </label>
-          <input
-            className="formInput"
-            type="text"
-            id="email"
-            name="email"
-            value={email ?? ""}
-            required
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <label htmlFor="password" className="formLabel">
-            Mot de passe
-          </label>
-          <input
-            className="formInput"
-            type="password"
-            id="password"
-            name="password"
-            value={password ?? ""}
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {errors && <p className="errorMessage">{errors}</p>}
-          <CustomButton
-            id="postLoginFormButton"
-            title="Se connecter"
-            buttonClassName={
-              isDesktop ? "mediumDesktopButton" : "largeMobileButton"
-            }
-            type="submit"
-            onClick={handleSubmit}
-          />
-        </form>
-      </main>
-      <Footer />
-    </div>
+    <>
+      <Helmet>
+        <title>Arcadia Zoo - Connexion</title>
+      </Helmet>
+      <div className="container">
+        <Header />
+        <main className="pageContainer" id="loginFormContainer">
+          <h1>Connexion</h1>
+          <p className="subh1">
+            Connexion reservée aux employés et vétérinaires du parc.
+          </p>
+          <form>
+            <label htmlFor="email" className="formLabel">
+              Email
+            </label>
+            <input
+              className="formInput"
+              type="text"
+              id="email"
+              name="email"
+              value={email ?? ""}
+              required
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <label htmlFor="password" className="formLabel">
+              Mot de passe
+            </label>
+            <input
+              className="formInput"
+              type="password"
+              id="password"
+              name="password"
+              value={password ?? ""}
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {errors && <p className="errorMessage">{errors}</p>}
+            <CustomButton
+              id="postLoginFormButton"
+              title="Se connecter"
+              buttonClassName={
+                isDesktop ? "mediumDesktopButton" : "largeMobileButton"
+              }
+              type="submit"
+              onClick={handleSubmit}
+            />
+          </form>
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 };
 

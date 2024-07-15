@@ -4,8 +4,11 @@ import PrevLink from "../../components/dashboards/admin/PrevLink";
 import { useQuery } from "@tanstack/react-query";
 import animalsApi from "../../services/animalsApi";
 import { getViewsData } from "../../services/firebase";
+import { useMediaQuery } from "react-responsive";
+import CustomButton from "../../components/CustomButton";
 
 const AnimalsViewsCountDashboardPage = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [animalViews, setAnimalViews] = useState();
   const [updatedAnimals, setUpdatedAnimals] = useState();
   const { data: animals } = useQuery({
@@ -72,9 +75,15 @@ const AnimalsViewsCountDashboardPage = () => {
                 </p>
               </div>
             ))}
-
-          <div className="leaderBoardItem"></div>
         </div>
+        {isDesktop && (
+          <CustomButton
+            id="prevButton"
+            buttonClassName="mediumDesktopButton"
+            title="Revenir au dashboard"
+            path="/dashboard"
+          />
+        )}
       </div>
     </div>
   );

@@ -4,8 +4,10 @@ import PrevLink from "../../components/dashboards/admin/PrevLink";
 import habitatsApi from "../../services/habitatsApi";
 import { useQuery } from "@tanstack/react-query";
 import CustomButton from "../../components/CustomButton";
+import { useMediaQuery } from "react-responsive";
 
 const HabitatCommentsDashboardPage = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const formRef = useRef(formRef);
   const getTodayDate = () => {
     const today = new Date();
@@ -136,7 +138,9 @@ const HabitatCommentsDashboardPage = () => {
               <CustomButton
                 title="Envoyer le commentaire"
                 type="submit"
-                buttonClassName="mediumMobileButton"
+                buttonClassName={
+                  isDesktop ? "smallDesktopButton" : "mediumMobilebutton"
+                }
                 onClick={(e) => handleSubmit(e)}
                 successMessage={successMessage}
                 submitSuccess={submitSuccess}
@@ -144,6 +148,14 @@ const HabitatCommentsDashboardPage = () => {
             </>
           )}
         </form>
+        {isDesktop && (
+          <CustomButton
+            id="prevButton"
+            buttonClassName="mediumDesktopButton"
+            title="Revenir au dashboard"
+            path="/dashboard"
+          />
+        )}
       </div>
     </div>
   );

@@ -84,9 +84,6 @@ const Footer = () => {
     staleTime: 2000,
   });
 
-  useEffect(() => {
-    console.log(planning);
-  }, [planning]);
   return (
     <>
       {isDesktop ? (

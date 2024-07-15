@@ -8,6 +8,8 @@
     width: 390px;
     height: 400px;
     object-fit: cover;
+    border-radius: 5px;
+    box-shadow: $defaultShadow;
   }
   .cardHeader {
     width: 100%;
@@ -28,9 +30,9 @@
       .subh1 {
         text-align: left;
         margin: 1rem;
-        font-weight: 600;
+
         span {
-          font-weight: 200;
+          color: $color-text-white-blur;
         }
       }
     }
@@ -99,6 +101,34 @@
         margin-bottom: calc($mobile-small-gap / 2);
         span {
           color: $color-text-white-blur;
+        }
+      }
+    }
+  }
+}
+@media screen and (min-width: 1024px) {
+  .animalCardContainer {
+    .animalCardImg {
+      width: 500px;
+    }
+    .cardHeader {
+      h2 {
+        margin-top: $desktop-large-gap;
+      }
+      .animalCardInfos {
+        width: 390px;
+        min-height: 250px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+      }
+      .reportsContainer {
+        .reportNavLink {
+          width: 390px;
+        }
+        .reportNavLinkActive {
+          width: 390px;
         }
       }
     }

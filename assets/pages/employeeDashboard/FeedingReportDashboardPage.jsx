@@ -5,8 +5,10 @@ import CustomButton from "../../components/CustomButton";
 import { useQuery } from "@tanstack/react-query";
 import PrevLink from "../../components/dashboards/admin/PrevLink";
 import animalsApi from "../../services/animalsApi";
+import { useMediaQuery } from "react-responsive";
 
 const FeedingReportDashboardPage = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const getTodayDateTime = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -196,7 +198,9 @@ const FeedingReportDashboardPage = () => {
               <CustomButton
                 title="Envoyer le rapport"
                 type="submit"
-                buttonClassName="mediumMobileButton"
+                buttonClassName={
+                  isDesktop ? "smallDesktopButton" : "mediumMobilebutton"
+                }
                 successMessage={successMessage}
                 submitSuccess={submitSuccess}
                 onClick={(e) => handleSubmit(e)}
@@ -204,6 +208,14 @@ const FeedingReportDashboardPage = () => {
             </>
           )}
         </form>
+        {isDesktop && (
+          <CustomButton
+            id="prevButton"
+            buttonClassName="mediumDesktopButton"
+            title="Revenir au dashboard"
+            path="/dashboard"
+          />
+        )}
       </div>
     </div>
   );

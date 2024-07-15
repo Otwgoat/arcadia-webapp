@@ -5,8 +5,10 @@ import habitatsApi from "../../services/habitatsApi";
 import { useQuery } from "@tanstack/react-query";
 import CustomButton from "../../components/CustomButton";
 import veterinaryApi from "../../services/veterinaryReport";
+import { useMediaQuery } from "react-responsive";
 
 const ConsultationsDashboardPage = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const formRef = useRef(formRef);
   const getTodayDate = () => {
     const today = new Date();
@@ -228,7 +230,9 @@ const ConsultationsDashboardPage = () => {
               <CustomButton
                 type="submit"
                 id="submitReportButton"
-                buttonClassName="mediumMobileButton"
+                buttonClassName={
+                  isDesktop ? "smallDesktopButton" : "mediumMobileButton"
+                }
                 title="Créer le rapport"
                 successMessage={successMessage}
                 submitSuccess={submitSuccess}
@@ -237,6 +241,14 @@ const ConsultationsDashboardPage = () => {
             </>
           )}
         </form>
+        {isDesktop && (
+          <CustomButton
+            id="prevButton"
+            buttonClassName="mediumDesktopButton"
+            title="Revenir au dashboard"
+            path="/dashboard"
+          />
+        )}
       </div>
     </div>
   );
