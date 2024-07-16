@@ -129,7 +129,7 @@ const AnimalFiles = ({ animalId }) => {
 
             <div className="reportsContainer animalVeterinaryReportsContainer">
               <h2>Rapports précédents</h2>
-              {veterinaryReports && veterinaryReports.reports.length > 1 ? (
+              {veterinaryReports && veterinaryReports.reports.length > 0 ? (
                 veterinaryReports.reports.map((report) => (
                   <div className="reportPlaceholder" key={report.id}>
                     <div
@@ -195,7 +195,7 @@ const AnimalFiles = ({ animalId }) => {
             </div>
             <div className="reportsContainer animalFeedingReportsContainer">
               <h2>Rapports d'alimentation</h2>
-              {feedingReports && feedingReports.reports.length > 1 ? (
+              {feedingReports && feedingReports.reports.length > 0 ? (
                 feedingReports.reports.map((report) => (
                   <div className="reportPlaceholder" key={report.id}>
                     <div

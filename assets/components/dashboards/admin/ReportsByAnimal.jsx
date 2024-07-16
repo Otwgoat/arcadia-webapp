@@ -85,7 +85,7 @@ const ReportsByAnimal = () => {
               ? "Trier par les plus récents"
               : "Trier par les moins récents"}
           </p>
-          {reports && reports && reports.length > 1 ? (
+          {reports && reports && reports.length > 0 ? (
             reports.map((report) => (
               <div className="reportPlaceholder" key={report.id}>
                 <div

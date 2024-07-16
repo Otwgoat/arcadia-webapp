@@ -92,7 +92,7 @@ const ReportsByDate = () => {
         />
       </form>
       <div className="reportsContainer">
-        {reports && reports.length > 1 ? (
+        {reports && reports.length > 0 ? (
           reports.map((report) => (
             <div className="reportPlaceholder" key={report.id}>
               <div
