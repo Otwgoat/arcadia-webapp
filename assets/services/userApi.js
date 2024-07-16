@@ -1,7 +1,11 @@
 import axios from "axios";
 import apiPath from "./apiPath";
 
+// This is a userApi object that contains several API functions related to user management
+
 const userApi = {
+    
+    // Function to create a new user
     createUser: async (userData) => {
         try {
             const response = await axios.post(apiPath('admin/creation-utilisateur'), userData);
@@ -11,6 +15,8 @@ const userApi = {
             throw error;
         }
     },
+    
+    // Function to get all users
     getUsers: async () => {
         try {
             const response = await axios.get(apiPath('admin/users'));
@@ -20,6 +26,8 @@ const userApi = {
             throw error;
         }
     },
+    
+    // Function to delete a user by their ID
     deleteUser: async (userId) => {
         try {
             const response = await axios.delete(apiPath(`admin/utilisateur/${userId}/suppression`));
@@ -29,6 +37,8 @@ const userApi = {
             throw error;
         }
     },
+    
+    // Function to get the current logged-in user
     getCurrentUser: async () => {
         try {
             const response = await axios.get(apiPath('utilisateur-connecte'));

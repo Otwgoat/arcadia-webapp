@@ -17,8 +17,14 @@ const HabitatPage = () => {
   const [topImage, setTopImage] = useState();
   const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const navigate = useNavigate();
-  const [displayHabitatImage, setDisplayHabitatImage] = useState(0);
   const [filteredAnimalsTotalCount, setFilteredAnimalsTotalCount] = useState(0);
+  /**
+   * Retrieves the URL of the principal image for a given folder and item ID.
+   *
+   * @param {string} folder - The folder where the images are stored.
+   * @param {string} itemId - The ID of the item.
+   * @returns {Promise<string>} The URL of the principal image.
+   */
   const getPrincipalImage = async (folder, itemId) => {
     try {
       const images = await getFiles(`/${folder}/${itemId}`);
@@ -63,6 +69,10 @@ const HabitatPage = () => {
     queryFn: () => habitatsApi.getAnimals(habitatId),
     enabled: !!habitatId,
   });
+  /**
+   * Get all species from the animals array and set the species state.
+   * @param {*} animals
+   */
   const getUniqueSpecies = (animals) => {
     const differentSpecies = [];
     animals &&
@@ -73,7 +83,9 @@ const HabitatPage = () => {
       });
     setSpecies(differentSpecies);
   };
-
+  /**
+   * Loads the animals of the habitat and filters them by species. Then it loads the principal image of each animal.
+   */
   useEffect(() => {
     const loadDisplayedAnimals = async () => {
       if (animals && animals.length > 0) {
@@ -115,12 +127,12 @@ const HabitatPage = () => {
   }, [animals]);
 
   useEffect(() => {
-    if (filteredAnimalsTotalCount) {
-      console.log(filteredAnimalsTotalCount);
-    }
-  }, [filteredAnimalsTotalCount]);
-  useEffect(() => {
     if (habitatImages) {
+      /**
+       * Retrieves the principal image URL from the habitatImages array.
+       * If no principal image is found, it returns the URL of the first image in the array.
+       * @returns {string} The URL of the principal image or the first image in the array.
+       */
       const getPrincipalImage = async () => {
         try {
           const images = habitatImages;

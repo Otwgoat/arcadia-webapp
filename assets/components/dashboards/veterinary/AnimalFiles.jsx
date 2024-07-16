@@ -4,7 +4,21 @@ import animalsApi from "../../../services/animalsApi";
 import { getFiles } from "../../../services/firebase";
 import CustomButton from "../../CustomButton";
 
+/**
+ * Renders a component that displays animal files, including veterinary reports and feeding reports.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.animalId - The ID of the animal.
+ * @returns {JSX.Element} The rendered AnimalFiles component.
+ */
 const AnimalFiles = ({ animalId }) => {
+  /**
+   * Formats a date string into a localized date string.
+   * @param {string} dateString - The date string to format.
+   * @param {boolean} withHours - Whether to include hours and minutes in the formatted date string.
+   * @returns {string} The formatted date string.
+   */
   const formatDate = (dateString, withHours) => {
     if (!withHours) {
       const options = {
@@ -66,6 +80,10 @@ const AnimalFiles = ({ animalId }) => {
     enabled: !!animalId,
   });
 
+  /**
+   * Sets the displayed image to the principal image if it exists, or the first image in the images array.
+   * @param {Object} report - The report to display.
+   */
   useEffect(() => {
     if (images && images.length > 0) {
       const principalImage = images.find((image) => image.isPrincipal);
@@ -76,12 +94,7 @@ const AnimalFiles = ({ animalId }) => {
       }
     }
   }, [images]);
-  useEffect(() => {
-    console.log(veterinaryReports);
-  }, [veterinaryReports]);
-  useEffect(() => {
-    console.log(animal);
-  }, [animal]);
+
   return (
     <div className="animalCardContainer">
       {!animal || !displayedImage ? (

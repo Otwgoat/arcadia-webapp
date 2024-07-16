@@ -26,18 +26,22 @@ const HabitatDashboardPage = () => {
     enabled: !!habitatId,
   });
 
+  /**
+   * Deletes a habitat with the specified ID.
+   *
+   * @param {string} habitatId - The ID of the habitat to delete.
+   * @returns {Promise<void>} - A promise that resolves when the habitat is deleted.
+   */
   const handleDelete = async (habitatId) => {
     try {
       await habitatsApi.deleteHabitat(habitatId);
     } catch (error) {
       setDeleteError(error.response.data.error);
-      console.log(error);
     }
   };
   useEffect(() => {
     if (location.state?.habitatId) {
       setHabitatId(location.state.habitatId);
-      console.log(location.state.habitatId);
     }
   }, [location.state]);
   return (

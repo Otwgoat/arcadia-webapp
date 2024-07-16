@@ -22,7 +22,6 @@ import { Helmet } from "react-helmet-async";
 export const Home = () => {
   const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [activeContent, setActiveContent] = useState("happiness");
-  const [postReviewFormActive, setPostReviewFormActive] = useState(false);
   const [introText, setIntroText] = useState(
     "Bienvenue sur le site du parc zoologique Arcadia. Situé à quelques kilomètres de Brocéliande, ce sanctuaire enchanteur offre une escapade fascinante à travers des habitats naturels diversifiés où cohabitent des espèces rares et exotiques. Venez découvrir une expérience unique où la nature se mêle à la magie, invitant petits et grands à explorer, apprendre et s'émerveiller."
   );

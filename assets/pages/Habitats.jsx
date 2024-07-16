@@ -39,6 +39,10 @@ const Habitats = () => {
     setUpdatedHabitats(habitats);
   }, [habitats]);
   useEffect(() => {
+    /**
+     * Loads images for habitats.
+     * @returns {Promise<void>} A promise that resolves when the images are loaded.
+     */
     const loadImages = async () => {
       if (habitats) {
         const newHabitats = await Promise.all(

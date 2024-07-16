@@ -15,6 +15,12 @@ const SelectAnimal = ({ selectAnimalOnChange }) => {
     setSelectHabitatError("Erreur lors du chargement des habitats");
   }
 
+  /**
+   * Handles the change event of the select input.
+   *
+   * @param {string} value - The selected value from the select input.
+   * @returns {void}
+   */
   const selectOnChange = (value) => {
     setHabitatId(value);
     setDisplayAnimalsList(true);

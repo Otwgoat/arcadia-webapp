@@ -22,6 +22,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AnimalController extends AbstractController
 {
+    /**
+     * Get animals from the database
+     */
     #[Route('api/animals', name: 'animals', methods: ['GET'])]
     public function getAnimals(SerializerInterface $serializer, AnimalRepository $animalRepository)
     {
@@ -34,6 +37,9 @@ class AnimalController extends AbstractController
         $jsonAnimals = $serializer->serialize($serializedAnimals, 'json', ['groups' => 'getAnimals']);
         return new JsonResponse($jsonAnimals, Response::HTTP_OK, [], true);
     }
+    /**
+     * Get animals by it's id from the database
+     */
     #[Route('api/animal/{id}', name: 'animal', methods: ['GET'])]
     public function getAnimalById(SerializerInterface $serializer, AnimalRepository $animalRepository, HabitatRepository $habitatRepository, $id): JsonResponse
     {
@@ -58,6 +64,9 @@ class AnimalController extends AbstractController
         return new JsonResponse($jsonAnimal, Response::HTTP_OK, [], true);
     }
 
+    /**
+     * Get veterinary reports by animal id from the database
+     */
     #[Route('api/animal/{id}/rapports-veterinaires', name: 'rapports-veterinaires', methods: ['GET'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function getVeterinaryReports(SerializerInterface $serializer, AnimalRepository $animalRepository, Request $request, $id, Security $security): JsonResponse
@@ -73,7 +82,9 @@ class AnimalController extends AbstractController
             return new JsonResponse(['error' => 'Vous n\'avez pas les droits pour accéder à cette ressource'], Response::HTTP_FORBIDDEN);
         }
     }
-
+    /**
+     * Get veterinary reports by date from the database
+     */
     #[Route('api/animal/rapports-veterinaires/{date}', name: 'rapports-veterinaires-par-date', methods: ['GET'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function getVeterinaryReportsByDate(SerializerInterface $serializer, AnimalRepository $animalRepository, Request $request, $date, Security $security): JsonResponse
@@ -91,7 +102,9 @@ class AnimalController extends AbstractController
     }
 
 
-
+    /**
+     * Get feeding reports by animal id from the database
+     */
     #[Route('api/animal/{id}/rapports-alimentation', name: 'rapports-alimentation', methods: ['GET'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function getFeedingReports(SerializerInterface $serializer, AnimalRepository $animalRepository, Request $request, $id, Security $security): JsonResponse
@@ -107,6 +120,9 @@ class AnimalController extends AbstractController
         }
     }
 
+    /**
+     * Create an animal in the database
+     */
     #[Route('api/admin/creation-animal', name: 'creation-animal', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
     public function createAnimal(ValidatorInterface $validator, UrlGeneratorInterface $urlGenerator, SerializerInterface $serializer, Request $request, LoggerInterface $logger, AnimalRepository $animalRepository): JsonResponse
@@ -133,6 +149,9 @@ class AnimalController extends AbstractController
         return new JsonResponse($jsonAnimal, Response::HTTP_CREATED, ['Location' => $location], true);
     }
 
+    /**
+     * Create a veterinary report in the database
+     */
     #[Route('api/animal/creation-rapport-veterinaire', name: 'creation-rapport-vétérinaire', methods: ['POST'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function createVeterinaryReport(Security $security, Request $request, AnimalRepository $animalRepository, LoggerInterface $logger): JsonResponse
@@ -155,6 +174,9 @@ class AnimalController extends AbstractController
         return new JsonResponse(['message' => 'Rapport vétérinaire créé'], Response::HTTP_CREATED);
     }
 
+    /**
+     * Create a feeding report in the database
+     */
     #[Route('api/animal/creation-rapport-alimentation', name: 'creation-rapport-alimentation', methods: ['POST'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function createFeedingReport(Security $security, Request $request, AnimalRepository $animalRepository, LoggerInterface $logger): JsonResponse
@@ -177,7 +199,9 @@ class AnimalController extends AbstractController
         return new JsonResponse(['message' => 'Rapport d\'alimentation créé'], Response::HTTP_CREATED);
     }
 
-
+    /**
+     * Update an animal in the database
+     */
     #[Route('api/admin/animal/{id}/modification', name: 'modification-animal', methods: ['PUT'])]
     #[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
     public function updateAnimal(SerializerInterface $serializer, ValidatorInterface $validator, $id, Request $request, LoggerInterface $logger, AnimalRepository $animalRepository): JsonResponse
@@ -201,7 +225,9 @@ class AnimalController extends AbstractController
         return new JsonResponse(['message' => 'Animal mis à jour'], Response::HTTP_OK);
     }
 
-
+    /**
+     * Delete an animal from the database
+     */
     #[Route('api/admin/animal/{id}/suppression', name: 'suppression-animal', methods: ['DELETE'])]
     #[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
     public function deleteAnimal($id, AnimalRepository $animalRepository, LoggerInterface $logger): JsonResponse

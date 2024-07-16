@@ -21,7 +21,16 @@ var firebaseConfig = {
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
   const db = getFirestore(app);
-
+  /**
+   * Upload images on firebase storage
+   * @param {*} file 
+   * @param {*} itemId 
+   * @param {*} loadingSetter 
+   * @param {*} filesSetter 
+   * @param {*} folder 
+   * @param {*} principalSelectedFile 
+   * @returns 
+   */
   const uploadFile = (file, itemId, loadingSetter, filesSetter, folder ,principalSelectedFile) => {
     loadingSetter(true);
     let imagePath;
@@ -69,7 +78,11 @@ var firebaseConfig = {
     
     });
   };
-
+ /**
+  * Get files on firebase storage
+  * @param {*} folder 
+  * @returns 
+  */
   const getFiles = async (folder) => {
     try {
       const storageRef = ref(storage, `${folder}`);
@@ -87,6 +100,10 @@ var firebaseConfig = {
       throw error;
     }
   }
+  /**
+   * Delete file on firebase by it's file url. 
+   * @param {*} fileUrl 
+   */
   const deleteFile = async (fileUrl) => {
     try {
       let fileRef = ref(storage, fileUrl);
@@ -97,6 +114,10 @@ var firebaseConfig = {
     }
   };
   
+  /**
+   * Add a view to an animal
+   * @param {*} animalId 
+   */
   const incrementAnimalViews = async (animalId) => {
     const animalRef = doc(db, "animals", animalId.toString());
     try {
@@ -107,7 +128,10 @@ var firebaseConfig = {
     console.error("Error incrementing animal views: ", error);
   }
   };
-
+  /**
+   * Get views data for animals
+   * @returns 
+   */
   const getViewsData = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "animals"));

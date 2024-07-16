@@ -55,6 +55,13 @@ const UpdateHabitatImages = ({ habitat }) => {
       );
     }
   };
+  /**
+   * Handles the submission of habitat images.
+   * @async
+   * @function handleSubmit
+   * @returns {Promise<void>} A Promise that resolves when the images are successfully uploaded.
+   * @throws {Error} If there is an error during the image upload process.
+   */
   const handleSubmit = async () => {
     try {
       const uploadPromises = files.map((file) => {

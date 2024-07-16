@@ -32,6 +32,10 @@ const UpdateAnimalForm = ({ animal, habitats }) => {
     habitat: "",
     description: "",
   });
+  /**
+   * Submits the form data to update an animal.
+   * @param {*} e
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedAnimalData = {

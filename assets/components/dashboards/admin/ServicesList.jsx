@@ -9,20 +9,21 @@ const ServicesList = () => {
   const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [updateServiceFormOpen, setUpdateServiceFormOpen] = useState(null);
   const [servicesList, setServicesList] = useState();
-  const {
-    data: services,
-    error,
-    isLoading,
-  } = useQuery({
+  const { data: services, error } = useQuery({
     queryKey: ["services"],
     queryFn: servicesApi.getServices,
   });
-  if (isLoading) {
-    console.log(isLoading);
-  }
+
   if (error) {
     return <p>Une erreur est survenue, merci de réesayer ou de patienter.</p>;
   }
+  /**
+   * Deletes a service by its ID.
+   *
+   * @param {string} serviceId - The ID of the service to delete.
+   * @returns {Promise<void>} - A promise that resolves when the service is deleted.
+   * @throws {Error} - If there is an error in the deleteService API call.
+   */
   const handleDelete = async (serviceId) => {
     try {
       await servicesApi.deleteService(serviceId);

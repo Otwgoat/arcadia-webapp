@@ -50,6 +50,12 @@ const CreateAnimalForm = (props) => {
     }
   }
 
+  /**
+   * Handles the form submission for creating an animal.
+   *
+   * @param {Event} e - The form submission event.
+   * @returns {Promise<void>} - A promise that resolves when the form submission is complete.
+   */
   const handleSubmit = async (e) => {
     setErrors({});
     e.preventDefault();
@@ -86,6 +92,9 @@ const CreateAnimalForm = (props) => {
     }
   };
 
+  /**
+   * Handles the button click event.
+   */
   const handleButtonClick = () => {
     setSelectImagesError();
     const realFileInput = document.getElementById("animalImages");

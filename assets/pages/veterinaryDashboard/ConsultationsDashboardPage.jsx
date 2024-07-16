@@ -10,6 +10,9 @@ import { useMediaQuery } from "react-responsive";
 const ConsultationsDashboardPage = () => {
   const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const formRef = useRef(formRef);
+  /**
+   * Obtain the current date in the format YYYY-MM-DD
+   */
   const getTodayDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -78,6 +81,12 @@ const ConsultationsDashboardPage = () => {
     }
   };
 
+  /**
+   * Handles the form submission for creating a report.
+   *
+   * @param {Event} e - The form submission event.
+   * @returns {Promise<void>} - A promise that resolves when the report is created successfully.
+   */
   const handleSubmit = async (e) => {
     setErrors({});
     e.preventDefault();

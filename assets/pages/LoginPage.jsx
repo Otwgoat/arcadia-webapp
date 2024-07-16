@@ -19,6 +19,12 @@ const LoginPage = () => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
+  /**
+   * Handles the form submission for the login page.
+   *
+   * @param {Event} e - The form submission event.
+   * @returns {Promise<void>} - A promise that resolves when the authentication is successful.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     let credentials = {};

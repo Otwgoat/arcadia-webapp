@@ -16,6 +16,9 @@ const AnimalsViewsCountDashboardPage = () => {
     queryFn: () => animalsApi.getAnimals(),
   });
 
+  /**
+   * Fetches the views data from the firebase database.
+   */
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -28,7 +31,11 @@ const AnimalsViewsCountDashboardPage = () => {
     };
     loadData();
   }, [animals]);
+  
   useEffect(() => {
+    /**
+     * Updates the animals with their respective views count.
+     */
     const updateAnimals = () => {
       if (
         animals &&

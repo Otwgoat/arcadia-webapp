@@ -9,8 +9,8 @@ import habitatsApi from "../../services/habitatsApi";
 import animalsApi from "../../services/animalsApi";
 import DashboardNavItem from "../../components/dashboards/DashboardNavItem";
 import UpdateAnimalImages from "../../components/dashboards/admin/UpdateAnimalImages";
-import { deleteFile } from "../../services/firebase";
 import { useMediaQuery } from "react-responsive";
+
 const AnimalDashboardPage = () => {
   const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [isActive, setIsActive] = useState("");
@@ -24,7 +24,7 @@ const AnimalDashboardPage = () => {
   const [newLinkTitle, setNewLinkTitle] = useState(
     location.state?.linkTitle || "Dashboard précédent"
   );
-  const [animal, setAnimal] = useState(location.state?.animal);
+
   const { id: paramAnimalId } = useParams();
   const [animalId, setAnimalId] = useState(
     location.state?.animal?.id || paramAnimalId.split(":")[1]

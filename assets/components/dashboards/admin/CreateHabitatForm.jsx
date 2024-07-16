@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import CustomButton from "../../CustomButton";
-
 import { uploadFile } from "../../../services/firebase";
 import habitatsApi from "../../../services/habitatsApi";
 import { useMediaQuery } from "react-responsive";
@@ -36,6 +35,12 @@ const CreateHabitatForm = () => {
       throw error;
     }
   }
+  /**
+   * Handles the form submission for creating a habitat.
+   *
+   * @param {Event} e - The form submission event.
+   * @returns {Promise<void>} - A promise that resolves when the form submission is complete.
+   */
   const handleSubmit = async (e) => {
     setErrors({});
     e.preventDefault();

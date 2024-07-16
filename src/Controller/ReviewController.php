@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ReviewController extends AbstractController
 {
+    /**
+     * Get the reviews from the database
+     */
     #[Route('api/reviews', name: 'get-reviews', methods: ['GET'])]
     public function getReviews(Request $request, SerializerInterface $serializer, ReviewRepository $reviewRepository)
     {
@@ -25,6 +28,9 @@ class ReviewController extends AbstractController
         return new JsonResponse($jsonReviews, Response::HTTP_OK, [], true);
     }
 
+    /**
+     * Get the unapproved reviews from the database
+     */
     #[Route('api/avis-non-approuves', name: 'avis non approuvés', methods: ['GET'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function getUnapprovedReviews(Security $security, SerializerInterface $serializer, ReviewRepository $reviewRepository)
@@ -43,6 +49,9 @@ class ReviewController extends AbstractController
         return new JsonResponse($jsonReviews, Response::HTTP_OK, [], true);
     }
 
+    /**
+     * Add a review to the database
+     */
     #[Route('api/add-review', name: 'add-review', methods: ['POST'])]
     public function addReview(ReviewRepository $reviewRepository, LoggerInterface $logger, Request $request, SerializerInterface $serializer)
     {
@@ -68,6 +77,9 @@ class ReviewController extends AbstractController
         return new Response('Avis soumis', Response::HTTP_OK);
     }
 
+    /**
+     * Approve a review from the unapproved reviews in database
+     */
     #[Route('api/review/{id}/approbation', name: 'approbation-avis', methods: ['PUT'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function approveReview(Security $security, LoggerInterface $logger, ReviewRepository $reviewRepository, $id)
@@ -87,6 +99,9 @@ class ReviewController extends AbstractController
         return new Response('Avis approuvé', Response::HTTP_OK);
     }
 
+    /**
+     * Delete a review from the database
+     */
     #[Route('api/review/{id}/suppression', name: 'suppression-avis', methods: ['DELETE'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function deleteReview(Security $security, LoggerInterface $logger, ReviewRepository $reviewRepository, $id)

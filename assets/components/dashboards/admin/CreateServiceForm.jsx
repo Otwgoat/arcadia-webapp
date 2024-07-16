@@ -11,6 +11,10 @@ const CreateServiceForm = (props) => {
   const [errors, setErrors] = useState({});
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState();
+  /**
+   * Function that handles the API endpoint for creating or updating a service.
+   * @returns {Promise} A promise that resolves with the API response.
+   */
   const apiEndpoint = () => {
     const serviceData = {
       title: title,

@@ -21,6 +21,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserController extends AbstractController
 {
+    /**
+     * Get the users from the database
+     */
     #[Route('api/admin/users', name: 'users', methods: ['GET'])]
     #[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
     public function getUsers(UserRepository $userRepository)
@@ -36,6 +39,9 @@ class UserController extends AbstractController
         return $this->json($user);
     }
 
+    /**
+     * Create a user in the database
+     */
     #[Route('api/admin/creation-utilisateur', name: 'creation_utilisateur', methods: ['POST'])]
     #[IsGranted("ROLE_ADMIN", message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
     public function createUser(MailerInterface $mailer, UserRepository $userRepository, Request $request, UserPasswordHasherInterface $passHasher, UrlGeneratorInterface $urlGenerator, SerializerInterface $serializer, LoggerInterface $logger, ValidatorInterface $validator): JsonResponse
@@ -66,6 +72,9 @@ class UserController extends AbstractController
         return new JsonResponse($jsonUser, Response::HTTP_CREATED, ['Location' => $location], true);
     }
 
+    /**
+     * Delete a user from the database
+     */
     #[Route('api/admin/utilisateur/{id}/suppression', name: 'delete_user', methods: ['DELETE'])]
     #[IsGranted("ROLE_ADMIN", message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
     public function deleteUser(UserRepository $userRepository, $id, LoggerInterface $logger): JsonResponse
@@ -79,6 +88,10 @@ class UserController extends AbstractController
         }
         return new JsonResponse(['message' => 'Utilisateur supprimé'], Response::HTTP_OK);
     }
+
+    /**
+     * Get the current user
+     */
     #[Route("api/utilisateur-connecte", name: "utilisateur-actuel", methods: ["GET"])]
     public function getConnectedUser(SerializerInterface $serializer, Security $security): JsonResponse
     {

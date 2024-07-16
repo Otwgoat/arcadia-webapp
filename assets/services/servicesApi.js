@@ -1,7 +1,16 @@
 import axios from "axios";
 import apiPath from "./apiPath";
 
+/**
+ * Represents a collection of API methods for interacting with services.
+ * @namespace servicesApi
+ */
 const servicesApi = {
+    /**
+     * Create a new service on the database.
+     * @param {*} serviceData 
+     * @returns 
+     */
     createService: async (serviceData) => {
         try {
             const response = await axios.post(apiPath('admin/creation-service'), serviceData);
@@ -11,6 +20,10 @@ const servicesApi = {
             throw error;
         }
     },
+    /**
+     * Get all the services from the database.
+     * @returns 
+     */
     getServices: async () => {
         try {
             const response = await axios.get(apiPath('services'));
@@ -20,6 +33,11 @@ const servicesApi = {
             throw error;
         }
     },
+    /**
+     * Delete a service from the database.
+     * @param {*} serviceId 
+     * @returns 
+     */
     deleteService: async (serviceId) => {
         try {
             const response = await axios.delete(apiPath(`service/${serviceId}/suppression`));
@@ -29,6 +47,12 @@ const servicesApi = {
             throw error;
         }
     },
+    /**
+     * Update a service on the database.
+     * @param {*} serviceId 
+     * @param {*} serviceData 
+     * @returns 
+     */
     updateService: async (serviceId, serviceData) => {
         try {
             const response = await axios.put(apiPath(`service/${serviceId}/modification`), serviceData);
@@ -38,6 +62,10 @@ const servicesApi = {
             throw error;
         }
     },
+    /**
+     * Get planning data from the json doc 
+     * 
+     */
     getPlanning: async () => {
         try {
             const response = await axios.get(apiPath('horaires'));
@@ -47,6 +75,11 @@ const servicesApi = {
             throw error;
         }
     },
+    /**
+     * Update planning on the json doc
+     * @param {*} planningForm 
+     * @returns 
+     */
     updatePlanning: async (planningForm) => {
         try {
             const response = await axios.put(apiPath('admin/horaires/modification'), planningForm);

@@ -52,7 +52,11 @@ const HabitatCommentsDashboardPage = () => {
     }
     return errors;
   };
-
+  /**
+   * Submit the form for creating a new report on an habitat.
+   * @param {*} e
+   * @returns
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});

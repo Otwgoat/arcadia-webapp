@@ -14,6 +14,11 @@ import { Helmet } from "react-helmet-async";
 const AnimalPage = () => {
   const [topImage, setTopImage] = useState();
   const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
+  /**
+   * Formats the date string to a French date format.
+   * @param {*} dateString
+   * @returns
+   */
   const formatDate = (dateString) => {
     const options = {
       day: "2-digit",
@@ -22,7 +27,7 @@ const AnimalPage = () => {
     };
     return new Date(dateString).toLocaleDateString("fr-FR", options);
   };
-  const { habitatName: paramHabitatName } = useParams();
+
   const { animalId: paramAnimalId } = useParams();
   const [animalId, setAnimalId] = useState(
     paramAnimalId.includes(":") ? paramAnimalId.split(":")[1] : paramAnimalId
@@ -40,6 +45,11 @@ const AnimalPage = () => {
   });
   useEffect(() => {
     if (animalImages) {
+      /**
+       * Retrieves the principal image URL from the animalImages array.
+       * If no principal image is found, it returns the URL of the first image in the array.
+       * @returns {string} The URL of the principal image or the first image in the array.
+       */
       const getPrincipalImage = async () => {
         try {
           const images = animalImages;

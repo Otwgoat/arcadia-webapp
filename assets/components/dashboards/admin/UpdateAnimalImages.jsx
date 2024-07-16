@@ -55,6 +55,13 @@ const UpdateAnimalImages = ({ animal }) => {
       );
     }
   };
+  /**
+   * Handles the submission of the form.
+   *
+   * @param {Event} e - The event object.
+   * @returns {Promise<void>} - A promise that resolves when the images are successfully uploaded.
+   * @throws {Error} - If there is an error while adding the images.
+   */
   const handleSubmit = async (e) => {
     try {
       const uploadPromises = files.map((file) => {

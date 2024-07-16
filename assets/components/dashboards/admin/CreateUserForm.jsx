@@ -12,17 +12,19 @@ const CreateUserForm = () => {
   const [email, setEmail] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
-  const [passwordShown, setPasswordShown] = useState(false);
   const [password, setPassword] = useState();
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   }
-  const handleShowPassword = () => {
-    setPasswordShown(!passwordShown);
-  };
 
+  /**
+   * Handles the form submission for creating a user.
+   *
+   * @param {Event} e - The form submission event.
+   * @returns {Promise<void>} - A promise that resolves when the user creation is successful.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSuccessMessage("");
@@ -99,7 +101,7 @@ const CreateUserForm = () => {
         Mot de passe
       </label>
       <input
-        type={passwordShown ? "text" : "password"}
+        type="password"
         className={errors.password ? "formInputError" : "formInput"}
         id="passwordField"
         onChange={(e) => setPassword(e.target.value)}

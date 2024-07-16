@@ -58,6 +58,11 @@ const FeedingReportDashboardPage = () => {
     }
   };
 
+  /**
+   * Checks the data for any errors before submitting the feeding report.
+   *
+   * @returns {Object} An object containing any errors found in the data.
+   */
   const checkData = () => {
     const errors = {};
     if (reportDate > getTodayDateTime()) {
@@ -73,6 +78,12 @@ const FeedingReportDashboardPage = () => {
     return errors;
   };
 
+  /**
+   * Handles the form submission for creating a feeding report.
+   * 
+   * @param {Event} e - The form submission event.
+   * @returns {Promise<void>} - A promise that resolves when the feeding report is created successfully.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});

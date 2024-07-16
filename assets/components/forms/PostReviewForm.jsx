@@ -11,7 +11,10 @@ const PostReviewForm = () => {
   const [succesMessage, setSuccesMessage] = useState();
   const [submitSuccess, setSubmitSuccess] = useState(false);
   let data = {};
-
+  /**
+   * Submits the review form.
+   * @param {*} e
+   */
   const handleSubmit = async (e) => {
     setSuccesMessage("");
     setErrors({});

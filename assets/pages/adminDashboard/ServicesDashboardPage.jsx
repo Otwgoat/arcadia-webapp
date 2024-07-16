@@ -10,9 +10,6 @@ import CustomButton from "../../components/CustomButton";
 
 const ServicesDashboardPage = () => {
   const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
-  const [createServiceFormOpen, setCreateServiceFormOpen] = useState(false);
-  const [servicesListOpen, setServicesListOpen] = useState(false);
-  const [planningFormOpen, setPlanningFormOpen] = useState(false);
   const [isActive, setIsActive] = useState("");
   return (
     <div className="container">

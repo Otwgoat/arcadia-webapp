@@ -9,6 +9,10 @@ const CustomButton = (props) => {
     }
   }, [props.submitSuccess]);
 
+  /**
+   * useEffect to reset the submitSuccess state after 2 seconds
+   *
+   */
   useEffect(() => {
     if (submitSuccess) {
       const timer = setTimeout(() => {

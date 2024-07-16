@@ -12,6 +12,11 @@ const ReportsByDate = () => {
     const day = String(today.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
+  /**
+   * Formats the date to a french format.
+   * @param {*} dateString
+   * @returns
+   */
   const formatDate = (dateString) => {
     const options = {
       day: "2-digit",
@@ -54,6 +59,10 @@ const ReportsByDate = () => {
     return animal ? animal.firstName : "";
   };
   useEffect(() => {
+    /**
+     * Retrieves the veterinary reports with the corresponding animal names.
+     * @returns {Promise<void>} A promise that resolves when the reports are updated with animal names.
+     */
     const getReportsWithAnimalName = async () => {
       if (veterinaryReports && veterinaryReports.reports) {
         const updatedReports = await Promise.all(
@@ -68,11 +77,7 @@ const ReportsByDate = () => {
 
     getReportsWithAnimalName();
   }, [veterinaryReports]);
-  useEffect(() => {
-    if (reports && reports.length > 0) {
-      console.log(reports);
-    }
-  }, [reports]);
+
   return (
     <>
       <form>

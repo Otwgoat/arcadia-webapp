@@ -17,6 +17,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ServiceController extends AbstractController
 {
+    /**
+     * Get the services from the database
+     */
     #[Route('api/services', name: 'services', methods: ['GET'])]
     public function getServices(ServiceRepository $serviceRepository, SerializerInterface $serializer): JsonResponse
     {
@@ -25,6 +28,9 @@ class ServiceController extends AbstractController
         return new JsonResponse($jsonServices, Response::HTTP_OK, [], true);
     }
 
+    /**
+     * Create a service in the database
+     */
     #[Route('api/admin/creation-service', name: 'create-service', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN', message: "Vous n'avez pas les droits, seul l'administrateur peut accéder à cette ressource.")]
     public function createService(SerializerInterface $serializer, LoggerInterface $logger, Request $request, ServiceRepository $serviceRepository)
@@ -52,6 +58,9 @@ class ServiceController extends AbstractController
         return new Response('Service créé', Response::HTTP_OK);
     }
 
+    /**
+     * Update a service in the database
+     */
     #[Route('api/service/{id}/modification', name: 'update-service', methods: ['PUT'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un employé peut accéder à cette ressource.")]
     public function updateService(Security $security, LoggerInterface $logger, Request $request, ServiceRepository $serviceRepository, $id)
@@ -72,6 +81,9 @@ class ServiceController extends AbstractController
         return new Response('Service modifié', Response::HTTP_OK);
     }
 
+    /**
+     * Delete a service from the database
+     */
     #[Route('api/service/{id}/suppression', name: 'delete-service', methods: ['DELETE'])]
     #[IsGranted('ROLE_USER', message: "Vous n'avez pas les droits, seul un membre des équipes du parc peut accéder à cette ressource.")]
     public function deleteService(LoggerInterface $logger, ServiceRepository $serviceRepository, $id)

@@ -9,9 +9,9 @@ function authenticate(credentials) {
            return response.data.token;
         })
         .then(token => {
-            // stockage du token généré par l'API dans le localStorage.
+            // Stock the token in the local storage
             window.localStorage.setItem("authToken", token);
-            // On prévient axios qu'on a maintenant un header par défaut sur toutes nos futures requêtes HTTP.
+            // Inform axios that we have a default header on all requests HTTP 
             setAxiosToken(token);
 
             return true
@@ -30,9 +30,9 @@ function setAxiosToken (token) {
 };
 
 function setup () {
-    //  Voir si on a un token
+    //  Check for a token
     const token = window.localStorage.getItem("authToken");
-    // ' Si le token est encore valide
+    // If token is valid, set the axios token
     if(token){
         const jwtData = jwtDecode(token);
         if((jwtData.exp * 1000) > new Date().getTime()){

@@ -44,6 +44,9 @@ const HomeSlider = () => {
   }, [animals]);
 
   useEffect(() => {
+    /**
+     * Sorts the animals based on their views and updates the state with the top three animals.
+     */
     const sortAnimals = () => {
       if (
         animals &&
@@ -66,6 +69,10 @@ const HomeSlider = () => {
 
   useEffect(() => {
     if (threeAnimals && threeAnimals.length > 0) {
+      /**
+       * Loads images for the displayed animals.
+       * @returns {Promise<void>} A promise that resolves when the images are loaded.
+       */
       const loadImages = async () => {
         const newDisplayedAnimals = await Promise.all(
           threeAnimals.map(async (animal) => {

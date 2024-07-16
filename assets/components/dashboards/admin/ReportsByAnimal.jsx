@@ -8,6 +8,11 @@ import { useMediaQuery } from "react-responsive";
 const ReportsByAnimal = () => {
   const isDesktop = useMediaQuery({ query: "(min-width: 700px)" });
   const [isSorted, setIsSorted] = useState(false);
+  /**
+   * Formats the date to a french format.
+   * @param {*} dateString
+   * @returns
+   */
   const formatDate = (dateString) => {
     const options = {
       day: "2-digit",
@@ -32,6 +37,10 @@ const ReportsByAnimal = () => {
     queryKey: ["veterinaryReports", animalId, itemCount],
     queryFn: () => animalsApi.getVeterinaryReports(animalId, itemCount),
   });
+  /**
+   * Select and show a specific report when clicked.
+   * @param {*} report
+   */
   const handleReportClick = (report) => {
     if (selectedReport && selectedReport.id === report.id) {
       setSelectedReport(null);
@@ -45,6 +54,9 @@ const ReportsByAnimal = () => {
     }
   }, [veterinaryReports]);
 
+  /**
+   * Sorts the reports based on their date and returns the sorted array.
+   */
   const sortReports = (reports, ascending) => {
     return reports
       .slice()

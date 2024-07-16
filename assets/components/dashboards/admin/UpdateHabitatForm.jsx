@@ -21,6 +21,12 @@ const UpdateHabitatForm = ({ habitat }) => {
   });
   const formRef = useRef(formRef);
 
+  /**
+   * Handles the form submission for updating a habitat.
+   *
+   * @param {Event} e - The form submission event.
+   * @returns {Promise<void>} - A promise that resolves when the habitat is updated successfully.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedHabitatData = {
