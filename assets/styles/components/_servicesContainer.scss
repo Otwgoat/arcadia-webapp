@@ -30,6 +30,7 @@
     min-height: 50vh;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-evenly;
     align-items: flex-start;
     margin-top: $desktop-small-gap;
     gap: $desktop-small-gap;
