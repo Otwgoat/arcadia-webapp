@@ -3,9 +3,19 @@ import reviewsApi from "../../services/reviewsApi";
 import CustomButton from "../CustomButton";
 import { useQuery } from "@tanstack/react-query";
 import PostReviewForm from "../forms/PostReviewForm";
+import { useMediaQuery } from "react-responsive";
 
 const Reviews = ({ mediaQuery }) => {
-  const [itemCount, setItemCount] = useState(mediaQuery ? 6 : 3);
+  const isTablet = useMediaQuery({ query: "(min-width: 700px)" });
+  const [itemCount, setItemCount] = useState(() => {
+    if (mediaQuery) {
+      return 6;
+    } else if (!mediaQuery && isTablet) {
+      return 4;
+    } else {
+      return 3;
+    }
+  });
   const [postReviewFormActive, setPostReviewFormActive] = useState(false);
   const {
     data: reviews,

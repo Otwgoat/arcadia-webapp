@@ -139,7 +139,7 @@ html {
   body {
     min-height: 100svh;
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 1020px) {
       .container {
         width: 100%;
         min-height: 100vh;
@@ -353,7 +353,7 @@ html {
       }
     }
 
-    @media screen and (min-width: 900px) {
+    @media screen and (min-width: 1024px) {
       .container {
         width: 100%;
         min-height: 100vh;

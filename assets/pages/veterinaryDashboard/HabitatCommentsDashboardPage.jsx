@@ -139,7 +139,7 @@ const HabitatCommentsDashboardPage = () => {
                 title="Envoyer le commentaire"
                 type="submit"
                 buttonClassName={
-                  isDesktop ? "smallDesktopButton" : "mediumMobilebutton"
+                  isDesktop ? "smallDesktopButton" : "mediumMobileButton"
                 }
                 onClick={(e) => handleSubmit(e)}
                 successMessage={successMessage}

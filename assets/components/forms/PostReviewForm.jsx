@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import CustomButton from "../CustomButton";
 import reviewsApi from "../../services/reviewsApi";
+import { useMediaQuery } from "react-responsive";
 
 const PostReviewForm = () => {
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [username, setUsername] = useState();
   const [review, setReview] = useState();
   const [errors, setErrors] = useState({});
@@ -72,7 +74,9 @@ const PostReviewForm = () => {
       <CustomButton
         id="postReviewSubmitButton"
         title="Envoyer"
-        buttonClassName="mediumMobileButton"
+        buttonClassName={
+          isDesktop ? "smallDesktopButton" : "mediumMobileButton"
+        }
         type="submit"
         submitSuccess={submitSuccess}
         succesMessage={succesMessage}

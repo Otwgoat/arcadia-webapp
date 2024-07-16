@@ -7,7 +7,7 @@ import CustomButton from "../CustomButton";
 import { useMediaQuery } from "react-responsive";
 
 const HomeSlider = () => {
-  const isDesktop = useMediaQuery({ query: "(min-width: 700px)" });
+  const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
   const [animalsToDisplayTop, setAnimalsToDisplayTop] = useState();
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);

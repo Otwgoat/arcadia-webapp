@@ -1,4 +1,5 @@
 .dashboardContainer {
+  margin-bottom: $mobile-large-gap;
   .infoMessage {
     color: $color-text-white-blur;
   }
@@ -286,6 +287,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: $mobile-large-gap;
+    margin-bottom: $mobile-large-gap;
     gap: $mobile-small-gap;
     .leaderBoardItem {
       width: 290px;

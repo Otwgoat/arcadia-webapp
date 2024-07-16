@@ -70,7 +70,7 @@ const HabitatDashboardPage = () => {
                 : setIsActive("habitatData")
             }
           />
-          {isActive && !isDesktop === "habitatData" && habitat && (
+          {isActive && "habitatData" && !isDesktop && habitat && (
             <UpdateHabitatForm habitat={habitat && habitat} />
           )}
           <DashboardNavItem
@@ -119,7 +119,7 @@ const HabitatDashboardPage = () => {
         </div>
         <CustomButton
           buttonClassName={
-            isDesktop ? "smallDesktopLogoutButton" : "mediumMobileLogoutButton"
+            isDesktop ? "smallDesktopLogoutButton" : "mediumLogoutButton"
           }
           id="deleteButton"
           title="Supprimer l'habitat"

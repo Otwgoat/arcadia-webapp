@@ -199,7 +199,7 @@ const FeedingReportDashboardPage = () => {
                 title="Envoyer le rapport"
                 type="submit"
                 buttonClassName={
-                  isDesktop ? "smallDesktopButton" : "mediumMobilebutton"
+                  isDesktop ? "smallDesktopButton" : "mediumMobileButton"
                 }
                 successMessage={successMessage}
                 submitSuccess={submitSuccess}

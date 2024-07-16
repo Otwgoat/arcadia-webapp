@@ -244,7 +244,9 @@ export const Home = () => {
           </div>
           <div id="reviewsContainer">
             <h2>Les avis</h2>
-            <p className="subh1">Qu’en pense nos visiteurs ?</p>
+            <p id="reviewsSubtitle" className="subh1">
+              Qu’en pense nos visiteurs ?
+            </p>
             <Reviews mediaQuery={isDesktop} />
           </div>
         </main>

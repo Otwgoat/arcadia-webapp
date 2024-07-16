@@ -1,4 +1,4 @@
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1020px) {
   #animalPageContainer {
     width: 100%;
     display: flex;
@@ -67,6 +67,18 @@
     }
     button {
       margin-top: $mobile-large-gap;
+    }
+  }
+
+  @media screen and (min-width: 700px) {
+    #animalPageContainer {
+      #animalInfosCard {
+        width: 70%;
+        flex-wrap: nowrap;
+      }
+      .animalContentCard {
+        min-width: 50%;
+      }
     }
   }
 }

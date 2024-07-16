@@ -20,7 +20,7 @@ const VeterinaryDashboard = ({ currentUser }) => {
         />
         <DashboardNavItem
           path="/dashboard/veterinaire/habitats"
-          title="Commenter l'état d'un habitats"
+          title="Commenter l'état d'un habitat"
         />
       </div>
     </>
