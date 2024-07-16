@@ -47,6 +47,7 @@ const App = () => {
           <title>Arcadia Zoo</title>
           <meta name="description" content="Bienvenue sur le site du zoo Arcadia. Situé aux alentours de Brocéliande en Bretagne, nous sommes heureux de vous faire découvrir le monde animal à travers des habitats naturels diversifiés où cohabitent des espèces rares et exotiques." />
           <link  id="favicon" rel='icon' href='images/logo-arcadia.png' sizes='16x16' type='image/png' data-react-helmet="true" />
+          
         </Helmet>
 
       

@@ -8,7 +8,7 @@ framework:
 
     #esi: true
     #fragments: true
-
+    disallow_search_engine_index: false
 when@test:
     framework:
         test: true

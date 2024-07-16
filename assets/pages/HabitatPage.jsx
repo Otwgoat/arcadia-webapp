@@ -60,9 +60,6 @@ const HabitatPage = () => {
     queryFn: () => getFiles("habitats/" + habitatId),
     enabled: !!habitatId,
   });
-  useEffect(() => {
-    console.log(habitatImages);
-  }, [habitatImages]);
 
   const { data: animals } = useQuery({
     queryKey: ["animals", habitatId],

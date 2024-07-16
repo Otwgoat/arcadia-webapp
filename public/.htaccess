@@ -68,3 +68,6 @@ Options +Indexes
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+<IfModule mod_headers.c>
+  Header unset X-Robots-Tag
+</IfModule>
