@@ -5,6 +5,7 @@
         "@babel/preset-react": "^7.24.7",
         "@symfony/webpack-encore": "^4.0.0",
         "@testing-library/jest-dom": "^6.4.6",
+        "assets-webpack-plugin": "^7.1.1",
         "core-js": "^3.23.0",
         "jest-environment-jsdom": "^29.7.0",
         "jsdom": "^24.1.0",
@@ -45,10 +46,10 @@
         "sass": "^1.77.2",
         "swiper": "^11.1.4"
     },
-   
     "jest": {
         "testEnvironment": "jsdom",
-        "setupFilesAfterEnv": ["@testing-library/jest-dom"]
-
+        "setupFilesAfterEnv": [
+            "@testing-library/jest-dom"
+        ]
     }
 }
