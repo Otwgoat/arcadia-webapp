@@ -88,6 +88,7 @@ const LoginPage = () => {
             <CustomButton
               id="postLoginFormButton"
               title="Se connecter"
+              name="Se connecter"
               buttonClassName={
                 isDesktop ? "mediumDesktopButton" : "largeMobileButton"
               }

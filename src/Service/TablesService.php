@@ -16,7 +16,7 @@ class TablesService
 
     public function createTableFromSqlFile($filePath)
     {
-        $databaseName = getenv('DATABASE_NAME');
+        $databaseName = $_ENV['DATABASE_NAME'];
         $this->databaseService->connect($databaseName);
         if (!file_exists($filePath)) {
             throw new \RuntimeException("SQL file does not exist: $filePath");

@@ -171,7 +171,9 @@ const HabitatPage = () => {
           )}
 
           <h1>{habitat && habitat.name}</h1>
-          <p className="subh1">{habitat && habitat.description}</p>
+          <p className="subh1" id="habitatDescription">
+            {habitat && habitat.description}
+          </p>
 
           {isDesktop ? <h3>Découvrir les animaux de cet habitat</h3> : null}
           <form>

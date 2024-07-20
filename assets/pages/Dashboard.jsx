@@ -32,7 +32,7 @@ const Dashboard = () => {
   }, [isAuthenticated]);
 
   return (
-    <div className="container">
+    <div className="container" id="dashboardContainer">
       <DashboardHeader />
       <main className="pageContainer dashboardContainer">
         {currentUser.type === "Admin" ? <AdminDashboard /> : ""}

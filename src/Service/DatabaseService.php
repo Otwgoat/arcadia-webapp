@@ -44,6 +44,7 @@ class DatabaseService
 
     public function createDatabase($name)
     {
+
         $this->connect(); // Connect without database name to execute creation
         $sql = "CREATE DATABASE IF NOT EXISTS $name";
         $this->pdo->exec($sql);
@@ -52,7 +53,7 @@ class DatabaseService
     public function createAdmin($firstName, $lastName, $email, $password)
     {
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        $databaseName = getenv('DATABASE_NAME');
+        $databaseName = $_ENV['DATABASE_NAME'];
         $this->connect($databaseName);
         $sql = "INSERT INTO user (firstName, lastName, email, password, role, type) VALUES (:firstName, :lastName, :email, :password, :role, :type)";
         $stmt = $this->pdo->prepare($sql);

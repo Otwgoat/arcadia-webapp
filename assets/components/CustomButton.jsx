@@ -28,6 +28,7 @@ const CustomButton = (props) => {
       className={props.buttonClassName}
       onClick={props.onClick}
       disabled={props.disabled}
+      name={props.name}
     >
       {submitSuccess ? (
         <p className="successMessage">{props.successMessage}</p>

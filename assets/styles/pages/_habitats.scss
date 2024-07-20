@@ -41,12 +41,13 @@
     width: 1300px;
     flex-direction: row;
     flex-wrap: wrap;
+    margin-top: $desktop-large-gap;
     gap: $desktop-small-gap;
     justify-content: space-evenly;
     .heroTitle {
       width: 100%;
     }
-    margin-top: $desktop-large-gap;
+
     .habitatCard {
       width: 400px;
       height: 350px;
