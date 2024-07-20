@@ -1,4 +1,5 @@
-{
+{    "name": "lucasjouffroy/arcadia-webapp",
+     "description": "Application web pour la gestion d'un parc animalier",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
