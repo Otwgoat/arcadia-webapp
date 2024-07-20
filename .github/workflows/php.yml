@@ -12,6 +12,7 @@ jobs:
     env:
       APP_ENV: "test"
       DATABASE_URL: ${{ secrets.DB_URL }}
+      KERNEL_CLASS: 'App\Kernel'
     steps:
       - uses: actions/checkout@v3
       - name: Set up PHP
