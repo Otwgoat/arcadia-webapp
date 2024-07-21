@@ -32,11 +32,13 @@ $ php bin/console app:create-tables
 
 $ php bin/console lexik:jwt:generate-keypair
 
-6. Lancement de symfony :
+6. Remplir le fichier .env en complétant les placeholder avec vos propres variables.
+
+7. Lancement de symfony :
 
 $ symfony server:start
 
-7. Lancement de la construction du front :
+8. Lancement de la construction du front :
 
 $ npm run dev-server
 

@@ -25,7 +25,7 @@ class SecurityControllerTest extends PantherTestCase
 
         $client->waitFor('#loginFormContainer');
 
-        // Vérifier si le texte 'Dashboard' est présent
-        $this->assertStringContainsString('CONNEXION', $client->getCrawler()->filter('h1')->text());
+
+        $this->assertStringContainsString('Connexion', $client->getCrawler()->filter('h1')->text());
     }
 }
